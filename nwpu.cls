@@ -12,11 +12,12 @@
 \RequirePackage{amsmath,amssymb}
 \RequirePackage{graphicx}
 \RequirePackage{footmisc,bm}
-\RequirePackage{geometry}  % °æÃæĞŞ¸Ä
-\RequirePackage{ctexcap}  % ÖĞÎÄ±êÌâ °üº¬ CTEX
-\RequirePackage{CJKulem} % ÖĞÎÄÏÂ»®Ïß Ö§³ÖÖĞÎÄ¶ÏĞĞµÄÏÂ»®Ïß
-\RequirePackage{fancyhdr} % Ò³½ÅÒ³Ã¼
-\RequirePackage{caption}   % Ê¹ÓÃ¸Ãºê°ü²úÉú¾¯¸æ ºöÂÔ
+\RequirePackage{geometry}  % ç‰ˆé¢ä¿®æ”¹
+\RequirePackage{ctexcap}  % ä¸­æ–‡æ ‡é¢˜ åŒ…å« CTEX
+\RequirePackage{CJKulem} % ä¸­æ–‡ä¸‹åˆ’çº¿ æ”¯æŒä¸­æ–‡æ–­è¡Œçš„ä¸‹åˆ’çº¿
+\RequirePackage{ulem} % ä¸­æ–‡ä¸‹åˆ’çº¿ æ”¯æŒä¸­æ–‡æ–­è¡Œçš„ä¸‹åˆ’çº¿
+\RequirePackage{fancyhdr} % é¡µè„šé¡µçœ‰
+\RequirePackage{caption}   % ä½¿ç”¨è¯¥å®åŒ…äº§ç”Ÿè­¦å‘Š å¿½ç•¥
 \RequirePackage{ifthen}
 \RequirePackage{calc}
 \RequirePackage{titletoc}
@@ -24,7 +25,7 @@
 \RequirePackage{mathptmx}
 %\RequirePackage{color}
 
-% Ò³±ß¾àÉèÖÃ
+% é¡µè¾¹è·è®¾ç½®
 \geometry{paperwidth=210mm,paperheight=297mm,left=2.5cm,right=2.5cm,top=2.54cm,bottom=2.54cm}%
 %\paperwidth=210mm
 %\paperheight=297mm
@@ -39,11 +40,11 @@
     \setlength{\evensidemargin}{\evensidemargin - 20pt} %
 \fi
 
-% ÉèÖÃÈ«ÎÄÄ¬ÈÏ×ÖºÅ  TODO
+% è®¾ç½®å…¨æ–‡é»˜è®¤å­—å·  TODO
 \renewcommand{\normalsize}{\zihao{-4}}
-\linespread{1.5}  % ²Î¿¼ÊéÉÏËµÊÇÓÃ1.25±íÊ¾1.5±¶ĞĞ¾à
+\linespread{1.5}  % å‚è€ƒä¹¦ä¸Šè¯´æ˜¯ç”¨1.25è¡¨ç¤º1.5å€è¡Œè·
 
-% ±êÌâÉèÖÃ
+% æ ‡é¢˜è®¾ç½®
 \CTEXsetup[name={,}, number={\arabic{chapter}},beforeskip={20pt}, afterskip={20pt}]{chapter}
 \CTEXsetup[nameformat={\heiti\zihao{3}\bf}]{chapter}
 \CTEXsetup[titleformat={\heiti\zihao{3}}]{chapter}
@@ -51,7 +52,7 @@
 \CTEXsetup[format={\heiti\zihao{-4}}]{subsection}
 
 \def\confont{\songti\zihao{-4}}
-% Ä¿Â¼ÉèÖÃ
+% ç›®å½•è®¾ç½®
 \titlecontents{chapter}[0pt]{\confont}
     {\thecontentslabel\hspace{.5em}}{}{\hspace{.5em}\titlerule*{.}\contentspage}
 %\titlecontents{chapter}[3em]{\vspace{3mm}\confont}{\thecontentslabel}%
@@ -60,11 +61,11 @@
     {\thecontentslabel\quad}{}{\hspace{.5em}\titlerule*{.}\contentspage}
 \titlecontents{subsection}[30pt]{\confont}
     {\thecontentslabel\quad}{}{\hspace{.5em}\titlerule*{.}\contentspage}
-% Ò³Ã¼ Ò³½Å
+% é¡µçœ‰ é¡µè„š
 \pagestyle{fancy}
 
-% ¸Ã¾äÖ»ÄÜ·ÅÔÚ \pagestyle{fancy} Ö®ºó·ñÔò²»Æô×÷ÓÃ
-% ²Î¿¼£º http://bbs.ctex.org/forum.php?mod=viewthread&tid=59087
+% è¯¥å¥åªèƒ½æ”¾åœ¨ \pagestyle{fancy} ä¹‹åå¦åˆ™ä¸å¯ä½œç”¨
+% å‚è€ƒï¼š http://bbs.ctex.org/forum.php?mod=viewthread&tid=59087
 \renewcommand{\chaptermark}[1]{\markboth{%
     \if@mainmatter %
         \ifnum\arabic{chapter}>0 %
@@ -72,17 +73,17 @@
         \fi%
     \fi#1}{}}
 \fancyhf{}
-\fancyhead[EC]{\songti\zihao{-5}Î÷±±¹¤Òµ´óÑ§²©Ê¿Ñ§Î»ÂÛÎÄ}
+\fancyhead[EC]{\songti\zihao{-5}è¥¿åŒ—å·¥ä¸šå¤§å­¦åšå£«å­¦ä½è®ºæ–‡}
 \fancyhead[OC]{\songti\zihao{-5}\leftmark}
 \fancyfoot[C]{\songti\zihao{5}\thepage}
 \renewcommand{\headrule}{%
     \hrule width\headwidth height1.2pt \vspace{1pt}%
     \hrule width\headwidth}
-\fancypagestyle{plain}{\thispagestyle{fancy}} % ÎªÕÂ½ÚÊ×Ò³Ìí¼ÓÒ³Ã¼
-% Çå³ıÕÂ½Úºó¿Õ°×Ò³µÄÒ³Ã¼
+\fancypagestyle{plain}{\thispagestyle{fancy}} % ä¸ºç« èŠ‚é¦–é¡µæ·»åŠ é¡µçœ‰
+% æ¸…é™¤ç« èŠ‚åç©ºç™½é¡µçš„é¡µçœ‰
 \newcommand{\clearpagestyle}{\clearpage{\pagestyle{empty}\cleardoublepage}}
 
-% ÖĞÎÄ·âÃæ
+% ä¸­æ–‡å°é¢
 \def\titleC#1#2{\def\@titleC{#1}\def\@titleCN{#2}}
 \def\@titleC{}
 \def\@titleCN{}
@@ -101,18 +102,18 @@
         \begin{center}
             \bf
             \hfill
-            \newlength{\Mycode} \settowidth{\Mycode}{Ñ§Ğ£´úÂë£º2000000000}
-            \newlength{\Name} \settowidth{\Name}{Ñ§Ğ£´úÂë}
+            \newlength{\Mycode} \settowidth{\Mycode}{å­¦æ ¡ä»£ç ï¼š2000000000}
+            \newlength{\Name} \settowidth{\Name}{å­¦æ ¡ä»£ç }
             \begin{minipage}{\Mycode}
-                \makebox[\Name][s]{Ñ§Ğ£´úÂë}£º10699 \\
-                \makebox[\Name][s]{·ÖÀàºÅ}£º\@classno \\
-                \makebox[\Name][s]{ÃÜ¼¶}£º\@secretlevel \\
-                \makebox[\Name][s]{Ñ§ºÅ}£º\@authorno \\
+                \makebox[\Name][s]{å­¦æ ¡ä»£ç }ï¼š10699 \\
+                \makebox[\Name][s]{åˆ†ç±»å·}ï¼š\@classno \\
+                \makebox[\Name][s]{å¯†çº§}ï¼š\@secretlevel \\
+                \makebox[\Name][s]{å­¦å·}ï¼š\@authorno \\
             \end{minipage}
             \par\vspace{7cm}
             \zihao{1}
             \begin{minipage}[t]{2.5cm}
-                ~Ìâ~Ä¿:
+                ~é¢˜~ç›®:
             \end{minipage}
             \begin{minipage}[t]{12cm}
                 \begin{center}
@@ -125,17 +126,17 @@
             \par\vspace{4cm}
             \zihao{3}
             \begin{minipage}{7cm}
-                ×÷\qquad Õß£º\uline{\hfill\@authorC\hfill}
+                ä½œ\qquad è€…ï¼š\uline{\hfill\@authorC\hfill}
             \end{minipage}
             \par\vspace{3\baselineskip}
-            \newlength{\Lname} \settowidth{\Lname}{ÉêÇëÑ§Î»ÈÕÆÚ}
+            \newlength{\Lname} \settowidth{\Lname}{ç”³è¯·å­¦ä½æ—¥æœŸ}
             \begin{minipage}{10cm}
                 \noindent
-                \makebox[\Lname][s]{Ñ§¿Æ×¨Òµ}£º\uline{\hfill\@majorC\hfill} \par
+                \makebox[\Lname][s]{å­¦ç§‘ä¸“ä¸š}ï¼š\uline{\hfill\@majorC\hfill} \par
                 \vspace{0.5\baselineskip}
-                \makebox[\Lname][s]{Ö¸µ¼½ÌÊ¦}£º\uline{\hfill\@supervisorC\hfill} \par
+                \makebox[\Lname][s]{æŒ‡å¯¼æ•™å¸ˆ}ï¼š\uline{\hfill\@supervisorC\hfill} \par
                 \vspace{0.5\baselineskip}
-                \makebox[\Lname][s]{ÉêÇëÑ§Î»ÈÕÆÚ}£º\uline{\hfill\@dateC\hfill} \par
+                \makebox[\Lname][s]{ç”³è¯·å­¦ä½æ—¥æœŸ}ï¼š\uline{\hfill\@dateC\hfill} \par
             \end{minipage}
             \vspace{2\baselineskip}
         \end{center}
@@ -149,13 +150,13 @@
         \vspace*{2cm}
         \begin{center}
 
-                \centerline{\zihao{3} Î÷~±±~¹¤~Òµ~´ó~Ñ§}
+                \centerline{\zihao{3} è¥¿~åŒ—~å·¥~ä¸š~å¤§~å­¦}
             \vspace{5mm}
-                \centerline{\zihao{1} ²©~Ê¿~Ñ§~Î»~ÂÛ~ÎÄ}
+                \centerline{\zihao{1} åš~å£«~å­¦~ä½~è®º~æ–‡}
             \vspace{3cm}
             \zihao{2}
             \begin{minipage}[t]{2cm}
-                Ìâ~Ä¿:
+                é¢˜~ç›®:
             \end{minipage}
             \begin{minipage}[t]{10cm}
                 \begin{center}
@@ -169,11 +170,11 @@
             \zihao{3}
             \begin{minipage}{8cm}
                 \noindent
-                ×÷\qquad Õß£º\uline{\hfill\@authorC\hfill}\par
+                ä½œ\qquad è€…ï¼š\uline{\hfill\@authorC\hfill}\par
                 \vspace{1\baselineskip}
-                Ñ§¿Æ×¨Òµ£º\uline{\hfill\@majorC\hfill}\par
+                å­¦ç§‘ä¸“ä¸šï¼š\uline{\hfill\@majorC\hfill}\par
                 \vspace{1\baselineskip}
-                Ö¸µ¼½ÌÊ¦£º\uline{\hfill\@supervisorC\hfill}\par
+                æŒ‡å¯¼æ•™å¸ˆï¼š\uline{\hfill\@supervisorC\hfill}\par
             \end{minipage}
             \vspace{2\baselineskip}
             \par\makebox[30mm]{\@dateC}\hfill
@@ -182,7 +183,7 @@
     \clearpagestyle
 }
 
-% Ó¢ÎÄ·âÃæ
+% è‹±æ–‡å°é¢
 \def\titleE#1{\def\@titleE{#1}}\def\@titleE{}
 \def\authorE#1{\def\@authorE{#1}}\def\@authorE{}
 \def\majorE#1{\def\@majorE{#1}}\def\@majorE{}
@@ -212,7 +213,7 @@
             For the degree of \\
             Doctor of \@majorE \\
             \vspace{3\baselineskip}
-            Xi¡¯an P. R. China \\
+            Xiâ€™an P. R. China \\
             \@dateE
         \end{center}
     \end{titlepage}
@@ -221,21 +222,21 @@
 
 \def\makecover{\makecoverO\makecoverC\makecoverE}
 
-% ÖĞÎÄÕªÒª
+% ä¸­æ–‡æ‘˜è¦
 \newenvironment{abstract}{%
-  \chapter{Õª \quad Òª}%\addcontentsline{toc}{chapter}{ÕªÒª}
+  \chapter{æ‘˜ \quad è¦}%\addcontentsline{toc}{chapter}{æ‘˜è¦}
     \newenvironment{keyword}{%
-    \vspace{2\baselineskip}\par\textbf{¹Ø¼ü´Ê: }}{}}
+    \vspace{2\baselineskip}\par\textbf{å…³é”®è¯: }}{}}
   {\par}
 
-% Ó¢ÎÄÕªÒª
+% è‹±æ–‡æ‘˜è¦
 \newenvironment{abstractE}{%
   \chapter{Abstract}%\addcontentsline{toc}{chapter}{Abstract}
     \newenvironment{keywordE}{%
     \vspace{2\baselineskip}\par\textbf{Keywords: }}{}}
   {\par}
 
-% ±í¸ñ
+% è¡¨æ ¼
 %\DeclareCaptionLabelFormat{bf-parens}{(\textbf{#2})}
 \DeclareCaptionFont{song}{\songti\zihao{5}}
 \captionsetup{labelsep=quad, font=song}
@@ -246,13 +247,13 @@
 \renewcommand\thefigure{\arabic{chapter}--\arabic{figure}}
 \renewcommand\theequation{\arabic{chapter}--\arabic{equation}}
 
-% ÉèÖÃÏß¿í
+% è®¾ç½®çº¿å®½
 \makeatletter
 \def\hlinewd#1{%
   \noalign{\ifnum0=`}\fi\hrule \@height #1 \futurelet
   \reserved@a\@xhline}
 \makeatother
-% ¶¨ÒåÈıÏß¸ñÊ½±í¸ñÉÏÏÂÏß¿í¶È
+% å®šä¹‰ä¸‰çº¿æ ¼å¼è¡¨æ ¼ä¸Šä¸‹çº¿å®½åº¦
 \def\topline{\hlinewd{1pt}}
 \def\bottomline{\hlinewd{1pt}}
 
@@ -264,40 +265,42 @@
         \parskip=7pt
         \vspace*{0pt}
         \songti\zihao{4}
-        \centerline{\bf Î÷±±¹¤Òµ´óÑ§}
-        \centerline{\bf Ñ§Î»ÂÛÎÄÖªÊ¶²úÈ¨ÉùÃ÷Êé}
+        \centerline{\bf è¥¿åŒ—å·¥ä¸šå¤§å­¦}
+        \centerline{\bf å­¦ä½è®ºæ–‡çŸ¥è¯†äº§æƒå£°æ˜ä¹¦}
         \songti\zihao{5}
-        ±¾ÈËÍêÈ«ÁË½âÑ§Ğ£ÓĞ¹Ø±£»¤ÖªÊ¶²úÈ¨µÄ¹æ¶¨£¬¼´£ºÑĞ¾¿ÉúÔÚĞ£¹¥¶ÁÑ§Î»ÆÚ¼äÂÛ
-        ÎÄ¹¤×÷µÄÖªÊ¶²úÈ¨µ¥Î»ÊôÓÚÎ÷±±¹¤Òµ´óÑ§¡£Ñ§Ğ£ÓĞÈ¨±£Áô²¢Ïò¹ú¼ÒÓĞ¹Ø²¿ÃÅ»ò»ú¹¹ËÍ½»ÂÛÎÄµÄ¸´Ó¡¼şºÍµç
-        ×Ó°æ¡£±¾ÈËÔÊĞíÂÛÎÄ±»²éÔÄºÍ½èÔÄ¡£Ñ§Ğ£¿ÉÒÔ½«±¾Ñ§Î»ÂÛÎÄµÄÈ«²¿»ò²¿·ÖÄÚÈİ±àÈëÓĞ¹ØÊı¾İ
-        ¿â½øĞĞ¼ìË÷£¬¿ÉÒÔ²ÉÓÃÓ°Ó¡¡¢ËõÓ¡»òÉ¨ÃèµÈ¸´ÖÆÊÖ¶Î±£´æºÍ»ã±à±¾Ñ§Î»ÂÛÎÄ¡£Í¬Ê±±¾ÈË±£Ö¤£¬
-        ±ÏÒµºó½áºÏÑ§Î»ÂÛÎÄÑĞ¾¿¿ÎÌâÔÙ×«Ğ´µÄÎÄÕÂÒ»ÂÉ×¢Ã÷×÷Õßµ¥Î»ÎªÎ÷±±¹¤Òµ´óÑ§¡£
+        æœ¬äººå®Œå…¨äº†è§£å­¦æ ¡æœ‰å…³ä¿æŠ¤çŸ¥è¯†äº§æƒçš„è§„å®šï¼Œå³ï¼šç ”ç©¶ç”Ÿåœ¨æ ¡æ”»è¯»å­¦ä½æœŸé—´è®º
+        æ–‡å·¥ä½œçš„çŸ¥è¯†äº§æƒå•ä½å±äºè¥¿åŒ—å·¥ä¸šå¤§å­¦ã€‚å­¦æ ¡æœ‰æƒä¿ç•™å¹¶å‘å›½å®¶æœ‰å…³éƒ¨é—¨æˆ–æœºæ„é€äº¤è®ºæ–‡çš„å¤å°ä»¶å’Œç”µ
+        å­ç‰ˆã€‚æœ¬äººå…è®¸è®ºæ–‡è¢«æŸ¥é˜…å’Œå€Ÿé˜…ã€‚å­¦æ ¡å¯ä»¥å°†æœ¬å­¦ä½è®ºæ–‡çš„å…¨éƒ¨æˆ–éƒ¨åˆ†å†…å®¹ç¼–å…¥æœ‰å…³æ•°æ®
+        åº“è¿›è¡Œæ£€ç´¢ï¼Œå¯ä»¥é‡‡ç”¨å½±å°ã€ç¼©å°æˆ–æ‰«æç­‰å¤åˆ¶æ‰‹æ®µä¿å­˜å’Œæ±‡ç¼–æœ¬å­¦ä½è®ºæ–‡ã€‚åŒæ—¶æœ¬äººä¿è¯ï¼Œ
+        æ¯•ä¸šåç»“åˆå­¦ä½è®ºæ–‡ç ”ç©¶è¯¾é¢˜å†æ’°å†™çš„æ–‡ç« ä¸€å¾‹æ³¨æ˜ä½œè€…å•ä½ä¸ºè¥¿åŒ—å·¥ä¸šå¤§å­¦ã€‚
 
-        ±£ÃÜÂÛÎÄ´ı½âÃÜºóÊÊÓÃ±¾ÉùÃ÷¡£
+        ä¿å¯†è®ºæ–‡å¾…è§£å¯†åé€‚ç”¨æœ¬å£°æ˜ã€‚
 
-        Ñ§Î»ÂÛÎÄ×÷ÕßÇ©Ãû: \underline{\qquad\qquad\qquad} \qquad
-        Ö¸µ¼½ÌÊ¦Ç©Ãû: \underline{\qquad\qquad\qquad}
+        å­¦ä½è®ºæ–‡ä½œè€…ç­¾å: \underline{\qquad\qquad\qquad} \qquad
+        æŒ‡å¯¼æ•™å¸ˆç­¾å: \underline{\qquad\qquad\qquad}
 
-        \hskip 3cm Äê \qquad ÔÂ \qquad ÈÕ \hskip 3cm Äê \qquad  ÔÂ \qquad  ÈÕ
+        \hskip 3cm å¹´ \qquad æœˆ \qquad æ—¥ \hskip 3cm å¹´ \qquad  æœˆ \qquad  æ—¥
 
         \vspace*{30pt}
         \hrule
         \vspace*{50pt}
         \songti\zihao{4}
-        \centerline{\bf Î÷±±¹¤Òµ´óÑ§}
-        \centerline{\bf Ñ§Î»ÂÛÎÄÔ­´´ĞÔÉùÃ÷}
+        \centerline{\bf è¥¿åŒ—å·¥ä¸šå¤§å­¦}
+        \centerline{\bf å­¦ä½è®ºæ–‡åŸåˆ›æ€§å£°æ˜}
         \songti\zihao{5}
-        ±ü³ĞÑ§Ğ£ÑÏ½÷µÄÑ§·çºÍÓÅÁ¼µÄ¿ÆÑ§µÀµÂ£¬±¾ÈËÖ£ÖØÉùÃ÷£ºËù³Ê½»µÄÑ§Î»ÂÛÎÄ£¬
-        ÊÇ±¾ÈËÔÚµ¼Ê¦µÄÖ¸µ¼ÏÂ½øĞĞÑĞ¾¿¹¤×÷ËùÈ¡µÃµÄ³É¹û¡£¾¡ÎÒËùÖª£¬³ıÎÄÖĞÒÑ¾­
-        ×¢Ã÷ÒıÓÃµÄÄÚÈİºÍÖÂĞ»µÄµØ·½Íâ£¬±¾ÂÛÎÄ²»°üº¬ÈÎºÎÆäËû¸öÈË»ò¼¯ÌåÒÑ¾­¹«
-        ¿ª·¢±í»ò×«Ğ´¹ıµÄÑĞ¾¿³É¹û£¬²»°üº¬±¾ÈË»òÆäËûÒÑÉêÇëÑ§Î»»òÆäËûÓÃÍ¾Ê¹ÓÃ
-        ¹ıµÄ³É¹û¡£¶Ô±¾ÎÄµÄÑĞ¾¿×ö³öÖØÒª¹±Ï×µÄ¸öÈËºÍ¼¯Ìå£¬¾ùÒÑÔÚÎÄÖĞÒÔÃ÷È··½Ê½±íÃ÷¡£
+        ç§‰æ‰¿å­¦æ ¡ä¸¥è°¨çš„å­¦é£å’Œä¼˜è‰¯çš„ç§‘å­¦é“å¾·ï¼Œæœ¬äººéƒ‘é‡å£°æ˜ï¼šæ‰€å‘ˆäº¤çš„å­¦ä½è®ºæ–‡ï¼Œ
+        æ˜¯æœ¬äººåœ¨å¯¼å¸ˆçš„æŒ‡å¯¼ä¸‹è¿›è¡Œç ”ç©¶å·¥ä½œæ‰€å–å¾—çš„æˆæœã€‚å°½æˆ‘æ‰€çŸ¥ï¼Œé™¤æ–‡ä¸­å·²ç»
+        æ³¨æ˜å¼•ç”¨çš„å†…å®¹å’Œè‡´è°¢çš„åœ°æ–¹å¤–ï¼Œæœ¬è®ºæ–‡ä¸åŒ…å«ä»»ä½•å…¶ä»–ä¸ªäººæˆ–é›†ä½“å·²ç»å…¬
+        å¼€å‘è¡¨æˆ–æ’°å†™è¿‡çš„ç ”ç©¶æˆæœï¼Œä¸åŒ…å«æœ¬äººæˆ–å…¶ä»–å·²ç”³è¯·å­¦ä½æˆ–å…¶ä»–ç”¨é€”ä½¿ç”¨
+        è¿‡çš„æˆæœã€‚å¯¹æœ¬æ–‡çš„ç ”ç©¶åšå‡ºé‡è¦è´¡çŒ®çš„ä¸ªäººå’Œé›†ä½“ï¼Œå‡å·²åœ¨æ–‡ä¸­ä»¥æ˜ç¡®æ–¹å¼è¡¨æ˜ã€‚
 
-        ±¾ÈËÑ§Î»ÂÛÎÄÓë×ÊÁÏÈôÓĞ²»Êµ£¬Ô¸Òâ³Ğµ£Ò»ÇĞÏà¹ØµÄ·¨ÂÉÔğÈÎ¡£
+        æœ¬äººå­¦ä½è®ºæ–‡ä¸èµ„æ–™è‹¥æœ‰ä¸å®ï¼Œæ„¿æ„æ‰¿æ‹…ä¸€åˆ‡ç›¸å…³çš„æ³•å¾‹è´£ä»»ã€‚
 
-        \hskip 5cm Ñ§Î»ÂÛÎÄ×÷ÕßÇ©Ãû£º\underline{\qquad\qquad\qquad}
+        \hskip 5cm å­¦ä½è®ºæ–‡ä½œè€…ç­¾åï¼š\underline{\qquad\qquad\qquad}
 
-        \hskip 8cm Äê \qquad  ÔÂ \qquad  ÈÕ
+        \hskip 8cm å¹´ \qquad  æœˆ \qquad  æ—¥
     \end{titlepage}
     %\clearpagestyle
 }
+
+% vim:filetype=tex

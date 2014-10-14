@@ -3,4 +3,4 @@ all:
    	dvipdf nwpu-cls-manual.dvi
 
 clean:
-	rm *.log *.aux *.toc *.dvi
+	rm -f *.log *.aux *.toc *.dvi *.pdf
