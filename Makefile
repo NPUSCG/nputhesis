@@ -1,6 +1,8 @@
 all:
-	xelatex nwpu-cls-manual.tex \
-   	dvipdf nwpu-cls-manual.dvi
+	latex manual.tex \
+	bibtex manual.aux \
+	latex manual.tex \
+   	dvipdf manual.dvi 
 
 clean:
-	rm -f *.log *.aux *.toc *.dvi *.pdf
+	rm -f *.log *.aux *.toc *.dvi *.pdf *.bbl *.blg
