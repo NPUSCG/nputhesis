@@ -1,8 +1,6 @@
 all:
-	latex manual.tex \
-	bibtex manual.aux \
-	latex manual.tex \
-   	dvipdf manual.dvi 
+	pdflatex manual ; bibtex manual ;\
+	pdflatex manual ; pdflatex manual 
 
 clean:
 	rm -f *.log *.aux *.toc *.dvi *.pdf *.bbl *.blg
