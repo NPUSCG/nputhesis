@@ -4,7 +4,6 @@ tags
 *.i
 .*project
 *.aux
-*.pdf
 *.log
 *.nav
 *.out

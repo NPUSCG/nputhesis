@@ -3,4 +3,4 @@ all:
 	pdflatex manual ; pdflatex manual 
 
 clean:
-	rm -f *.log *.aux *.toc *.dvi *.pdf *.bbl *.blg
+	rm -f *.log *.aux *.toc *.dvi *.bbl *.blg *eps*pdf
