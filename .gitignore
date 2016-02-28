@@ -9,3 +9,6 @@ tags
 *.out
 *.snm
 *.toc
+*.bbl
+*.blg
+*.synctex
