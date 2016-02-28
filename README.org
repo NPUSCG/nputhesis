@@ -1,2 +1,1 @@
-论文模板
-介绍说明请参看 manual.tex
+NPU 论文 LaTeX 模板
