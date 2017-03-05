@@ -1,5 +1,5 @@
 %%UTF-8
-\documentclass[twoside]{nputhesis}
+\documentclass[twoside,UTF8]{nputhesis}
 %\documentclass[oneside]{nputhesis}
 
 \usepackage{amsmath}
@@ -10,106 +10,86 @@
 
 \usepackage{lipsum}
 
-\schoolno{10699}
+\schoolno{00000}
 %\classno{}
 %\secretlevel{}
-%\title{\LaTeX 论文模板之模板模板模板}
-\title[\LaTeX\ template]{\LaTeX 论文模板之模板模板模板}
-\author[Yimu Shu]{水易木}
-\authorno{2014201852}
-\major[Math]{数学}
-\supervisor[Shan]{山}
-\applydate[September 2016]{2016~年~9~月}
+\title[\LaTeX\ Template for Thesis of NPU]{西北工业大学硕博士论文\LaTeX 模板}
+\author[San Zhang]{张三}
+\authorno{2014000000}
+\major[Mathematics]{数学}
+\supervisor[Si Li]{李四}
+\applydate[September 2017]{2017~年~3~月}
 \support{本文研究得到某某基金(编号:XXXXXXX)资助。}
 
 \begin{document}
-\makecover
+\makecover  % 中英文封面
 \frontmatter
+
 % 中文摘要
-\begin{abstract}
-  中文 \lipsum[2-3]
-  \begin{keywords}
-   中文, 摘要
-  \end{keywords}
+\begin{abstract}  
+    因为\TeX 具有出色的公式和图表排版功能, 所以大部分期刊都要求作者投稿时使用
+    \TeX. 学生写论文时也多用 \TeX, 所以我们制作本模板以节省写毕业论文的时间 
+    (重用之前编辑的公式和图标).
+
+    本文简要介绍西北工业大学论文模板 (nputhesis) 的实现和使用.
+
+    { % 乱码测试
+        \noindent\hrulefill\\
+        {\centerline {\it 乱码模式开启}}
+        \lipsum[1-4]
+        {\centerline{\it 乱码模式关闭}}
+        \noindent\hrulefill
+    }
+    \begin{keywords}
+        论文模板, \LaTeX, 西工大 
+    \end{keywords}
 \end{abstract}
+
 % 英文摘要
 \begin{Abstract}
-  \lipsum[1-4] 
-  \begin{Keywords}
-  English, Abstract
-  \end{Keywords}
+
+    { % some meaningless words.
+        \noindent\hrulefill\\
+        {\centerline {\it 乱码模式开启}}
+        \lipsum[1-4]
+        {\centerline{\it 乱码模式关闭}}
+        \noindent\hrulefill
+    }
+    \begin{Keywords}
+        Thesis Template, \LaTeX, NPU
+    \end{Keywords}
 \end{Abstract}
+
+% 目录
 \tableofcontents 
 
-\mainmatter
-\chapter{简介}
-\section{运行环境}
-\subsection{操作系统}
-\begin{equation}
-  a^2+b^2=c^2
-\end{equation}
-我是正文 我是正文 我是正文 我是正文 我是正文 我是正文 我是正文 
-我是正文 我是正文 我是正文 我是正文 我是正文 我是正文 我是正文 
-我是正文 我是正文 我是正文 我是正文 我是正文 我是正文 我是正文 
-我是正文 我是正文 我是正文 我是正文 我是正文 我是正文 我是正文 
-我是正文 我是正文 我是正文 我是正文 我是正文 我是正文 我是正文 
-我是正文 我是正文 我是正文 我是正文 我是正文 我是正文 我是正文
-我是正文 我是正文 我是正文 我是正文 我是正文 我是正文 我是正文
-我是正文 我是正文 我是正文 我是正文 我是正文 我是正文 我是正文
-我是正文 我是正文 我是正文 我是正文 我是正文 我是正文 我是正文
-我是正文 我是正文 我是正文 我是正文 我是正文 我是正文 我是正文
-\begin{table}
-  \caption{测试表格}
-  \centering
-  \begin{tabular}{cccccc}
-    \toprule
-    & $h$ & $L^2$ error & Order & $L^{(\alpha,\beta)}$ error & Order \\
-    \midrule
-    \multirow{5}{4em}{$\alpha=0.85$\\ $\beta = 0.85$}
-    & 1/4   & 3.8571e-04 &      - & 3.0781e-03 &      -\\
-    & 1/8   & 1.3035e-04 & 1.5651 & 1.2640e-03 & 1.2840\\
-    & 1/16  & 3.8665e-05 & 1.7533 & 5.2782e-04 & 1.2599\\
-    & 1/48  & 4.9386e-06 & 1.8731 & 1.5519e-04 & 1.1142\\
-    \bottomrule
-  \end{tabular}
+\mainmatter  % 
+\chapter{nputhesis 简介}
+\section{\TeX 和 \LaTeX 介绍}
+\section{book 文档类介绍}
+\section{nputhesis 运行环境}
+
+\begin{table}[h]
+    \caption{测试运行环境}
+    \centering
+    \begin{tabular}{ccc}
+        \toprule
+        操作系统    & \TeX 系统   & 版本 \\
+        \midrule
+        Windows 10  & TeXLive     & 2013 \\
+        CentOS 7    & TeXLive     & 2015 \\
+        \bottomrule
+    \end{tabular}
 \end{table}
-\cite{Ji2015}\cite{Grisvard2011}\cite{Roop2006}
-\cite{Roop2004}\cite{Gorenflo2001}\cite{Oldham1974}\cite{Berthold1992}
-\cite{Guo2011}
+
 \chapter{实现}
-\section{实现思路}
-\begin{equation}
-  E=mc^2
-\end{equation}
-\begin{figure}
-  \centering
-  \includegraphics{figures/fig1-1.pdf}
-  \hskip 10pt
-  \includegraphics{figures/fig1-2.pdf}
-  \caption{测试图-区域}
-\end{figure}
-\begin{figure}
-  \centering
-  \includegraphics{figures/fig2.pdf}
-  \caption{测试图-三维图}
-\end{figure}
-%\begin{figure}
-  %\centering
-  %\includegraphics{figures/fig3.eps}
-  %\caption{测试图-三维图}
-%\end{figure}
-%\begin{figure}
-  %\centering
-  %\includegraphics[width=0.3\textwidth]{figures/nwpu.jpg}
-  %\caption{测试图-工大图标}
-%\end{figure}
-\lipsum[4-8]
-\section{实现代码}
-\lipsum[2-4]
+\section{思路}
+\section{代码}
+
 
 \backmatter
 \bibliographystyle{nputhesis}
-\bibliography{Reference}
+\bibliography{ref}
 
 \Appendix
 This is appendix.
@@ -122,4 +102,3 @@ This is a thanks.
 
 \statement
 \end{document}
-

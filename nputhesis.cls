@@ -4,6 +4,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{nputhesis}[2015/10/23 v0.02 NPU]
 
+\DeclareOption{UTF8}{\PassOptionsToPackage{\CurrentOption}{ctexcap}}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ProcessOptions \relax
 \LoadClass{book}
@@ -13,7 +14,8 @@
 \RequirePackage{titletoc}
 \RequirePackage{caption}
 \RequirePackage{ulem}
-\RequirePackage[UTF8]{ctexcap} % TODO make utf8 as parameter
+
+\RequirePackage{ctexcap}
 
 \geometry{paperwidth=210mm,paperheight=297mm,%
   left=2.5cm,right=2.5cm,top=2.54cm,bottom=2.54cm}
@@ -22,13 +24,21 @@
 \footskip=8mm
 \headsep=5mm
 
-\CTEXsetup[name={,}, number={\arabic{chapter}},%
-  beforeskip={20pt}, afterskip={20pt}]{chapter}
-\CTEXsetup[nameformat={\heiti\zihao{3}\bf}]{chapter}
-\CTEXsetup[titleformat={\heiti\zihao{3}}]{chapter}
-\CTEXsetup[format={\heiti\zihao{4}}]{section}
-\CTEXsetup[format={\heiti\zihao{-4}}]{subsection}
-
+\ifx\ctexset\undefined
+  \CTEXsetup[name={,}, number={\arabic{chapter}},%
+    beforeskip={20pt}, afterskip={20pt}]{chapter}
+  \CTEXsetup[nameformat={\heiti\zihao{3}\bf}]{chapter}
+  \CTEXsetup[titleformat={\heiti\zihao{3}}]{chapter}
+  \CTEXsetup[format={\heiti\zihao{4}}]{section}
+  \CTEXsetup[format={\heiti\zihao{-4}}]{subsection}
+\else
+  \ctexset{chapter={name={,}, number={\arabic{chapter}}, %
+      beforeskip={20pt}, afterskip={20pt}}}
+  \ctexset{chapter={nameformat={\heiti\zihao{3}\bf}}}
+  \ctexset{chapter={titleformat={\heiti\zihao{3}}}}
+  \ctexset{section={format={\heiti\zihao{4}}}}
+  \ctexset{subsection={format={\heiti\zihao{-4}}}}
+\fi
 % content setting
 \def\@contentfont{\songti\zihao{-4}}
 \titlecontents{chapter}[0pt]{\@contentfont}
@@ -68,9 +78,14 @@
 \def\@@title[#1]#2{\def\@title@en{#1}\def\@title{#2}}
 \def\@@author[#1]#2{\def\@author@en{#1}\def\@author{#2}}
 \def\@@major[#1]#2{\def\@major@en{#1}\def\@major{#2}}
-\def\@@supervisor[#1]#2{\def\@supervisor@en{#1}\def\@supervisor{#2}} 
+\def\@@supervisor[#1]#2{\def\@supervisor@en{#1}\def\@supervisor{#2}}
 \def\@@applydate[#1]#2{\def\@applydate@en{#1}\def\@applydate{#2}}
-\def\@title{} \def\@author{} \def\@major{} \def\@supervisor{} \def\@applydate{}
+\def\@title{}\def\@title@en{}
+\def\@author{}\def\@author@en{}
+\def\@major{}\def\@major@en{}
+\def\@supervisor{}\def\@supervisor@en{}
+\def\@applydate{}\def\@applydate@en{}
+\def\npu@empty{}
 
 \def\schoolno#1{\def\@schoolno{#1}}\def\@schoolno{}
 \def\classno#1{\def\@classno{#1}}\def\@classno{}
@@ -206,10 +221,10 @@
         \vspace{3\baselineskip}
         \zihao{-3}
         By\\
-        \@author@en \\
+        \ifx\@author@en\npu@empty\quad\else\@author@en\fi\\
         \vspace{1\baselineskip}
         Under the Supervision of Professor\\
-        \@supervisor@en\\}
+        \ifx\@supervisor@en\npu@empty\quad\else\@supervisor@en\fi\\}
       %\Large
       \vspace{4\baselineskip}
       A Dissertation Submitted to\\
