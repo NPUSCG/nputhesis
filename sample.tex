@@ -1,14 +1,14 @@
-%%UTF-8
-\documentclass[twoside,UTF8]{nputhesis}
-%\documentclass[oneside]{nputhesis}
+%% UTF-8
+\documentclass[twoside,UTF8,ma,blankinfo]{nputhesis}
 
-\usepackage{amsmath}
-\usepackage{amsfonts}
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{graphicx}
-
 \usepackage{lipsum}
+
+\newtheorem{thm}{定理}[section]
+\theoremstyle{plain}
+\newtheorem{oldthm}{旧定理}[section]
 
 \schoolno{00000}
 %\classno{}
@@ -66,21 +66,32 @@
 \mainmatter  % 
 \chapter{nputhesis 简介}
 \section{\TeX 和 \LaTeX 介绍}
-\section{book 文档类介绍}
-\section{nputhesis 运行环境}
+关于 \TeX 和 \LaTeX 请参考 \cite{Knuth1986,Lamport1994,Liu2013}, 其中 \cite{Liu2013} 最适合入门.  
 
+\section{nputhesis 依赖}
+如下表格给出了测试编译通过的环境
 \begin{table}[h]
-    \caption{测试运行环境}
+  \caption{测试环境\cite{Liu2013}}
     \centering
-    \begin{tabular}{ccc}
+    \begin{tabular}{cccc}
         \toprule
-        操作系统    & \TeX 系统   & 版本 \\
+        操作系统    & \TeX 系统   & 版本  & 引擎\\
         \midrule
-        Windows 10  & TeXLive     & 2013 \\
-        CentOS 7    & TeXLive     & 2015 \\
+        Windows 10  & TeXLive     & 2017  & xelatex\\
         \bottomrule
     \end{tabular}
 \end{table}
+
+\section{定理环境}
+\lipsum[1]
+\begin{thm}
+    这里是定理环境使用 `nputheorem' 格式.
+\end{thm}
+\lipsum[2]
+\begin{oldthm}
+    这里是 `amsthm' 默认的定理环境, 使用 `plain' 格式.
+\end{oldthm}
+\lipsum[3]
 
 \chapter{实现}
 \section{思路}

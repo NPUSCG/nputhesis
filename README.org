@@ -1,4 +1,53 @@
-* NPU 博士论文 LaTeX 模板
-在 windows 10 上使用 TexLive (2013及2015) 中的 pdflatex 和 xelatex 均编译通过 (*编码均使用utf-8*).
+* NPU 硕博士论文 LaTeX 模板
+`nputhesis` 是基于\LaTeX 的 `book` 文类编写的[[https://www.nwpu.edu.cn][西北工业大学]]硕博论文格式文类, 实现了[[http://gs.nwpu.edu.cn/info/2021/5046.htm][西北工业大学硕博毕业论文格式]]的基本要求.
 
-注： *不推荐使用 CTeX 套装, 可能会出现各种问题。*
+** \TeX 环境
+`sample.tex` 源文件使用 `UTF8` 编码在 `TeXLive 2017` 下使用引擎 `xelatex` 及 `pdflatex` 编译通过. 其他环境未测试.
+
+(* 推荐使用新版 `TeXLive` 下的 `xelatex` 进行编译 *)
+
+** 如何使用
+在 \TeX 文档开头使用 `nputhesis` 文类即可, 如 `\documentclass[twoside,UTF8,phd]{nputhesis}`.
+
+*** 文档选项说明
+1. 由于 `nputhesis` 基于 `book` 实现, `book` 文类的选项这里均能是使用, 如 `twoside`.
+2. `nputhesis` 新定义的选项
+	- `UTF8` : 传递给宏包 `ctexcap`, 用于中文标题处理.
+	- `phd` : 使用博士论文模板, 默认选项.
+	- `ma` : 使用硕士论文模板.
+	- `blankinfo` : 空白页信息开关, 用于在偶数空白页显示 `This Page Intentionally Left Blank!`, 默认不显示.
+
+*** 使用的宏包及定义的环境
+该文类内部已包含宏包`geometry`,`fancyhdr`,`titletoc`,`caption`,`ulem`,`amsthm`,`amsmath`,`amsfonts`, `ctexcap`,`xcolor`.
+
+内部使用了 `amsthm` 宏包定义了定理格式 `nputheorem`, 并默认启用. 在文档中 `\newtheorem{thm}{定理}[section]` 定义新环境将默认使用格式.
+若需更改将要定义的定理格式为其他格式, 如 `plain`, 请使用如下命令:
+```
+\theoremstyle{plain}
+\newtheorem{oldthm}{旧定理}[section]
+```
+那么 `newthm` 环境将使用 `plain` 格式.
+
+** License
+
+MIT License
+
+Copyright (c) 2017 Yang Zongze (yangzongze@gmail.com)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

@@ -2,10 +2,17 @@
 %% This is file `nputhesis.cls'.
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{nputhesis}[2015/10/23 v0.02 NPU]
+\ProvidesClass{nputhesis}[2017/12/6 v0.3 NPU]
 
+\newif\if@npu@phd
+\newif\if@npu@blankinfo
+\@npu@blankinfofalse
+\DeclareOption{phd}{\@npu@phdtrue}
+\DeclareOption{ma}{\@npu@phdfalse}
+\DeclareOption{blankinfo}{\@npu@blankinfotrue}
 \DeclareOption{UTF8}{\PassOptionsToPackage{\CurrentOption}{ctexcap}}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
+\ExecuteOptions{phd}
 \ProcessOptions \relax
 \LoadClass{book}
 
@@ -14,8 +21,12 @@
 \RequirePackage{titletoc}
 \RequirePackage{caption}
 \RequirePackage{ulem}
+\RequirePackage{amsthm}
+\RequirePackage{amsmath}
+\RequirePackage{amsfonts}
 
 \RequirePackage{ctexcap}
+\RequirePackage{xcolor}
 
 \geometry{paperwidth=210mm,paperheight=297mm,%
   left=2.5cm,right=2.5cm,top=2.54cm,bottom=2.54cm}
@@ -92,6 +103,12 @@
 \def\secretlevel#1{\def\@secretlevel{#1}}\def\@secretlevel{}
 \def\authorno#1{\def\@authorno{#1}}\def\@authorno{}
 \def\support#1{\def\@support{#1}}\def\@support{}
+
+\if@npu@phd
+  \def\npu@degreename@en{Doctor}
+\else
+  \def\npu@degreename@en{Master}
+\fi
 
 % set normal font size
 \renewcommand{\normalsize}{\zihao{-4}}
@@ -232,7 +249,7 @@
       \vspace{1\baselineskip}
       In partial fulfillment of the requirement\\
       For the degree of\\
-      Doctor of \@major@en\\
+      \npu@degreename@en\  of \@major@en\\
       \vspace{4\baselineskip}
       Xi'an P. R. China\\
       \@applydate@en
@@ -243,8 +260,10 @@
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
   \hbox{}
   \vspace*{\fill}
-  \begin{center}
-    \Large This Page Intentionally Left Blank!
+  \begin{center}\Large
+    \if@npu@blankinfo
+      \textcolor{gray!60}{This Page Intentionally Left Blank!}
+    \fi
   \end{center}
   \vspace{\fill}
   \thispagestyle{empty}
@@ -270,7 +289,7 @@
 \def\tableofcontents{\npu@tableofcontents%
   \addcontentsline{toc}{chapter}{\npu@contents}}
 
-\DeclareCaptionFont{song}{\songti\zihao{5}}
+\DeclareCaptionFont{song}{\songti\zihao{5}}  % command defined in package caption
 \captionsetup{labelsep=quad, font=song}
 \setlength{\abovecaptionskip}{10pt}
 \setlength{\belowcaptionskip}{10pt}
@@ -314,6 +333,19 @@
     \hfill\hskip8.5cm \npu@ymd
   \end{titlepage}}
 
-\input{npuphd.cfg}
+% ref amsthdoc.pdf
+\newtheoremstyle{nputheorem}% name
+  {0pt}% Space above
+  {0pt}% Space below
+  {\itshape}% Body font
+  {}% Indent amount
+  {\bfseries}% Theorem head font
+  {}% Punctuation after theorem head
+  {.5em}% Space after theorem head
+  {}% Theorem head spec (can be left empty, meaning ‘normal’ )
+
+\theoremstyle{nputheorem} % set default style to nputheorem
+
+\input{nputhesis.cfg}
 
 \endinput
