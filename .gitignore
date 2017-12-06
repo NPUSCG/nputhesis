@@ -12,4 +12,9 @@ tags
 *.bbl
 *.blg
 *.synctex
+*.fdb_latexmk
+*.xdv
+*.fls
+*.pdf
+*.synctex.gz
 auto

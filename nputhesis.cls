@@ -2,7 +2,7 @@
 %% This is file `nputhesis.cls'.
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{nputhesis}[2017/12/6 v0.3 NPU]
+\ProvidesClass{nputhesis}[2017/12/06 v0.3 NPU]
 
 \newif\if@npu@phd
 \newif\if@npu@blankinfo
