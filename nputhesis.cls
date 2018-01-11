@@ -2,14 +2,17 @@
 %% This is file `nputhesis.cls'.
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{nputhesis}[2017/12/06 v0.3 NPU]
+\ProvidesClass{nputhesis}[2018/01/11 v0.3 NPU]
 
 \newif\if@npu@phd
 \newif\if@npu@blankinfo
+\newif\if@npu@multibib
+\@npu@multibibfalse
 \@npu@blankinfofalse
 \DeclareOption{phd}{\@npu@phdtrue}
 \DeclareOption{ma}{\@npu@phdfalse}
 \DeclareOption{blankinfo}{\@npu@blankinfotrue}
+\DeclareOption{multibib}{\@npu@multibibtrue}
 \DeclareOption{UTF8}{\PassOptionsToPackage{\CurrentOption}{ctexcap}}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ExecuteOptions{phd}
@@ -27,6 +30,10 @@
 
 \RequirePackage{ctexcap}
 \RequirePackage{xcolor}
+
+\if@npu@multibib
+  \RequirePackage{multibib}
+\fi
 
 \geometry{paperwidth=210mm,paperheight=297mm,%
   left=2.5cm,right=2.5cm,top=2.54cm,bottom=2.54cm}
@@ -297,14 +304,14 @@
 \renewcommand\thefigure{\arabic{chapter}-\arabic{figure}}
 \renewcommand\theequation{\arabic{chapter}-\arabic{equation}}
 
-\let\npu@bibliographystyle\bibliographystyle
-\def\bibliographystyle#1{%
-  \addcontentsline{toc}{chapter}{\bibname}%
-  \npu@bibliographystyle{#1}}
+\let\npu@chapter\chapter
+\def\npu@star@chapter#1{\npu@chapter{#1}}
+\def\chapter{\secdef\npu@chapter\npu@star@chapter}
 
-\def\Appendix{\chapter{\npu@appendix}}
+\newcounter{npu@c@appendix}
+\setcounter{npu@c@appendix}{0}
+\def\Appendix{ \addtocounter{npu@c@appendix}{1}\chapter{\npu@appendix\Alph{npu@c@appendix}}}
 \def\Thanks{\chapter{\npu@thanks}}
-\def\Work{\chapter{\npu@work}}
 
 \def\statement{
   \begin{titlepage}
@@ -347,5 +354,17 @@
 \theoremstyle{nputheorem} % set default style to nputheorem
 
 \input{nputhesis.cfg}
+
+\if@npu@multibib
+  \newcites{@work}{\npu@work}
+  \newcommand\Work[3][nputhesis]{%
+    \usecounter{enumiv}
+    \nocite@work{#3}
+    \bibliographystyle@work{#1}
+    \bibliography@work{#2}
+  }
+\else
+  \def\Work{\chapter{\npu@work}}
+\fi
 
 \endinput
