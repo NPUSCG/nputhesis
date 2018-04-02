@@ -2,7 +2,7 @@
 %% This is file `nputhesis.cls'.
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{nputhesis}[2018/01/11 v0.3 NPU]
+\ProvidesClass{nputhesis}[2018/04/02 v0.3 NPU]
 
 \newif\if@npu@phd
 \newif\if@npu@blankinfo
@@ -292,9 +292,10 @@
 \let\npu@frontmatter\frontmatter
 \def\frontmatter{\npu@frontmatter\pagenumbering{Roman}}
 
-\let\npu@tableofcontents\tableofcontents
-\def\tableofcontents{\npu@tableofcontents%
-  \addcontentsline{toc}{chapter}{\npu@contents}}
+%fix bugs: duplicate npu@contents
+%\let\npu@tableofcontents\tableofcontents
+%\def\tableofcontents{\npu@tableofcontents%
+%  \addcontentsline{toc}{chapter}{\npu@contents}}
 
 \DeclareCaptionFont{song}{\songti\zihao{5}}  % command defined in package caption
 \captionsetup{labelsep=quad, font=song}
