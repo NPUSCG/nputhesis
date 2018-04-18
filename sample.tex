@@ -78,15 +78,41 @@
 \begin{table}[h]
   \caption{测试环境\cite{Liu2013}}
     \centering
+    \zihao{5}
     \begin{tabularx}{\linewidth}{*{4}{>{\centering\arraybackslash}X}}
         \toprule
-        操作系统    & \TeX 系统   & 版本  & 引擎\\
+        {\bf 操作系统}    & \TeX 系统   & 版本  & 引擎\\
         \midrule[1bp]
         Windows 10  & TeXLive     & 2017  & xelatex\\
         \bottomrule
     \end{tabularx}
 \end{table}
+\section{表格环境}
+\begin{table}[h]
+	\caption{聚合物基复合材料性能}
+	\centering
+	\zihao{5}
+	\begin{tabularx}{0.98\linewidth}{*{5}{>{\centering\arraybackslash}X}}
+		\toprule
+		\multirow{2}*{材料}   & \multicolumn{2}{c}{碳/环氧}    & \multicolumn{2}{c}{玻璃/环氧}\\
+		\cmidrule{2-3} \cmidrule{4-5}
+		&纵向	&横向	&纵向	&横向\\
+		\midrule
+模量，GPa&	181	&10.3&	38.6&	8.3 \\
+压缩强度，MPa&	1500&	246&	610	&118\\
+拉伸强度，MPa&	1500&	40&	1062&	31\\
+		\bottomrule
+	\end{tabularx}
+\end{table}
 
+\lipsum[9-15]
+\section{插入图片}
+\includegraphics[width=6.67cm, height=5cm]{figures/fig1-1.pdf}\\
+\includegraphics[width=9cm, height=6.75cm]{figures/fig1-2.pdf}\\
+\includegraphics[width=13.5cm, height=9cm]{figures/fig2.pdf} \par
+\includegraphics[width=6.67cm]{figures/fig1-1.pdf}\\
+\includegraphics[width=9cm]{figures/fig1-2.pdf}\\
+\includegraphics[width=13.5cm]{figures/fig2.pdf}
 \section{定理环境}
 \lipsum[1]
 \begin{thm}
