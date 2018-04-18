@@ -20,6 +20,7 @@
 \LoadClass{book}
 
 \RequirePackage{geometry}
+\RequirePackage{xcolor}
 \RequirePackage{fancyhdr}
 \RequirePackage{titletoc}
 \RequirePackage{caption}
@@ -28,8 +29,20 @@
 \RequirePackage{amsmath}
 \RequirePackage{amsfonts}
 
-\RequirePackage{ctexcap}
-\RequirePackage{xcolor}
+\RequirePackage[fontset=windows,heading=true,zihao=-4]{ctex}
+\setmainfont{Times New Roman}
+
+\RequirePackage[%pdftex,
+            CJKbookmarks=true,
+			      pdfstartview=FitH,
+            bookmarksnumbered=true,
+            bookmarksopen=true,
+            colorlinks=true,
+            citecolor=black,
+            linkcolor=black,
+            anchorcolor=black,
+            urlcolor=black
+            ]{hyperref}
 
 \if@npu@multibib
   \RequirePackage{multibib}
@@ -50,12 +63,30 @@
   \CTEXsetup[format={\heiti\zihao{4}}]{section}
   \CTEXsetup[format={\heiti\zihao{-4}}]{subsection}
 \else
-  \ctexset{chapter={name={,}, number={\arabic{chapter}}, %
-      beforeskip={20pt}, afterskip={20pt}}}
-  \ctexset{chapter={nameformat={\heiti\zihao{3}\bf}}}
-  \ctexset{chapter={titleformat={\heiti\zihao{3}}}}
-  \ctexset{section={format={\heiti\zihao{4}}}}
-  \ctexset{subsection={format={\heiti\zihao{-4}}}}
+  % 一级标题
+  \ctexset{
+  	chapter/name={,},
+  	chapter/number=\arabic{chapter},
+  	chapter/beforeskip={20pt},
+  	chapter/afterskip={20pt},
+  	chapter/format={\heiti\zihao{3}\centering}
+  }
+  
+   % 二级标题
+   \ctexset{
+   	section/name={,},
+   	%section/number=\arabic{chapter},
+   	section/beforeskip={20pt},
+   	section/afterskip={20pt},
+   	section/format={\heiti\zihao{4}}
+   }
+   \ctexset{
+   	subsection/name={,},
+   	%subsection/number=\arabic{chapter},
+   	subsection/beforeskip={20pt},
+   	subsection/afterskip={20pt},
+   	subsection/format={\heiti\zihao{-4}}
+   }
 \fi
 % content setting
 \def\@contentfont{\songti\zihao{-4}}
