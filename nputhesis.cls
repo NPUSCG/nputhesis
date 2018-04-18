@@ -133,10 +133,12 @@
       \newlength{\name@length}
       \settowidth{\name@length}{\npu@schoolno}
       \begin{minipage}{\max@length}
-        \makebox[\name@length][s]{\npu@schoolno}\npu@comma \@schoolno\\
-        \makebox[\name@length][s]{\npu@classno}\npu@comma \@classno\\
-        \makebox[\name@length][s]{\npu@secretlevel}\npu@comma \@secretlevel\\
-        \makebox[\name@length][s]{\npu@authorno}\npu@comma \@authorno\\
+        \begin{tabular}{|c|c|}\hline
+        \makebox[\name@length][s]{\npu@schoolno} & \@schoolno \\ \hline
+        \makebox[\name@length][s]{\npu@classno} & \@classno \\ \hline
+        \makebox[\name@length][s]{\npu@secretlevel} & \@secretlevel \\  \hline
+        \makebox[\name@length][s]{\npu@authorno} & \@authorno \\ \hline
+        \end{tabular}
       \end{minipage}
       \par\vspace{7cm}
       \zihao{1}
