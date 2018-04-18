@@ -28,6 +28,7 @@
 \RequirePackage{amsthm}
 \RequirePackage{amsmath}
 \RequirePackage{amsfonts}
+\RequirePackage{setspace}
 
 \RequirePackage[fontset=windows,heading=true,zihao=-4]{ctex}
 \setmainfont{Times New Roman}
@@ -254,9 +255,9 @@
       \begin{minipage}{8cm}
         \noindent
         \makebox[\name@length][s]{\npu@author}\npu@comma\uline{\hfill\@author\hfill}\par
-        \vspace{1\baselineskip}
+        \vspace{0.25\baselineskip}
         \makebox[\name@length][s]{\npu@major}\npu@comma\uline{\hfill\@major\hfill}\par
-        \vspace{1\baselineskip}
+        \vspace{0.25\baselineskip}
         \makebox[\name@length][s]{\npu@supervisor}\npu@comma\uline{\hfill\@supervisor\hfill}\par
         \vspace{1\baselineskip}
       \end{minipage}
