@@ -2,15 +2,18 @@
 \documentclass[twoside,UTF8,phd]{nputhesis}
 
 \usepackage{booktabs}
+\heavyrulewidth=2.25bp
+\lightrulewidth=1bp
+\usepackage{tabularx}       
+
 \usepackage{multirow}
 \usepackage{graphicx}
 \usepackage{lipsum}
-
 \newtheorem{thm}{定理}[section]
 \theoremstyle{plain}
 \newtheorem{oldthm}{旧定理}[section]
 
-\schoolno{00000}
+\schoolno{10699}
 %\classno{}
 %\secretlevel{}
 \title[\LaTeX\ Template for Thesis of NPU]{西北工业大学硕博士论文\LaTeX 模板}
@@ -62,9 +65,11 @@
 
 % 目录
 \tableofcontents 
-
 \mainmatter  % 
+\setlength{\baselineskip}{20pt}
+
 \chapter{nputhesis 简介}
+
 \section{\TeX 和 \LaTeX 介绍}
 关于 \TeX 和 \LaTeX 请参考 \cite{Knuth1986,Lamport1994,Liu2013}, 其中 \cite{Liu2013} 最适合入门.  
 
@@ -73,13 +78,13 @@
 \begin{table}[h]
   \caption{测试环境\cite{Liu2013}}
     \centering
-    \begin{tabular}{cccc}
+    \begin{tabularx}{\linewidth}{*{4}{>{\centering\arraybackslash}X}}
         \toprule
         操作系统    & \TeX 系统   & 版本  & 引擎\\
-        \midrule
+        \midrule[1bp]
         Windows 10  & TeXLive     & 2017  & xelatex\\
         \bottomrule
-    \end{tabular}
+    \end{tabularx}
 \end{table}
 
 \section{定理环境}
@@ -96,7 +101,9 @@
 \chapter{实现}
 \section{思路}
 \section{代码}
-
+\begin{equation}
+    u(x) = \int_{\Gamma} f(x)dx
+\end{equation}
 
 \backmatter
 \bibliographystyle{nputhesis}

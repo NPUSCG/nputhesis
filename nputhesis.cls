@@ -29,10 +29,20 @@
 \RequirePackage{amsmath}
 \RequirePackage{amsfonts}
 \RequirePackage{setspace}
+%\RequirePackage{longtable}
 
 \RequirePackage[fontset=windows,heading=true,zihao=-4]{ctex}
+%\RequirePackage{mathptmx}
+%\RequirePackage[no-math]{fontspec}
+%\RequirePackage{mathspec}
+%\setmainfont{Times New Roman}
+%\setmathsfont{Times New Roman}
 \setmainfont{Times New Roman}
+%\RequirePackage{newtxtext}
 
+\setlength{\baselineskip}{20pt}
+
+% 书签和超链接设置
 \RequirePackage[%pdftex,
             CJKbookmarks=true,
 			      pdfstartview=FitH,
@@ -68,7 +78,7 @@
   \ctexset{
   	chapter/name={,},
   	chapter/number=\arabic{chapter},
-  	chapter/beforeskip={20pt},
+  	chapter/beforeskip={0pt},
   	chapter/afterskip={20pt},
   	chapter/format={\heiti\zihao{3}\centering}
   }
@@ -76,16 +86,15 @@
    % 二级标题
    \ctexset{
    	section/name={,},
-   	%section/number=\arabic{chapter},
-   	section/beforeskip={20pt},
-   	section/afterskip={20pt},
+   	section/beforeskip={10pt},
+   	section/afterskip={0pt},
    	section/format={\heiti\zihao{4}}
    }
+   % 三级标题
    \ctexset{
    	subsection/name={,},
-   	%subsection/number=\arabic{chapter},
-   	subsection/beforeskip={20pt},
-   	subsection/afterskip={20pt},
+   	subsection/beforeskip={10pt},
+   	subsection/afterskip={0pt},
    	subsection/format={\heiti\zihao{-4}}
    }
 \fi
