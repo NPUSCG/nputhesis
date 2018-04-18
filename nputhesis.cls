@@ -195,15 +195,15 @@
       \par\vspace{4cm}
       \zihao{3}
       \begin{minipage}{5cm}
-        {\kaishu\npu@author} \uline{\hfill\@author\hfill}
+        {\kaishu\npu@author} {\songti\uline{\hfill\@author\hfill}}
       \end{minipage}
       \par\vspace{3\baselineskip}
       \settowidth{\name@length}{\npu@applydate}
       \begin{minipage}{10cm}
         \noindent
-        \makebox[\name@length][s]{\npu@major} \uline{\hfill\@major\hfill} \par
+        \makebox[\name@length][s]{\npu@major} {\songti\uline{\hfill{\songti\@major}\hfill}} \par
         \vspace{0.5\baselineskip}
-        \makebox[\name@length][s]{\npu@supervisor} \uline{\hfill\@supervisor\hfill} \par
+        \makebox[\name@length][s]{\npu@supervisor} {\songti\uline{\hfill\@supervisor\hfill}} \par
         \vspace{0.5\baselineskip}
         \makebox[\name@length][s]{\npu@applydate} \uline{\hfill\@applydate\hfill} \par
       \end{minipage}
