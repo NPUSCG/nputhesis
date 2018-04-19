@@ -1,24 +1,21 @@
 %% UTF-8
 \documentclass[twoside,UTF8,phd]{nputhesis}
+    \usepackage{lipsum}
 
-\usepackage{booktabs}
-\heavyrulewidth=2.25bp
-\lightrulewidth=1bp
-\usepackage{tabularx}       
 
-\usepackage{multirow}
-\usepackage{graphicx}
-\usepackage{lipsum}
-\newtheorem{thm}{定理}[section]
+    \newtheorem{thm}{定理}[section]
 \theoremstyle{plain}
 \newtheorem{oldthm}{旧定理}[section]
+{
 
+}
 \schoolno{10699}
-%\classno{}
-%\secretlevel{}
+\classno{O.242}
+\secretlevel{公开}
+\authorno{2014000000}
+
 \title[\LaTeX\ Template for Thesis of NPU]{西北工业大学硕博士论文\LaTeX 模板}
 \author[San Zhang]{张\,\,三}
-\authorno{2014000000}
 \major[Applied Mathematics]{应用数学}
 \supervisor[Si Li]{李四}
 \applydate[September 2017]{2017~年~3~月}
@@ -98,12 +95,21 @@
 		\cmidrule{2-3} \cmidrule{4-5}
 		&纵向	&横向	&纵向	&横向\\
 		\midrule
-模量，GPa&	181	&10.3&	38.6&	8.3 \\
-压缩强度，MPa&	1500&	246&	610	&118\\
-拉伸强度，MPa&	1500&	40&	1062&	31\\
+模量，GPa&	181	&10.3&	38.6&	8.3
+ \\
+压缩强度，MPa&	1500&	246&	610	&118
+\\
+拉伸强度，MPa&	1500&	40&	1062&	31
+\\
 		\bottomrule
 	\end{tabularx}
 \end{table}
+\setlength{\baselineskip}{20pt}
+%\setlength{\lineskip}{5pt}
+\setlength{\parskip}{0pt}
+这四种说明符可以组合使用，自左向右优先级递降。至于最后这个图表出现在哪里，我们就不需要关心了。但是可能出现的一种情况是，如果你的浮动体太多而其他内容太少，{\zihao{-4} 它们可能会被堆到整个文档的最后一起出现。这个时候你可能就需要使用 minipage 等方法手动安排一下它们的位置了。}
+
+图表的标题用 \\caption 命令来指定。需要注意的是，表的标题应该在表的上方，而图的标题应该在图的下方。这个是排版中的一个默认的规则。图表标题格式的控制可以使用 caption 宏包来实现，细节较多，大家可以阅读 caption 宏包的文档来了解。图表同样也可以进行交叉引用，只需要加个一个标签，就可以用 \\ref 命令进行引用了。
 
 \lipsum[9-15]
 \section{插入图片}

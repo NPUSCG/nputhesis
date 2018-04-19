@@ -29,7 +29,7 @@
 \RequirePackage{amsmath}
 \RequirePackage{amsfonts}
 \RequirePackage{setspace}
-%\RequirePackage{longtable}
+\RequirePackage{longtable}
 
 \RequirePackage[fontset=windows,heading=true,zihao=-4]{ctex}
 %\RequirePackage{mathptmx}
@@ -37,10 +37,22 @@
 %\RequirePackage{mathspec}
 %\setmainfont{Times New Roman}
 %\setmathsfont{Times New Roman}
-\setmainfont{Times New Roman}
 %\RequirePackage{newtxtext}
 
+\setmainfont{Times New Roman}
+\newCJKfontfamily[songbold]\songtibold{SimSun}[AutoFakeBold=true]
+\newCJKfontfamily[fsbold]\fsbold{FangSong}[AutoFakeBold=true]
+
+\usepackage{booktabs}
+\heavyrulewidth=2.25bp
+\lightrulewidth=1bp
+\usepackage{tabularx}       
+
+\usepackage{multirow}
+\usepackage{graphicx}
+
 \setlength{\baselineskip}{20pt}
+\setlength{\parskip}{0pt}
 
 % 书签和超链接设置
 \RequirePackage[%pdftex,
@@ -78,8 +90,8 @@
   \ctexset{
   	chapter/name={,},
   	chapter/number=\arabic{chapter},
-  	chapter/beforeskip={0pt},
-  	chapter/afterskip={20pt},
+  	chapter/beforeskip={14.4bp},
+  	chapter/afterskip={14.4bp},
   	chapter/format={\heiti\zihao{3}\centering}
   }
   
@@ -205,17 +217,18 @@
       \par\vspace{4cm}
       \zihao{3}
       \begin{minipage}{5cm}
-        {\kaishu\npu@author} {\songti\uline{\hfill\@author\hfill}}
+        \bf
+        {\kaishu\npu@author} {\songtibold\bfseries\uline{\hfill\@author\hfill}}
       \end{minipage}
       \par\vspace{3\baselineskip}
       \settowidth{\name@length}{\npu@applydate}
       \begin{minipage}{10cm}
         \noindent
-        \makebox[\name@length][s]{\npu@major} {\songti\uline{\hfill{\songti\@major}\hfill}} \par
+        \makebox[\name@length][s]{\fsbold\bfseries\npu@major} {\songtibold\bfseries\uline{\hfill{\@major}\hfill}} \par
         \vspace{0.5\baselineskip}
-        \makebox[\name@length][s]{\npu@supervisor} {\songti\uline{\hfill\@supervisor\hfill}} \par
+        \makebox[\name@length][s]{\fsbold\textbf{\npu@supervisor}}{\songtibold\bfseries\uline{\hfill\@supervisor\hfill}} \par
         \vspace{0.5\baselineskip}
-        \makebox[\name@length][s]{\npu@applydate} \uline{\hfill\@applydate\hfill} \par
+        \makebox[\name@length][s]{\fsbold\bfseries\npu@applydate} {\kaishu\uline{\hfill\@applydate\hfill}} \par
       \end{minipage}
       \vspace{2\baselineskip}
     \end{center}
@@ -280,11 +293,11 @@
   \begin{titlepage}
     \linespread{1.25}
     \vspace*{1.5cm}
-    \zihao{3}
     \begin{center}
       {\bf
         %\Large
-        Title: \@title@en \\
+        \zihao{2}
+        Title:\@title@en \\
         \vspace{3\baselineskip}
         \zihao{-3}
         By\\
