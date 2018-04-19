@@ -86,12 +86,16 @@
   \CTEXsetup[format={\heiti\zihao{4}}]{section}
   \CTEXsetup[format={\heiti\zihao{-4}}]{subsection}
 \else
+
+  \ctexset{
+    contentsname = {\npu@contents}
+  }
   % 一级标题
   \ctexset{
   	chapter/name={,},
   	chapter/number=\arabic{chapter},
-  	chapter/beforeskip={14.4bp},
-  	chapter/afterskip={14.4bp},
+  	chapter/beforeskip={0bp},
+  	chapter/afterskip={0bp},
   	chapter/format={\heiti\zihao{3}\centering}
   }
   
@@ -297,7 +301,7 @@
       {\bf
         %\Large
         \zihao{2}
-        Title:\@title@en \\
+        Title: \@title@en \\
         \vspace{3\baselineskip}
         \zihao{-3}
         By\\
