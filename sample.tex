@@ -1,28 +1,39 @@
 %% UTF-8
 \documentclass[twoside,UTF8,phd]{nputhesis}
 
-\usepackage{booktabs}
-\usepackage{multirow}
-\usepackage{graphicx}
+% \RequirePackage[%pdftex,
+%             CJKbookmarks=true,
+%             pdfstartview=FitH,
+%             bookmarksnumbered=true,
+%             bookmarksopen=true,
+%             colorlinks=true,
+%             citecolor=black,
+%             linkcolor=black,
+%             anchorcolor=black,
+%             urlcolor=black
+%             ]{hyperref}
 \usepackage{lipsum}
+
 
 \newtheorem{thm}{定理}[section]
 \theoremstyle{plain}
 \newtheorem{oldthm}{旧定理}[section]
 
-\schoolno{00000}
-%\classno{}
-%\secretlevel{}
+\schoolno{10699}
+\classno{O.242}
+\secretlevel{公开}
+\authorno{2018999999}
+
 \title[\LaTeX\ Template for Thesis of NPU]{西北工业大学硕博士论文\LaTeX 模板}
-\author[San Zhang]{张三}
-\authorno{2014000000}
+
+\author[San Zhang]{张\,\,三}
 \major[Mathematics]{数学}
 \supervisor[Si Li]{李四}
-\applydate[September 2017]{2017~年~3~月}
+\applydate[April 2018]{2018~年~4~月}
 \support{本文研究得到某某基金(编号:XXXXXXX)资助。}
 
 \begin{document}
-\makecover  % 中英文封面
+\makecover  % 中英文封面 
 \frontmatter
 
 % 中文摘要
@@ -36,7 +47,7 @@
     { % 乱码测试
         \noindent\hrulefill\\
         {\centerline {\it 乱码模式开启}}
-        \lipsum[1-4]
+        \lipsum[1-5]
         {\centerline{\it 乱码模式关闭}}
         \noindent\hrulefill
     }
@@ -47,7 +58,6 @@
 
 % 英文摘要
 \begin{Abstract}
-
     { % some meaningless words.
         \noindent\hrulefill\\
         {\centerline {\it 乱码模式开启}}
@@ -65,6 +75,7 @@
 
 \mainmatter  % 
 \chapter{nputhesis 简介}
+
 \section{\TeX 和 \LaTeX 介绍}
 关于 \TeX 和 \LaTeX 请参考 \cite{Knuth1986,Lamport1994,Liu2013}, 其中 \cite{Liu2013} 最适合入门.  
 
@@ -81,7 +92,21 @@
         \bottomrule
     \end{tabular}
 \end{table}
-
+\lipsum[9-15]
+\section{插入图片}
+\lipsum[1-3]
+\begin{figure}
+    \centering
+    \includegraphics[width=0.3\textwidth]{figures/fig1-1.pdf}
+    \includegraphics[width=0.3\textwidth]{figures/fig1-1.pdf}
+    \caption{样例图}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/fig2.pdf}
+    \caption{另一个图}
+\end{figure}
+\lipsum[4-6]
 \section{定理环境}
 \lipsum[1]
 \begin{thm}
