@@ -1,24 +1,35 @@
 %% UTF-8
 \documentclass[twoside,UTF8,phd]{nputhesis}
-    \usepackage{lipsum}
+
+% \RequirePackage[%pdftex,
+%             CJKbookmarks=true,
+%             pdfstartview=FitH,
+%             bookmarksnumbered=true,
+%             bookmarksopen=true,
+%             colorlinks=true,
+%             citecolor=black,
+%             linkcolor=black,
+%             anchorcolor=black,
+%             urlcolor=black
+%             ]{hyperref}
+\usepackage{lipsum}
 
 
-    \newtheorem{thm}{定理}[section]
+\newtheorem{thm}{定理}[section]
 \theoremstyle{plain}
 \newtheorem{oldthm}{旧定理}[section]
-{
 
-}
 \schoolno{10699}
 \classno{O.242}
 \secretlevel{公开}
-\authorno{2014000000}
+\authorno{2018999999}
 
 \title[\LaTeX\ Template for Thesis of NPU]{西北工业大学硕博士论文\LaTeX 模板}
+
 \author[San Zhang]{张\,\,三}
-\major[Applied Mathematics]{应用数学}
+\major[Mathematics]{数学}
 \supervisor[Si Li]{李四}
-\applydate[September 2017]{2017~年~3~月}
+\applydate[April 2018]{2018~年~4~月}
 \support{本文研究得到某某基金(编号:XXXXXXX)资助。}
 
 \begin{document}
@@ -47,7 +58,6 @@
 
 % 英文摘要
 \begin{Abstract}
-
     { % some meaningless words.
         \noindent\hrulefill\\
         {\centerline {\it 乱码模式开启}}
@@ -62,9 +72,8 @@
 
 % 目录
 \tableofcontents 
-\mainmatter  % 
-\setlength{\baselineskip}{20pt}
 
+\mainmatter  % 
 \chapter{nputhesis 简介}
 
 \section{\TeX 和 \LaTeX 介绍}
@@ -75,50 +84,29 @@
 \begin{table}[h]
   \caption{测试环境\cite{Liu2013}}
     \centering
-    \zihao{5}
-    \begin{tabularx}{\linewidth}{*{4}{>{\centering\arraybackslash}X}}
+    \begin{tabular}{cccc}
         \toprule
-        {\bf 操作系统}    & \TeX 系统   & 版本  & 引擎\\
-        \midrule[1bp]
+        操作系统    & \TeX 系统   & 版本  & 引擎\\
+        \midrule
         Windows 10  & TeXLive     & 2017  & xelatex\\
         \bottomrule
-    \end{tabularx}
+    \end{tabular}
 \end{table}
-\section{表格环境}
-\begin{table}[h]
-	\caption{聚合物基复合材料性能}
-	\centering
-	\zihao{5}
-	\begin{tabularx}{0.98\linewidth}{*{5}{>{\centering\arraybackslash}X}}
-		\toprule
-		\multirow{2}*{材料}   & \multicolumn{2}{c}{碳/环氧}    & \multicolumn{2}{c}{玻璃/环氧}\\
-		\cmidrule{2-3} \cmidrule{4-5}
-		&纵向	&横向	&纵向	&横向\\
-		\midrule
-模量，GPa&	181	&10.3&	38.6&	8.3
- \\
-压缩强度，MPa&	1500&	246&	610	&118
-\\
-拉伸强度，MPa&	1500&	40&	1062&	31
-\\
-		\bottomrule
-	\end{tabularx}
-\end{table}
-\setlength{\baselineskip}{20pt}
-%\setlength{\lineskip}{5pt}
-\setlength{\parskip}{0pt}
-这四种说明符可以组合使用，自左向右优先级递降。至于最后这个图表出现在哪里，我们就不需要关心了。但是可能出现的一种情况是，如果你的浮动体太多而其他内容太少，{\zihao{-4} 它们可能会被堆到整个文档的最后一起出现。这个时候你可能就需要使用 minipage 等方法手动安排一下它们的位置了。}
-
-图表的标题用 \\caption 命令来指定。需要注意的是，表的标题应该在表的上方，而图的标题应该在图的下方。这个是排版中的一个默认的规则。图表标题格式的控制可以使用 caption 宏包来实现，细节较多，大家可以阅读 caption 宏包的文档来了解。图表同样也可以进行交叉引用，只需要加个一个标签，就可以用 \\ref 命令进行引用了。
-
 \lipsum[9-15]
 \section{插入图片}
-\includegraphics[width=6.67cm, height=5cm]{figures/fig1-1.pdf}\\
-\includegraphics[width=9cm, height=6.75cm]{figures/fig1-2.pdf}\\
-\includegraphics[width=13.5cm, height=9cm]{figures/fig2.pdf} \par
-\includegraphics[width=6.67cm]{figures/fig1-1.pdf}\\
-\includegraphics[width=9cm]{figures/fig1-2.pdf}\\
-\includegraphics[width=13.5cm]{figures/fig2.pdf}
+\lipsum[1-3]
+\begin{figure}
+    \centering
+    \includegraphics[width=0.3\textwidth]{figures/fig1-1.pdf}
+    \includegraphics[width=0.3\textwidth]{figures/fig1-1.pdf}
+    \caption{样例图}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/fig2.pdf}
+    \caption{另一个图}
+\end{figure}
+\lipsum[4-6]
 \section{定理环境}
 \lipsum[1]
 \begin{thm}
@@ -133,9 +121,7 @@
 \chapter{实现}
 \section{思路}
 \section{代码}
-\begin{equation}
-    u(x) = \int_{\Gamma} f(x)dx
-\end{equation}
+
 
 \backmatter
 \bibliographystyle{nputhesis}

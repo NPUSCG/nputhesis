@@ -18,7 +18,8 @@
 	- =blankinfo= : 空白页信息开关, 用于在偶数空白页显示 `This Page Intentionally Left Blank!`, 默认不显示.
 
 *** 使用的宏包及定义的环境
-该文类内部已包含宏包 =geometry=, =fancyhdr=, =titletoc=, =caption=, =ulem=, =amsthm=, =amsmath=, =amsfonts=, =ctexcap=, =xcolor=.
+该文类内部已包含宏包 =geometry=, =xcolor=, =fancyhdr=, =titletoc=, =caption=, =ulem=, =amsthm=, =amsmath=, =amsfonts=, =setspace=, =longtable=, =booktabs=,
+=tabularx=, =multirow=, =graphicx=, =ctex=.
 
 内部使用了 =amsthm= 宏包定义了定理格式 =nputheorem=, 并默认启用. 在文档中 =\newtheorem{thm}{定理}[section]= 定义新环境将默认使用格式.
 若需更改将要定义的定理格式为其他格式, 如 =plain=, 请使用如下命令:
@@ -32,7 +33,7 @@
 
 MIT License
 
-Copyright (c) 2017 Yang Zongze (yangzongze@gmail.com)
+Copyright (c) 2018 Yang Zongze (yangzongze@gmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -2,7 +2,7 @@
 %% This is file `nputhesis.cls'.
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{nputhesis}[2018/04/02 v0.3 NPU]
+\ProvidesClass{nputhesis}[2018/04/20 v0.4 NPU]
 
 \newif\if@npu@phd
 \newif\if@npu@blankinfo
@@ -13,7 +13,7 @@
 \DeclareOption{ma}{\@npu@phdfalse}
 \DeclareOption{blankinfo}{\@npu@blankinfotrue}
 \DeclareOption{multibib}{\@npu@multibibtrue}
-\DeclareOption{UTF8}{\PassOptionsToPackage{\CurrentOption}{ctexcap}}
+\DeclareOption{UTF8}{\PassOptionsToPackage{\CurrentOption}{ctex}}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ExecuteOptions{phd}
 \ProcessOptions \relax
@@ -30,42 +30,13 @@
 \RequirePackage{amsfonts}
 \RequirePackage{setspace}
 \RequirePackage{longtable}
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{multirow}
+\RequirePackage{graphicx}
 
-\RequirePackage[fontset=windows,heading=true,zihao=-4]{ctex}
-%\RequirePackage{mathptmx}
-%\RequirePackage[no-math]{fontspec}
-%\RequirePackage{mathspec}
-%\setmainfont{Times New Roman}
-%\setmathsfont{Times New Roman}
-%\RequirePackage{newtxtext}
-
+\RequirePackage[heading=true,zihao=-4]{ctex}
 \setmainfont{Times New Roman}
-\newCJKfontfamily[songbold]\songtibold{SimSun}[AutoFakeBold=true]
-\newCJKfontfamily[fsbold]\fsbold{FangSong}[AutoFakeBold=true]
-
-\usepackage{booktabs}
-\heavyrulewidth=2.25bp
-\lightrulewidth=1bp
-\usepackage{tabularx}       
-
-\usepackage{multirow}
-\usepackage{graphicx}
-
-\setlength{\baselineskip}{20pt}
-\setlength{\parskip}{0pt}
-
-% 书签和超链接设置
-\RequirePackage[%pdftex,
-            CJKbookmarks=true,
-			      pdfstartview=FitH,
-            bookmarksnumbered=true,
-            bookmarksopen=true,
-            colorlinks=true,
-            citecolor=black,
-            linkcolor=black,
-            anchorcolor=black,
-            urlcolor=black
-            ]{hyperref}
 
 \if@npu@multibib
   \RequirePackage{multibib}
@@ -86,33 +57,31 @@
   \CTEXsetup[format={\heiti\zihao{4}}]{section}
   \CTEXsetup[format={\heiti\zihao{-4}}]{subsection}
 \else
-
   \ctexset{
     contentsname = {\npu@contents}
   }
-  % 一级标题
+  % title format of chapter
   \ctexset{
-  	chapter/name={,},
-  	chapter/number=\arabic{chapter},
-  	chapter/beforeskip={0bp},
-  	chapter/afterskip={0bp},
-  	chapter/format={\heiti\zihao{3}\centering}
+    chapter/name={,},
+    chapter/number=\arabic{chapter},
+    chapter/beforeskip={20bp},
+    chapter/afterskip={20bp},
+    chapter/format={\heiti\zihao{3}\centering}
   }
-  
-   % 二级标题
-   \ctexset{
-   	section/name={,},
-   	section/beforeskip={10pt},
-   	section/afterskip={0pt},
-   	section/format={\heiti\zihao{4}}
-   }
-   % 三级标题
-   \ctexset{
-   	subsection/name={,},
-   	subsection/beforeskip={10pt},
-   	subsection/afterskip={0pt},
-   	subsection/format={\heiti\zihao{-4}}
-   }
+  % title format of section
+  \ctexset{
+    section/name={,},
+    % section/beforeskip={10pt},
+    % section/afterskip={0pt},
+    section/format={\heiti\zihao{4}}
+  }
+  % title format of subsection
+  \ctexset{
+    subsection/name={,},
+    % subsection/beforeskip={10pt},
+    % subsection/afterskip={0pt},
+    subsection/format={\heiti\zihao{-4}}
+  }
 \fi
 % content setting
 \def\@contentfont{\songti\zihao{-4}}
@@ -127,11 +96,11 @@
   {\hspace{.5em}\titlerule*{.}\contentspage}
 
 \pagestyle{fancy}
-\renewcommand{\chaptermark}[1]{\markboth{%
+\renewcommand\chaptermark[1]{\markboth{%
   \if@mainmatter%
-    \ifnum\arabic{chapter}>0%
+    %\ifnum\arabic{chapter}>0%
       \arabic{chapter}\quad%
-    \fi
+    %\fi%
   \fi#1}{}}
 \fancyhf{}
 \fancyhead[EC]{\songti\zihao{-5}\npu@rightmark}
@@ -183,18 +152,17 @@
   \begin{titlepage}
     \linespread{1.25}
     \begin{center}
-      \bf
-      \hfill
+      \hfill\bf % default \bf font
       \newlength{\max@length}
       \settowidth{\max@length}{\npu@schoolno\npu@comma 2000000000}
       \newlength{\name@length}
       \settowidth{\name@length}{\npu@schoolno}
       \begin{minipage}{\max@length}
         \begin{tabular}{|c|c|}\hline
-        \makebox[\name@length][s]{\npu@schoolno} & \@schoolno \\ \hline
-        \makebox[\name@length][s]{\npu@classno} & \@classno \\ \hline
-        \makebox[\name@length][s]{\npu@secretlevel} & \@secretlevel \\  \hline
-        \makebox[\name@length][s]{\npu@authorno} & \@authorno \\ \hline
+        \makebox[\name@length][s]{\npu@schoolno}   & \@schoolno    \\ \hline
+        \makebox[\name@length][s]{\npu@classno}    & \@classno     \\ \hline
+        \makebox[\name@length][s]{\npu@secretlevel}& \@secretlevel \\ \hline
+        \makebox[\name@length][s]{\npu@authorno}   & \@authorno    \\ \hline
         \end{tabular}
       \end{minipage}
       \par\vspace{7cm}
@@ -221,18 +189,20 @@
       \par\vspace{4cm}
       \zihao{3}
       \begin{minipage}{5cm}
-        \bf
-        {\kaishu\npu@author} {\songtibold\bfseries\uline{\hfill\@author\hfill}}
+        {\kaishu\npu@author} \uline{\hfill\@author\hfill}
       \end{minipage}
       \par\vspace{3\baselineskip}
       \settowidth{\name@length}{\npu@applydate}
       \begin{minipage}{10cm}
         \noindent
-        \makebox[\name@length][s]{\fsbold\bfseries\npu@major} {\songtibold\bfseries\uline{\hfill{\@major}\hfill}} \par
+        \makebox[\name@length][s]{\npu@major}%
+          {\uline{\hfill{\@major}\hfill}}    \par
         \vspace{0.5\baselineskip}
-        \makebox[\name@length][s]{\fsbold\textbf{\npu@supervisor}}{\songtibold\bfseries\uline{\hfill\@supervisor\hfill}} \par
+        \makebox[\name@length][s]{\npu@supervisor}%
+          {\uline{\hfill\@supervisor\hfill}} \par
         \vspace{0.5\baselineskip}
-        \makebox[\name@length][s]{\fsbold\bfseries\npu@applydate} {\kaishu\uline{\hfill\@applydate\hfill}} \par
+        \makebox[\name@length][s]{\npu@applydate}%
+          {\uline{\hfill\@applydate\hfill}}  \par
       \end{minipage}
       \vspace{2\baselineskip}
     \end{center}
@@ -280,11 +250,14 @@
       \settowidth{\name@length}{\npu@major}
       \begin{minipage}{8cm}
         \noindent
-        \makebox[\name@length][s]{\npu@author}\npu@comma\uline{\hfill\@author\hfill}\par
+        \makebox[\name@length][s]{\npu@author}\npu@comma%
+          \uline{\hfill\@author\hfill}     \par
         \vspace{0.25\baselineskip}
-        \makebox[\name@length][s]{\npu@major}\npu@comma\uline{\hfill\@major\hfill}\par
+        \makebox[\name@length][s]{\npu@major}\npu@comma%
+          \uline{\hfill\@major\hfill}     \par
         \vspace{0.25\baselineskip}
-        \makebox[\name@length][s]{\npu@supervisor}\npu@comma\uline{\hfill\@supervisor\hfill}\par
+        \makebox[\name@length][s]{\npu@supervisor}\npu@comma%
+          \uline{\hfill\@supervisor\hfill}\par
         \vspace{1\baselineskip}
       \end{minipage}
       \vspace{2\baselineskip}
@@ -297,10 +270,10 @@
   \begin{titlepage}
     \linespread{1.25}
     \vspace*{1.5cm}
+    \zihao{3}
     \begin{center}
       {\bf
         %\Large
-        \zihao{2}
         Title: \@title@en \\
         \vspace{3\baselineskip}
         \zihao{-3}
@@ -351,11 +324,6 @@
 \def\makecover{\makeoutercover\makeinnercover@zh\makeinnercover@en}
 \let\npu@frontmatter\frontmatter
 \def\frontmatter{\npu@frontmatter\pagenumbering{Roman}}
-
-%fix bugs: duplicate npu@contents
-%\let\npu@tableofcontents\tableofcontents
-%\def\tableofcontents{\npu@tableofcontents%
-%  \addcontentsline{toc}{chapter}{\npu@contents}}
 
 \DeclareCaptionFont{song}{\songti\zihao{5}}  % command defined in package caption
 \captionsetup{labelsep=quad, font=song}
