@@ -2,7 +2,7 @@
 %% This is file `nputhesis.cls'.
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{nputhesis}[2018/04/20 v0.4 NPU]
+\ProvidesClass{nputhesis}[2018/04/21 v0.4 NPU]
 
 \newif\if@npu@phd
 \newif\if@npu@blankinfo
@@ -34,9 +34,11 @@
 \RequirePackage{tabularx}
 \RequirePackage{multirow}
 \RequirePackage{graphicx}
-
 \RequirePackage[heading=true,zihao=-4]{ctex}
-\setmainfont{Times New Roman}
+\RequirePackage{ifxetex}
+\ifxetex
+  \setmainfont{Times New Roman}
+\fi
 
 \if@npu@multibib
   \RequirePackage{multibib}
