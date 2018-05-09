@@ -29,6 +29,13 @@
 #+END_SRC
 那么 =newthm= 环境将使用 =plain= 格式.
 
+** 已知问题
++ 使用 =natbib= 宏包时, 包含参考文献条目的目录页中, 页眉显示为参考文献. 修复方法如下: 在使用 `natbib` 包时, 修改 `bibsection` 命令
+  #+BEGIN_SRC tex
+    \usepackage[super]{natbib}
+    \renewcommand\bibsection{\chapter*{\bibname}}
+  #+END_SRC
+
 ** License
 
 MIT License
