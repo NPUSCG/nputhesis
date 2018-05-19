@@ -7,8 +7,20 @@
 (* 推荐使用新版 =TeXLive= 下的 =xelatex= 进行编译 *)
 
 ** 如何使用
-在 \TeX 文档开头使用 =nputhesis= 文类即可, 如 =\documentclass[twoside,UTF8,phd]{nputhesis}=.
-
+1. 如何使用该文类
+   - 在 \TeX 文档开头使用 =nputhesis= 文类即可, 如 =\documentclass[twoside,UTF8,phd]{nputhesis}=.
+2. 如何编译
+   推荐使用 `latexmk' 命令进行编译, 编译命令如下
+   #+BEGIN_SRC shell
+    latexmk -xelatex -synctex=1 sample.tex
+   #+END_SRC
+3. 符号表的生成
+   由于符号表需要使用外部程序 `makeindex' 辅助生成, 所以我们添加了 `latexmkrc' 文件, 
+   只要使用上述 `latexmk' 命令符号表可以自动生成, 否则, 需要手动调用 'makeindex' 程序
+   #+BEGIN_SRC shell
+     makeindex sample.nlo -s nomencl.ist -o sample.nls -t sample.nlg
+   #+END_SRC
+   
 *** 文档选项说明
 1. 由于 =nputhesis= 基于 =book= 实现, =book= 文类的选项这里均能是使用, 如 =twoside=.
 2. =nputhesis= 新定义的选项
@@ -18,16 +30,19 @@
 	- =blankinfo= : 空白页信息开关, 用于在偶数空白页显示 `This Page Intentionally Left Blank!`, 默认不显示.
 
 *** 使用的宏包及定义的环境
-该文类内部已包含宏包 =geometry=, =xcolor=, =fancyhdr=, =titletoc=, =caption=, =ulem=, =amsthm=, =amsmath=, =amsfonts=, =setspace=, =longtable=, =booktabs=,
-=tabularx=, =multirow=, =graphicx=, =ctex=.
+该文类内部已包含宏包 =geometry=, =xcolor=, =fancyhdr=, =titletoc=, =caption=, =ulem=, =amsthm=, =amsmath=, 
+=amsfonts=, =setspace=, =longtable=, =booktabs=, =tabularx=, =multirow=, =graphicx=, =ctex=, =nomencl=, 
+=multicol=.
 
-内部使用了 =amsthm= 宏包定义了定理格式 =nputheorem=, 并默认启用. 在文档中 =\newtheorem{thm}{定理}[section]= 定义新环境将默认使用格式.
+1. 使用了 =amsthm= 宏包定义了定理格式 =nputheorem=, 并默认启用. 在文档中 =\newtheorem{thm}{定理}[section]= 定义新环境将默认使用格式.
 若需更改将要定义的定理格式为其他格式, 如 =plain=, 请使用如下命令:
 #+BEGIN_SRC tex
   \theoremstyle{plain}
   \newtheorem{oldthm}{旧定理}[section]
 #+END_SRC
 那么 =newthm= 环境将使用 =plain= 格式.
+2. 符号表以双栏方式显示, 内部使用宏包 =nomencl= 和 =multicol=. 在需要显示符号表的地方使用命令 =\printnomenclature= 即可, 模板中
+符号表在目录后. 添加符号请使用命令 =\nomenclature{<sym>}{<text explanation>}=.
 
 ** 已知问题
 + 使用 =natbib= 宏包时, 包含参考文献条目的目录页中, 页眉显示为参考文献. 修复方法如下: 在使用 `natbib` 包时, 修改 `bibsection` 命令

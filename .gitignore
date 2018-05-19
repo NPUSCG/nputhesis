@@ -17,4 +17,10 @@ tags
 *.fls
 *.pdf
 *.synctex.gz
+*.nlg
+*.nlo
+*.nls
+*.bcf
+*.run.xml
+
 auto

@@ -1,18 +1,18 @@
-%% 
-%% This is file `nputhesis.cls'.
-%%
+%% FileName: nputhesis.cls
+%% Author: Yang Zongze (yangzongze@gmail.com)
+
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{nputhesis}[2018/04/21 v0.4 NPU]
+\ProvidesClass{nputhesis}[2018/10/03 v0.5 NPU]
 
 \newif\if@npu@phd
 \newif\if@npu@blankinfo
-\newif\if@npu@multibib
-\@npu@multibibfalse
+\newif\if@npu@work@bib  % TODO
+\@npu@work@bibfalse
 \@npu@blankinfofalse
 \DeclareOption{phd}{\@npu@phdtrue}
 \DeclareOption{ma}{\@npu@phdfalse}
 \DeclareOption{blankinfo}{\@npu@blankinfotrue}
-\DeclareOption{multibib}{\@npu@multibibtrue}
+\DeclareOption{workbib}{\@npu@work@bibtrue}
 \DeclareOption{UTF8}{\PassOptionsToPackage{\CurrentOption}{ctex}}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ExecuteOptions{phd}
@@ -40,10 +40,6 @@
   \setmainfont{Times New Roman}
 \fi
 
-\if@npu@multibib
-  \RequirePackage{multibib}
-\fi
-
 \geometry{paperwidth=210mm,paperheight=297mm,%
   left=2.5cm,right=2.5cm,top=2.54cm,bottom=2.54cm}
 \topmargin=-10.4mm
@@ -52,7 +48,7 @@
 \headsep=5mm
 
 \ifx\ctexset\undefined
-  \CTEXsetup[name={,}, number={\arabic{chapter}},%
+  \CTEXsetup[ % name={,}, number={\arabic{chapter}},% use default value
     beforeskip={20pt}, afterskip={20pt}]{chapter}
   \CTEXsetup[nameformat={\heiti\zihao{3}\bf}]{chapter}
   \CTEXsetup[titleformat={\heiti\zihao{3}}]{chapter}
@@ -64,8 +60,8 @@
   }
   % title format of chapter
   \ctexset{
-    chapter/name={,},
-    chapter/number=\arabic{chapter},
+    % chapter/name={,},                % use default value in ctex
+    % chapter/number=\arabic{chapter}, % use default value in ctex
     chapter/beforeskip={20bp},
     chapter/afterskip={20bp},
     chapter/format={\heiti\zihao{3}\centering}
@@ -98,12 +94,12 @@
   {\hspace{.5em}\titlerule*{.}\contentspage}
 
 \pagestyle{fancy}
-\renewcommand\chaptermark[1]{\markboth{%
-  \if@mainmatter%
-    %\ifnum\arabic{chapter}>0%
-      \arabic{chapter}\quad%
-    %\fi%
-  \fi#1}{}}
+% \renewcommand\chaptermark[1]{\markboth{%
+%   \if@mainmatter%
+%     %\ifnum\arabic{chapter}>0%
+%       \arabic{chapter}\quad%
+%     %\fi%
+%   \fi#1}{}}
 \fancyhf{}
 \fancyhead[EC]{\songti\zihao{-5}\npu@rightmark}
 \fancyhead[OC]{\songti\zihao{-5}\leftmark}
@@ -217,12 +213,12 @@
     \vspace*{2cm}
     \begin{center}
       \settowidth{\name@length}{\zihao{3}\npu@schoolname}
-      \divide\name@length by 12 
+      \divide\name@length by 12
       \multiply\name@length by 17
       \makebox[\name@length][s]{\zihao{3}\npu@schoolname}
       \vskip5mm
       \settowidth{\name@length}{\zihao{1}\npu@degree}
-      \divide\name@length by 12 
+      \divide\name@length by 12
       \multiply\name@length by 17
       \makebox[\name@length][s]{\zihao{1}\npu@degree}
       \vskip5mm
@@ -386,16 +382,50 @@
 
 \input{nputhesis.cfg}
 
-\if@npu@multibib
-  \newcites{@work}{\npu@work}
-  \newcommand\Work[3][nputhesis]{%
-    \usecounter{enumiv}
-    \nocite@work{#3}
-    \bibliographystyle@work{#1}
-    \bibliography@work{#2}
-  }
-\else
-  \def\Work{\chapter{\npu@work}}
-\fi
+\AtBeginDocument{% fixed output error when load natbib and use nputhesis.bst.
+  \@ifpackageloaded{natbib}{}{%
+    \let\@ldbibitem\bibitem
+    \def\gobble@ption[#1]{}
+    \def\bibitem{\expandafter\@ldbibitem\gobble@ption}
+    \def\bibpunct#1#2#3#4#5#6{}}}
+
+\newcommand\Work{\chapter{\npu@work}}
+\newcommand\papersection{\section*{\npu@work@paper}}
+\newcommand\researchsection{\section*{\npu@work@research}}
+
+
+\RequirePackage{nomencl}   % add symbol notation
+\RequirePackage{multicol}  % for two column notation
+% \AtEndPreamble{\makenomenclature}
+\makenomenclature
+\renewcommand{\nomname}{\npu@nomname}
+
+% code come from  @egreg
+% https://tex.stackexchange.com/questions/78764/two-column-nomenclature
+\@ifundefined{chapter}
+  {\def\wilh@nomsection{section}}
+  {\def\wilh@nomsection{chapter}}
+
+\def\thenomenclature{%
+  \newlength{\npu@columnsep@save}
+  \setlength{\npu@columnsep@save}{\columnsep}
+  \setlength{\columnsep}{20pt}
+  \begin{multicols}{2}[%
+    \csname\wilh@nomsection\endcsname*{\nomname}
+    \if@intoc\addcontentsline{toc}{\wilh@nomsection}{\nomname}\fi
+    \nompreamble\raggedcolumns]
+  \list{}{%
+    \labelsep=10pt
+    \labelwidth\nom@tempdim
+    \leftmargin\labelwidth
+    \advance\leftmargin\labelsep
+    \itemsep\nomitemsep
+    \let\makelabel\nomlabel}%
+}
+\def\endthenomenclature{%
+  \endlist
+  \end{multicols}
+  \setlength{\columnsep}{\npu@columnsep@save}
+  \nompostamble}
 
 \endinput
