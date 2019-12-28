@@ -1,5 +1,5 @@
-%% UTF-8
-\documentclass[twoside, workbib, UTF8, phd]{nputhesis}
+%% Filename: npu-thesis-sample.tex
+\documentclass[twoside, UTF8, phd]{nputhesis}
 
 \usepackage{lipsum}
 
@@ -14,160 +14,172 @@
             doi=false]{biblatex}
 
 \addbibresource{ref.bib}        % biblatex 命令. 添加参考文献文件, 必须加后缀.
-% % 如果想使用 biblatex 自动生成成果, 可以取消下面命令 \papersection 的定义
-% % 在 \Work 章节使用命令 \papersection{<bib-key-list>}
-% % e.g.
-% %         \papersection{Knuth1986, Yang1000}
-% % 注: ------------------自动生成并不符合格式规定-------------------------- 
-% \renewcommand\papersection[1]{
-%   \begin{refsection}
-%     \nocite{#1}
-%     \makeatletter
-%     \printbibliography[heading=subbibliography, title=\npu@work@paper]
-%     \makeatother
-%   \end{refsection}
-% }
 %%%%%%%%%%%%%%%%%%%%%%%%%%        biblatex     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%        multibib     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% % 成果作为参考文献自动生成的一种方法.
-% % 由于 multibib 与上面的 biblatex 冲突, 只能使用其中的一种.
-% % 如果使用 multibib 请注释掉上面使用 biblatex 的部分并取消下面的注释.
-% % 以及后面的 \printbibliography 行.
-% \usepackage{multibib}
-% \makeatletter
-% \newcites{@work}{\npu@work@paper}
-% \renewcommand\papersection[3][nputhesis]{%
-%   \let\orig@chapter\chapter
-%   \let\chapter\section
-%   \usecounter{enumiv}
-%   \nocite@work{#3}
-%   \bibliographystyle@work{#1}
-%   \bibliography@work{#2}
-%   \let\chapter\orig@chapter
-% }
-% \makeatother
-% % 在 \Work 章节, 使用上述重定义的 \papersection 命令, 并注释掉原来的无参数命令.
-% % \papersection[<bibstyle>]{<bib-file>}{<bib-key-list>}
-% % e.g.
-% %     \papersection[nputhesis]{ref}{zhao2017, qian2018, sun2019}
-% % 注: ------------------自动生成并不符合格式规定-------------------------- 
-%%%%%%%%%%%%%%%%%%%%%%%%%%        multibib     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{npuplain}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{remark}[theorem]{注}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{example}{例}[section]
+\newtheorem{assumption}{假设}
+\renewenvironment{proof}[1][]{{\noindent\bf\emph{#1证明}: }}{\hfill $\Box$ \\}
 
-\newtheorem{thm}{定理}[section]
-\theoremstyle{plain}
-\newtheorem{plain-thm}{定理(plain)}[section]
+\theoremstyle{nputheorem}
+\newtheorem{npu-thm}{斜体定理}[section]
 
 \schoolno{10699}
 \classno{O.242}
 \secretlevel{公开}
-\authorno{2018999999}
+\authorno{0000999999}
 
-\title[\LaTeX\ Template for Thesis of NPU]{西北工业大学硕博士论文\LaTeX 模板}
+\title[\LaTeX\ Template of NPU Thesis]{西工大硕博学位论文 \LaTeX 模板}
 
 \author[San Zhang]{张\,\,三}
 \major[Mathematics]{数学}
 \supervisor[Si Li]{李四}
-\applydate[April 2018]{2018~年~4~月}
+\applydate[April 2046]{2046~年~4~月}
 \support{本文研究得到某某基金(编号:XXXXXXX)资助。}
 
 \begin{document}
 \makecover    % 生成中英文封面.
+
 \frontmatter  % 分割封面与前言部分.
 
 % 中文摘要
 \begin{abstract}
-  \LaTeX 是一种基于 \TeX 的排版系统, 它非常适用于生成高印刷质量的科技和数学,
-  化学类文档. \LaTeX 把排版的细节隐藏在若干样式之后, 以内容的逻辑结构统帅复杂
-  的格式, 现已成为科技文写作特别是数学写作的重要工具之一. NPU 仅提供了博士论
-  文的 Word 模板, 所以我们根据官方 Word 模板制作该模板, 以满足使用 \LaTeX 写作
+  \LaTeX 是一种基于 \TeX 的排版系统, 它非常适用于生成高印刷质量的科技和数学,化
+  学类文档. \LaTeX 把排版的细节隐藏在若干样式之后, 以内容的逻辑结构统帅复杂的格
+  式, 现已成为科技文写作特别是数学写作的重要工具之一. 然而 NPU 仅提供了博士论文
+  的 Word 模板. 鉴于此, 我们根据官方 Word 模板制作该模板, 以满足使用 \LaTeX写作
   论文的需求.
 
   本模板基本实现了官方格式要求: 封皮, 页眉页脚, 章节标题格式, 参考文献格式等.
 
-  { % 这怎么可能写两页? 只能 lipsum 了.
-    \noindent\hrulefill\\
-    {\centerline {\it lipsum begin}}
-    \lipsum[1-5]
-    {\centerline{\it lipsum end}}
-    \noindent\hrulefill
-  }
+  \lipsum[1-5]
   \begin{keywords}
-    论文模板, \LaTeX, 西工大
+    学位论文, \LaTeX\ 模板, 西工大
   \end{keywords}
 \end{abstract}
 
 % 英文摘要
 \begin{Abstract}
-  { % some meaningless words.
-    \noindent\hrulefill\\
-    {\centerline {\it lipsum begin}}
-    \lipsum[1-4]
-    {\centerline{\it lipsum end}}
-    \noindent\hrulefill
-  }
+  \lipsum[1-4]
   \begin{Keywords}
     Thesis Template, \LaTeX, NPU
   \end{Keywords}
 \end{Abstract}
 
 \tableofcontents    % 目录
-\printnomenclature  % 符号命名表 添加符号可用 \nomenclature{<sym>}{<text explanation>}
+\printnomenclature  % 符号命名表 添加符号可用 
+                    % \nomenclature{<sym>}{<text explanation>}
+
 \mainmatter         % 分割目录和正文部分
 
 % 添加符号  这些可在正文中任意的地方
 \nomenclature{$\mathbb{R}^n$}{$n$ 维欧几里得空间}
-\nomenclature{$\varOmega$}{空间 $\mathbb{R}^n$ 中的开集}
-\nomenclature{$L^p(\varOmega$}{Lebesgue 空间}
-\nomenclature{$W^{m,p}(\varOmega)$}{Sobolev 空间}
-\nomenclature{$H^m(\varOmega)$}{具有 $m$ 阶 $L^2$ 导数 的 Sobolev 空间}
-\nomenclature{$C^k(\varOmega)$}{具有 $k$ 阶连续导数的函数空间}
-\nomenclature{$C^k_0(\varOmega)$}{具有 $k$ 阶连续导数且有紧支集的函数空间}
+\nomenclature{$\Omega$}{空间 $\mathbb{R}^n$ 中的开集}
+\nomenclature{$L^p(\Omega)$}{Lebesgue 空间}
+\nomenclature{$W^{m,p}(\Omega)$}{Sobolev 空间}
+\nomenclature{$H^m(\Omega)$}{具有 $m$ 阶 $L^2$ 导数 的 Sobolev 空间}
+\nomenclature{$C^k(\Omega)$}{具有 $k$ 阶连续导数的函数空间}
+\nomenclature{$C^k_0(\Omega)$}{具有 $k$ 阶连续导数且有紧支集的函数空间}
 
 \chapter{nputhesis 简介}
 
 \section{\TeX 和 \LaTeX 介绍}
-关于 \TeX 和 \LaTeX 请参考 \cite{Knuth1986,Lamport1994,Liu2013}, 其中 \cite{Liu2013} 最适合入门.
+关于 \TeX 和 \LaTeX 请参考 \cite{Knuth1986,Lamport1994,Liu2013}, 
+其中 \cite{Liu2013} 最适合入门.
+
 
 \section{nputhesis 依赖}
 如下表格给出了测试编译通过的环境
-\begin{table}[h]
+\begin{table}[h!]
   \caption{测试环境\cite{Liu2013}}
   \centering
-  \begin{tabular}{cccc}
+  \begin{nputabu}{CCCC}
     \toprule
     操作系统    & \TeX 系统   & 版本  & 引擎\\
     \midrule
     Windows 10  & TeXLive     & 2017  & xelatex\\
     \bottomrule
-  \end{tabular}
+  \end{nputabu}
 \end{table}
 
 % \nomenclature{$H^{1}_{0}(\Omega)$}{Hilbert 空间}  % 向符号表添加内容
-\section{插入图片}
-\lipsum[1-3]
-\begin{figure}
+
+\section{表格}
+
+模板定义了新的表格环境 `nputabu', 它为通栏表格, 即表格宽度与正文版面平齐.
+该表格环境符合学校学位论文书写规范. 表 \ref{tab:nputabu} 给出了新定义的
+三种列类型: `C', `L', `R'. 列类型 `c', `r', `l' 仍然可以使用.
+ 
+\begin{table}[h!]
+  \caption{`nputabu' 表格}  \label{tab:nputabu}
+  \centering
+  \begin{nputabu}{CCCC}
+    \toprule
+    列模式符号    &  C     &  L       &  R       \\
+    \midrule
+    意义          &  居中  & 左对齐   & 右对齐   \\
+    \bottomrule
+  \end{nputabu}
+\end{table}
+
+表 \ref{tab:nputabu2} 中使用了列类型 `c' 和 `l'. 请自行比较他们和
+`C', `L', `R' 的区别.
+\begin{table}[h!]
+  \caption{`nputabu' 表格}  \label{tab:nputabu2}
+  \centering
+  \begin{nputabu}{CcCl}
+    \toprule
+    列模式符号    &  C     &  L       &  R       \\
+    \midrule
+    意义          &  居中  & 左对齐   & 右对齐   \\
+    \bottomrule
+  \end{nputabu}
+\end{table}
+
+\section{图片}
+
+\begin{figure}[h!]
     \centering
-    \includegraphics[width=0.3\textwidth]{figures/fig1-1.pdf}
-    \includegraphics[width=0.3\textwidth]{figures/fig1-1.pdf}
-    \caption{样例图}
+    \includegraphics[width=0.3\textwidth]{figures/nwpu.jpg}
+    \caption{校徽}
 \end{figure}
-\begin{figure}
-    \centering
-    \includegraphics[width=0.5\textwidth]{figures/fig2.pdf}
-    \caption{另一个图}
-\end{figure}
-\lipsum[4-6]
-\section{定理环境}
-\lipsum[1]
-\begin{thm}
-    这里是定理环境使用 `nputheorem' 格式.
-\end{thm}
+
 \lipsum[2]
-\begin{plain-thm}
-    这里是 `amsthm' 默认的定理环境, 使用 `plain' 格式.
-\end{plain-thm}
-\lipsum[3]
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=.8\textwidth]{figures/campus.jpg}
+    \caption{西工大}
+\end{figure}
+\lipsum[2]
+
+% \lipsum[4-6]
+
+\section{定理环境}
+\begin{definition}
+  这里是定义环境使用 `npuplain' 格式.
+\end{definition}
+\begin{assumption}
+  这里是假设环境使用 `npuplain' 格式.
+\end{assumption}
+\begin{theorem}
+  这里是定理环境使用 `npuplain' 格式.
+\end{theorem}
+\begin{lemma}
+  这里是引理环境使用 `npuplain' 格式.
+\end{lemma}
+\begin{remark}
+  这里是注环境使用 `npuplain' 格式.
+\end{remark}
+\begin{npu-thm}
+  这里是 `' 默认的定理环境, 使用 `nputheorem' 格式.
+\end{npu-thm}
+% \lipsum[3]
+
 
 \chapter{实现}
 \section{思路}
@@ -184,22 +196,18 @@
 \Thanks     % 致谢
 
 \Work
-%  biblatex 方式 \papersection{<bib-key-list>}
-% \papersection{Knuth1986}
-
-%  multibib 方式 \papersection[<bibstyle>]{<bib-file>}{<bib-key-list>}
-% \papersection[nputhesis]{ref}{Knuth1986}
-
-%  none  方式 即手动书写方式
 \papersection  % 以下填写发表论文情况
-1. 论文1
 
-2. 论文2
+\begin{npulist}
+  \item {\bf Z. Yang}. NPU 硕博学位论文 \LaTeX\ 模板[D]. 2019.
+\end{npulist}
 
 \researchsection % 以下填写参加科研情况
-1. 我的研究项目1
-
-2. 我的研究项目2
+\begin{npulist}
+  \item NPU \LaTeX 模板.   编号: 000000000, 参与.
+  \item NPU \LaTeX 模板.   编号: 000000001, 参与.
+  \item NPU \LaTeX 模板.   编号: 000000002, 参与.
+\end{npulist}
 
 \statement
 \end{document}
