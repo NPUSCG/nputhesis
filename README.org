@@ -1,8 +1,8 @@
-* NPU 硕博士论文 LaTeX 模板
-=nputhesis= 是基于\LaTeX 的 =book= 文类编写的[[https://www.nwpu.edu.cn][西北工业大学]]硕博论文格式文类, 实现了[[http://gs.nwpu.edu.cn/info/2021/5046.htm][西北工业大学硕博毕业论文格式]]的基本要求.
+* NPU 博士、硕士学位论文 \LaTeX 模板
+=nputhesis= 是基于\LaTeX 的 =ctexbook= 文类编写的[[https://www.nwpu.edu.cn][西北工业大学]]博士、硕士论文格式文类, 基本实现了[[http://gs.nwpu.edu.cn/info/2021/5046.htm][博士、硕士学位论文撰写规定]]的要求.
 
 ** \TeX 环境
-=sample.tex= 源文件使用 =UTF8= 编码在 =TeXLive 2017= 下使用引擎 =xelatex= 及 =pdflatex= 编译通过. 其他环境未测试.
+=sample.tex= 源文件使用 =UTF8= 编码在 =TeXLive 2019= 下使用引擎 =xelatex= 及 =pdflatex= 编译通过. 其他环境未测试.
 
 (* 推荐使用新版 =TeXLive= 下的 =xelatex= 进行编译 *)
 
@@ -34,22 +34,23 @@
 =amsfonts=, =setspace=, =longtable=, =booktabs=, =tabularx=, =multirow=, =graphicx=, =ctex=, =nomencl=, 
 =multicol=.
 
-1. 使用了 =amsthm= 宏包定义了定理格式 =nputheorem=, 并默认启用. 在文档中 =\newtheorem{thm}{定理}[section]= 定义新环境将默认使用格式.
-若需更改将要定义的定理格式为其他格式, 如 =plain=, 请使用如下命令:
+1. 使用了 =amsthm= 宏包定义了定理格式 =nputheorem= 和 =npuplain=, 并默认启用 =npuplain=. 在文档中 =\newtheorem{theorem}{定理}[section]= 定义新环境将默认使用格式. 若需更改将要定义的定理格式为其他格式, 如 =nputheorem=, 请使用如下命令:
 #+BEGIN_SRC tex
-  \theoremstyle{plain}
-  \newtheorem{oldthm}{旧定理}[section]
+  \theoremstyle{nputheorem}
+  \newtheorem{npu-thm}{斜体定理}[section]
 #+END_SRC
-那么 =newthm= 环境将使用 =plain= 格式.
-2. 符号表以双栏方式显示, 内部使用宏包 =nomencl= 和 =multicol=. 在需要显示符号表的地方使用命令 =\printnomenclature= 即可, 模板中
+那么 =npu-thm= 环境将使用 =nputheorem= 格式.
+2. 符号表生成使用了宏包 =nomencl= . 在需要显示符号表的地方使用命令 =\printnomenclature= 即可, 模板中
 符号表在目录后. 添加符号请使用命令 =\nomenclature{<sym>}{<text explanation>}=.
 
-** 已知问题
-+ 使用 =natbib= 宏包时, 包含参考文献条目的目录页中, 页眉显示为参考文献. 修复方法如下: 在使用 `natbib` 包时, 修改 `bibsection` 命令
-  #+BEGIN_SRC tex
-    \usepackage[super]{natbib}
-    \renewcommand\bibsection{\chapter*{\bibname}}
-  #+END_SRC
+** 其他模板
+
+1. @polossk: [[https://github.com/polossk/LaTeX-Template-For-NPU-Thesis][LaTeX-Template-For-NPU-Thesis]] 
+2. @lrtfm: [[https://github.com/lrtfm/npu-dissertation-proposal][西北工业大学研究生选题报告表 \LaTeX 模板]]
+
+** 感谢
+
+这里复制了 @Haixing-Hu 编写的 `bst' 文件 `gbt7741-2005.bst'.
 
 ** License
 

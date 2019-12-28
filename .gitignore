@@ -22,5 +22,6 @@ tags
 *.nls
 *.bcf
 *.run.xml
+*.swp
 
 auto

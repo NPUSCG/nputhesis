@@ -1,4 +1,6 @@
-%% Filename: npu-thesis-sample.tex
+%! TEX program = xelatex
+%% Filename: sample.tex
+%% Author:
 \documentclass[twoside, UTF8, phd]{nputhesis}
 
 \usepackage{lipsum}
@@ -7,14 +9,19 @@
 % 使用 biblatex 处理参考文献, 格式使用 gb7714-2015
 % https://github.com/hushidong/biblatex-gb7714-2015
 % 该宏包已包含在 TeXLive 和 MikTeX 中.
-% gbnamefmt 参数需要 v1.0k 版本.
+% gbnamefmt 参数需要 v1.0k 版本. 如果出错, 可以注释掉第15行.
 \usepackage[backend=biber,
-            style=gb7714-2015,
-%           gbnamefmt=none,
-            doi=false]{biblatex}
+            style=gb7714-2015, maxbibnames=3,minbibnames=3,
+            gbnamefmt=givenahead,
+            doi=false,
+            url=false,
+%            gbpub=false
+           ]{biblatex}
 
-\addbibresource{ref.bib}        % biblatex 命令. 添加参考文献文件, 必须加后缀.
+\addbibresource{ref.bib}        % 添加参考文献文件, 必须加后缀.
 %%%%%%%%%%%%%%%%%%%%%%%%%%        biblatex     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \usepackage[super,square,colon,sort&compress]{natbib}
 
 \theoremstyle{npuplain}
 \newtheorem{theorem}{定理}[section]
@@ -36,7 +43,7 @@
 \title[\LaTeX\ Template of NPU Thesis]{西工大硕博学位论文 \LaTeX 模板}
 
 \author[San Zhang]{张\,\,三}
-\major[Mathematics]{数学}
+\major[Philosophy in Mathematics]{数学}
 \supervisor[Si Li]{李四}
 \applydate[April 2046]{2046~年~4~月}
 \support{本文研究得到某某基金(编号:XXXXXXX)资助。}
@@ -51,8 +58,8 @@
   \LaTeX 是一种基于 \TeX 的排版系统, 它非常适用于生成高印刷质量的科技和数学,化
   学类文档. \LaTeX 把排版的细节隐藏在若干样式之后, 以内容的逻辑结构统帅复杂的格
   式, 现已成为科技文写作特别是数学写作的重要工具之一. 然而 NPU 仅提供了博士论文
-  的 Word 模板. 鉴于此, 我们根据官方 Word 模板制作该模板, 以满足使用 \LaTeX写作
-  论文的需求.
+  的 Word 模板. 鉴于此, 我们根据官方 Word 模板制作该模板, 以满足使用 \LaTeX 写
+  作论文的需求.
 
   本模板基本实现了官方格式要求: 封皮, 页眉页脚, 章节标题格式, 参考文献格式等.
 
@@ -83,13 +90,13 @@
 \nomenclature{$W^{m,p}(\Omega)$}{Sobolev 空间}
 \nomenclature{$H^m(\Omega)$}{具有 $m$ 阶 $L^2$ 导数 的 Sobolev 空间}
 \nomenclature{$C^k(\Omega)$}{具有 $k$ 阶连续导数的函数空间}
-\nomenclature{$C^k_0(\Omega)$}{具有 $k$ 阶连续导数且有紧支集的函数空间}
+% \nomenclature{$C^k_0(\Omega)$}{具有 $k$ 阶连续导数且有紧支集的函数空间}
 
 \chapter{nputhesis 简介}
 
 \section{\TeX 和 \LaTeX 介绍}
-关于 \TeX 和 \LaTeX 请参考 \cite{Knuth1986,Lamport1994,Liu2013}, 
-其中 \cite{Liu2013} 最适合入门.
+关于 \TeX\cite{Knuth1986} 和 \LaTeX\cite{Lamport1994} 请参考\parencite{Knuth1986,Lamport1994,Liu2013}, 
+其中 \parencite{Liu2013} 最适合入门.
 
 
 \section{nputhesis 依赖}
@@ -133,9 +140,9 @@
   \centering
   \begin{nputabu}{CcCl}
     \toprule
-    列模式符号    &  C     &  L       &  R       \\
+    C       &  c     &  C     &  l       \\
     \midrule
-    意义          &  居中  & 左对齐   & 右对齐   \\
+    居中    &  居中  &  居中  & 左对齐   \\
     \bottomrule
   \end{nputabu}
 \end{table}
@@ -180,6 +187,7 @@
 \end{npu-thm}
 % \lipsum[3]
 
+关于养猪的文献有\parencite{Zhang2019, Zhang2019a, Zhang2019b, Zhang2019c}.
 
 \chapter{实现}
 \section{思路}
@@ -188,8 +196,8 @@
 \backmatter
 % 以下两种参考文献格式, 根据实际宏包使用情况添加
 \printbibliography             % biblatex 输出参考文件方式
-% \bibliographystyle{nputhesis}  % 传统输出参考文献方式
-% \bibliography{ref}             % 传统输出参考文献方式
+% \bibliographystyle{gbt7714-2005}   % 传统输出参考文献方式
+% \bibliography{ref}                 % 传统输出参考文献方式
 
 \Appendix  % 如果有多个附录, 可重复使用该命令, 自动按字母编号.
 

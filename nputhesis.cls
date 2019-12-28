@@ -1,10 +1,24 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% FileName: nputhesis.cls
+%%
+%%    The \LaTeX Template for Thesis of NWPU
+%%
 %% Author: Yang Zongze (yangzongze@gmail.com)
-%% 
-%% Changelog: 
+%% Project Site: https://github.com/lrtfm/nputhesis
+%% Last Modified: 2019-12-28
+%%
+%% Changelog:
+%%   [0.6.1] - 2019-12-28 
+%%     -- Delete option workbib
+%%     -- Replace nputhesis.bst by gbt7714-2005.bst
+%%     -- Modify font size in tabular environment to \zihao{5}
+%%     -- Add `nputabu' environment
+%%     -- Add theorem style `npuplain', and set it to default
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{nputhesis}[2018/10/03 v0.5 NPU]
+\ProvidesClass{nputhesis}[2019/12/28 v0.6.1 NPU Thesis]
 
 \newif\if@npu@phd
 \newif\if@npu@blankinfo
@@ -309,7 +323,7 @@
       \vspace{1\baselineskip}
       In Partial Fulfillment of the Requirement\\
       for the Degree of\\
-      \npu@degreename@en\  of Philosophy in \@major@en\\
+      \npu@degreename@en\ of \@major@en\\
       \vspace{4\baselineskip}
       Xi'an P. R. China\\
       \@applydate@en
@@ -428,17 +442,9 @@
 
 \input{nputhesis.cfg}
 
-\AtBeginDocument{% fixed output error when load natbib and use nputhesis.bst.
-  \@ifpackageloaded{natbib}{}{%
-    \let\@ldbibitem\bibitem
-    \def\gobble@ption[#1]{}
-    \def\bibitem{\expandafter\@ldbibitem\gobble@ption}
-    \def\bibpunct#1#2#3#4#5#6{}}}
-
 \newcommand\Work{\chapter{\npu@work}}
 \newcommand\papersection{\section*{\npu@work@paper}}
 \newcommand\researchsection{\section*{\npu@work@research}}
-
 
 \RequirePackage{nomencl}   % add symbol notation
 \RequirePackage{multicol}  % for two column notation
