@@ -1,20 +1,33 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% FileName: nputhesis.cls
+%%
+%%    The \LaTeX Template for Thesis of NWPU
+%%
 %% Author: Yang Zongze (yangzongze@gmail.com)
+%% Project Site: https://github.com/lrtfm/nputhesis
+%% Last Modified: 2019-12-28
+%%
+%% Changelog:
+%%   [0.6.1] - 2019-12-28 
+%%     -- Delete option workbib
+%%     -- Replace nputhesis.bst by gbt7714-2005.bst
+%%     -- Modify font size in tabular environment to \zihao{5}
+%%     -- Add `nputabu' environment
+%%     -- Add theorem style `npuplain', and set it to default
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{nputhesis}[2018/10/03 v0.5 NPU]
+\ProvidesClass{nputhesis}[2019/12/28 v0.6.1 NPU Thesis]
 
 \newif\if@npu@phd
 \newif\if@npu@blankinfo
-\newif\if@npu@work@bib  % TODO
-\@npu@work@bibfalse
 \@npu@blankinfofalse
 \DeclareOption{phd}{\@npu@phdtrue}
 \DeclareOption{ma}{\@npu@phdfalse}
 \DeclareOption{blankinfo}{\@npu@blankinfotrue}
-\DeclareOption{workbib}{\@npu@work@bibtrue}
-\DeclareOption{UTF8}{\PassOptionsToPackage{\CurrentOption}{ctex}}
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
+% \DeclareOption{UTF8}{\PassOptionsToPackage{\CurrentOption}{ctex}}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ExecuteOptions{phd}
 \ProcessOptions \relax
 \LoadClass{book}
@@ -34,6 +47,7 @@
 \RequirePackage{tabularx}
 \RequirePackage{multirow}
 \RequirePackage{graphicx}
+% \RequirePackage[heading=true,zihao=-4, fontset=adobe]{ctex}
 \RequirePackage[heading=true,zihao=-4]{ctex}
 \RequirePackage{ifxetex}
 \ifxetex
@@ -48,8 +62,8 @@
 \headsep=5mm
 
 \ifx\ctexset\undefined
-  \CTEXsetup[ % name={,}, number={\arabic{chapter}},% use default value
-    beforeskip={20pt}, afterskip={20pt}]{chapter}
+  % \CTEXsetup[ % name={,}, number={\arabic{chapter}},% use default value
+  %   beforeskip={20pt}, afterskip={20pt}]{chapter}
   \CTEXsetup[nameformat={\heiti\zihao{3}\bf}]{chapter}
   \CTEXsetup[titleformat={\heiti\zihao{3}}]{chapter}
   \CTEXsetup[format={\heiti\zihao{4}}]{section}
@@ -62,23 +76,41 @@
   \ctexset{
     % chapter/name={,},                % use default value in ctex
     % chapter/number=\arabic{chapter}, % use default value in ctex
-    chapter/beforeskip={20bp},
-    chapter/afterskip={20bp},
+    % chapter/beforeskip={20pt},
+    % chapter/afterskip={15pt},
     chapter/format={\heiti\zihao{3}\centering}
   }
   % title format of section
   \ctexset{
     section/name={,},
-    % section/beforeskip={10pt},
-    % section/afterskip={0pt},
+    % section/beforeskip={2ex plus .5ex minus .1ex},
+    % section/afterskip={1ex plus .1ex},
     section/format={\heiti\zihao{4}}
   }
   % title format of subsection
   \ctexset{
     subsection/name={,},
-    % subsection/beforeskip={10pt},
-    % subsection/afterskip={0pt},
+    % subsection/beforeskip={2ex plus .5ex minus .1ex},
+    % subsection/afterskip={1ex plus .1ex},
     subsection/format={\heiti\zihao{-4}}
+  }
+  \ctexset{
+    subsubsection/name={,},
+    % subsubsection/beforeskip={1ex plus .3ex minus .1ex},
+    % subsubsection/afterskip={.5ex plus .1ex},
+    subsubsection/format={\heiti\zihao{-4}}
+  }
+  \ctexset{
+    paragraph/name={,},
+    % paragraph/beforeskip={1ex plus .3ex minus .1ex},
+    % paragraph/afterskip={.5ex plus .1ex},
+    paragraph/format={\heiti\zihao{-4}}
+  }
+  \ctexset{
+    subparagraph/name={,},
+    % subparagraph/beforeskip={1ex plus .3ex minus .1ex},
+    % subparagraph/afterskip={.5ex plus .1ex},
+    subparagraph/format={\heiti\zihao{-4}}
   }
 \fi
 % content setting
@@ -143,19 +175,23 @@
 
 % set normal font size
 \renewcommand{\normalsize}{\zihao{-4}}
-\linespread{1.5}
+\linespread{1.25}
 
 % cover
 \def\makeoutercover{
   \begin{titlepage}
+    \bfseries
     \linespread{1.25}
     \begin{center}
-      \hfill\bf % default \bf font
+      \hfill% default \bf font
+      \heiti\zihao{5}
       \newlength{\max@length}
       \settowidth{\max@length}{\npu@schoolno\npu@comma 2000000000}
       \newlength{\name@length}
       \settowidth{\name@length}{\npu@schoolno}
       \begin{minipage}{\max@length}
+        \vskip.5cm
+        \renewcommand\arraystretch{1.2}
         \begin{tabular}{|c|c|}\hline
         \makebox[\name@length][s]{\npu@schoolno}   & \@schoolno    \\ \hline
         \makebox[\name@length][s]{\npu@classno}    & \@classno     \\ \hline
@@ -163,8 +199,8 @@
         \makebox[\name@length][s]{\npu@authorno}   & \@authorno    \\ \hline
         \end{tabular}
       \end{minipage}
-      \par\vspace{7cm}
-      \zihao{1}
+      \par\vspace{9cm}
+      \songti\zihao{2}
       \begin{minipage}[t]{2cm}
         \hfill\npu@title\\
       \end{minipage}
@@ -172,7 +208,7 @@
       \setbox123=\hbox{
         \begin{minipage}[t]{10cm}
           \begin{center}
-            \@title
+            \heiti\@title
           \end{center}
         \end{minipage} }
       \setbox124=\hbox{
@@ -182,14 +218,14 @@
             \uline{\hfill\quad\hfill}\\
           \end{center}
         \end{minipage} }
-      \hskip-1cm
+      \hskip-0.5cm
       \copy123\kern-\wd123\box124
-      \par\vspace{4cm}
       \zihao{3}
+      \par\vspace{2.5\baselineskip}
       \begin{minipage}{5cm}
         {\kaishu\npu@author} \uline{\hfill\@author\hfill}
       \end{minipage}
-      \par\vspace{3\baselineskip}
+      \par\vspace{2.5\baselineskip}
       \settowidth{\name@length}{\npu@applydate}
       \begin{minipage}{10cm}
         \noindent
@@ -272,7 +308,7 @@
     \begin{center}
       {\bf
         %\Large
-        Title: \@title@en \\
+        \@title@en \\
         \vspace{3\baselineskip}
         \zihao{-3}
         By\\
@@ -285,9 +321,9 @@
       A Dissertation Submitted to\\
       Northwestern Polytechnical University\\
       \vspace{1\baselineskip}
-      In partial fulfillment of the requirement\\
-      For the degree of\\
-      \npu@degreename@en\  of \@major@en\\
+      In Partial Fulfillment of the Requirement\\
+      for the Degree of\\
+      \npu@degreename@en\ of \@major@en\\
       \vspace{4\baselineskip}
       Xi'an P. R. China\\
       \@applydate@en
@@ -325,11 +361,25 @@
 
 \DeclareCaptionFont{song}{\songti\zihao{5}}  % command defined in package caption
 \captionsetup{labelsep=quad, font=song}
-\setlength{\abovecaptionskip}{10pt}
-\setlength{\belowcaptionskip}{10pt}
+\captionsetup[figure]{aboveskip=10pt, belowskip=10pt}
+\captionsetup[table]{aboveskip=10pt, belowskip=10pt}
 \renewcommand\thetable{\arabic{chapter}-\arabic{table}}
 \renewcommand\thefigure{\arabic{chapter}-\arabic{figure}}
 \renewcommand\theequation{\arabic{chapter}-\arabic{equation}}
+
+\let\@ldtabular\tabular
+\let\end@ldtabular\endtabular
+\renewenvironment{tabular}{\zihao{5}\@ldtabular}{\end@ldtabular}
+
+% define nputabu environment which will stretch to textwidth
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newenvironment{nputabu}[1][\zihao{5}]{#1\tabularx{\textwidth}}{\endtabularx}
+
+\newenvironment{npulist}{%
+\begingroup\renewcommand{\labelenumi}{[\theenumi].}\enumerate}%
+  {\endenumerate\endgroup}
 
 \let\npu@chapter\chapter
 \def\npu@star@chapter#1{\npu@chapter{#1}}
@@ -337,7 +387,7 @@
 
 \newcounter{npu@c@appendix}
 \setcounter{npu@c@appendix}{0}
-\def\Appendix{ \addtocounter{npu@c@appendix}{1}\chapter{\npu@appendix\Alph{npu@c@appendix}}}
+\def\Appendix{\addtocounter{npu@c@appendix}{1}\chapter{\npu@appendix\Alph{npu@c@appendix}}}
 \def\Thanks{\chapter{\npu@thanks}}
 
 \def\statement{
@@ -378,21 +428,23 @@
   {.5em}% Space after theorem head
   {}% Theorem head spec (can be left empty, meaning ‘normal’ )
 
-\theoremstyle{nputheorem} % set default style to nputheorem
+\newtheoremstyle{npuplain}% name
+  {0pt}% Space above
+  {0pt}% Space below
+  {}% Body font
+  {}% Indent amount
+  {\bfseries}% Theorem head font
+  {}% Punctuation after theorem head
+  {.5em}% Space after theorem head
+  {}% Theorem head spec (can be left empty, meaning ‘normal’ )
+
+\theoremstyle{npuplain} % set default style to npuplain
 
 \input{nputhesis.cfg}
-
-\AtBeginDocument{% fixed output error when load natbib and use nputhesis.bst.
-  \@ifpackageloaded{natbib}{}{%
-    \let\@ldbibitem\bibitem
-    \def\gobble@ption[#1]{}
-    \def\bibitem{\expandafter\@ldbibitem\gobble@ption}
-    \def\bibpunct#1#2#3#4#5#6{}}}
 
 \newcommand\Work{\chapter{\npu@work}}
 \newcommand\papersection{\section*{\npu@work@paper}}
 \newcommand\researchsection{\section*{\npu@work@research}}
-
 
 \RequirePackage{nomencl}   % add symbol notation
 \RequirePackage{multicol}  % for two column notation
@@ -407,15 +459,16 @@
   {\def\wilh@nomsection{chapter}}
 
 \def\thenomenclature{%
-  \newlength{\npu@columnsep@save}
-  \setlength{\npu@columnsep@save}{\columnsep}
-  \setlength{\columnsep}{20pt}
-  \begin{multicols}{2}[%
-    \csname\wilh@nomsection\endcsname*{\nomname}
-    \if@intoc\addcontentsline{toc}{\wilh@nomsection}{\nomname}\fi
-    \nompreamble\raggedcolumns]
+  % \newlength{\npu@columnsep@save}
+  % \setlength{\npu@columnsep@save}{\columnsep}
+  % \setlength{\columnsep}{20pt}
+  % \begin{multicols}{2}[%
+      \csname\wilh@nomsection\endcsname*{\nomname}
+      \if@intoc\addcontentsline{toc}{\wilh@nomsection}{\nomname}\fi
+      \nompreamble % \raggedcolumns
+  % ]
   \list{}{%
-    \labelsep=10pt
+    \labelsep=15pt
     \labelwidth\nom@tempdim
     \leftmargin\labelwidth
     \advance\leftmargin\labelsep
@@ -424,8 +477,8 @@
 }
 \def\endthenomenclature{%
   \endlist
-  \end{multicols}
-  \setlength{\columnsep}{\npu@columnsep@save}
+  % \end{multicols}
+  % \setlength{\columnsep}{\npu@columnsep@save}
   \nompostamble}
 
 \endinput
