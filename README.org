@@ -8,7 +8,8 @@
 
 ** 如何使用
 1. 如何使用该文类
-   - 在 \TeX 文档开头使用 =nputhesis= 文类即可, 如 =\documentclass[twoside,UTF8,phd]{nputhesis}=.
+   在 \TeX 文档开头使用 =nputhesis= 文类即可, 如 =\documentclass[twoside,UTF8,phd,AutoFakeBold]{nputhesis}=.
+   这里选项 ``AutoFakeBold'' 用于宋体加黑.
 2. 如何编译
    推荐使用 `latexmk' 命令进行编译, 编译命令如下
    #+BEGIN_SRC shell
@@ -45,12 +46,12 @@
 
 ** 其他模板
 
-1. @polossk: [[https://github.com/polossk/LaTeX-Template-For-NPU-Thesis][LaTeX-Template-For-NPU-Thesis]] 
-2. @lrtfm: [[https://github.com/lrtfm/npu-dissertation-proposal][西北工业大学研究生选题报告表 \LaTeX 模板]]
+1. [[https://github.com/polossk][@polossk]]: [[https://github.com/polossk/LaTeX-Template-For-NPU-Thesis][LaTeX-Template-For-NPU-Thesis]] 
+2. [[https://github.com/lrtfm][@lrtfm]]: [[https://github.com/lrtfm/npu-dissertation-proposal][西北工业大学研究生选题报告表 \LaTeX 模板]]
 
 ** 感谢
 
-这里复制了 @Haixing-Hu 编写的 `bst' 文件 `gbt7741-2005.bst'.
+这里复制了 [[https://github.com/Haixing-Hu][@Haixing-Hu]] 编写的 `bst' 文件 [[https://github.com/Haixing-Hu/GBT7714-2005-BibTeX-Style][`gbt7741-2005.bst']].
 
 ** License
 

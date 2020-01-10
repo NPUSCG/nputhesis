@@ -8,6 +8,14 @@
 %% Last Modified: 2019-12-28
 %%
 %% Changelog:
+%%   [0.6.2] - 2019-01-10
+%%     -- Adjust the skip of the chapter title
+%%     -- Make the line under the title longer
+%%     -- Comment line "\renewcommand{\normalsize}{\zihao{-4}}" because this had been set
+%%        when loading `ctex' package
+%%     -- Remark: ``AutoFakeBold'' option should be used when load this document class to
+%%        make the font in the cover page as bold font: 
+%%            `\documentclass[twoside, UTF8, phd, AutoFakeBold]{nputhesis}'
 %%   [0.6.1] - 2019-12-28 
 %%     -- Delete option workbib
 %%     -- Replace nputhesis.bst by gbt7714-2005.bst
@@ -18,7 +26,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{nputhesis}[2019/12/28 v0.6.1 NPU Thesis]
+\ProvidesClass{nputhesis}[2020/01/10 v0.6.2 NPU Thesis]
 
 \newif\if@npu@phd
 \newif\if@npu@blankinfo
@@ -62,8 +70,8 @@
 \headsep=5mm
 
 \ifx\ctexset\undefined
-  % \CTEXsetup[ % name={,}, number={\arabic{chapter}},% use default value
-  %   beforeskip={20pt}, afterskip={20pt}]{chapter}
+  \CTEXsetup[ % name={,}, number={\arabic{chapter}},% use default value
+    beforeskip={0pt}, afterskip={20pt}]{chapter}
   \CTEXsetup[nameformat={\heiti\zihao{3}\bf}]{chapter}
   \CTEXsetup[titleformat={\heiti\zihao{3}}]{chapter}
   \CTEXsetup[format={\heiti\zihao{4}}]{section}
@@ -76,8 +84,8 @@
   \ctexset{
     % chapter/name={,},                % use default value in ctex
     % chapter/number=\arabic{chapter}, % use default value in ctex
-    % chapter/beforeskip={20pt},
-    % chapter/afterskip={15pt},
+    chapter/beforeskip={0pt},
+    chapter/afterskip={20pt},
     chapter/format={\heiti\zihao{3}\centering}
   }
   % title format of section
@@ -174,7 +182,7 @@
 \fi
 
 % set normal font size
-\renewcommand{\normalsize}{\zihao{-4}}
+% \renewcommand{\normalsize}{\zihao{-4}}
 \linespread{1.25}
 
 % cover
@@ -206,13 +214,13 @@
       \end{minipage}
       %\hbox to 2.5cm{\hfill \npu@title}
       \setbox123=\hbox{
-        \begin{minipage}[t]{10cm}
+        \begin{minipage}[t]{12cm}
           \begin{center}
             \heiti\@title
           \end{center}
         \end{minipage} }
       \setbox124=\hbox{
-        \begin{minipage}[t]{10cm}
+        \begin{minipage}[t]{12cm}
           \begin{center}
             \uline{\hfill\quad\hfill}\\
             \uline{\hfill\quad\hfill}\\
@@ -227,7 +235,7 @@
       \end{minipage}
       \par\vspace{2.5\baselineskip}
       \settowidth{\name@length}{\npu@applydate}
-      \begin{minipage}{10cm}
+      \begin{minipage}{12.5cm}
         \noindent
         \makebox[\name@length][s]{\npu@major}%
           {\uline{\hfill{\@major}\hfill}}    \par
@@ -265,13 +273,13 @@
         \hfil\npu@title\npu@comma
       \end{minipage}
       \setbox123=\hbox{
-        \begin{minipage}[t]{10cm}
+        \begin{minipage}[t]{11cm}
           \begin{center}
             \@title
           \end{center}
         \end{minipage}}
       \setbox124=\hbox{
-        \begin{minipage}[t]{10cm}
+        \begin{minipage}[t]{11cm}
           \begin{center}
             \uline{\hfill\quad\hfill}\\
             \uline{\hfill\quad\hfill}\\
