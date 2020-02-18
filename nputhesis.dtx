@@ -1,5 +1,7 @@
 % \iffalse meta-comment
-% 
+% !TeX program  = XeLaTeX
+% !TeX encoding = UTF-8
+%
 % Copyright (C) 2020 by Zongze Yang <yangzongze@gmail.com>
 % 
 % It may be distributed and/or modified under the
@@ -10,33 +12,209 @@
 % and version 1.3b or later is part of all distributions of LaTeX 
 % version 2005/12/01 or later.
 %
-% \fi
-%
-% \iffalse
+%<*internal>
+\iffalse
+%</internal>
+%<*readme>
+* NPU 博士、硕士学位论文 \LaTeX 模板
+=nputhesis= 是基于\LaTeX 的 =ctexbook= 文类编写的[[https://www.nwpu.edu.cn][西北工业大学]]博士、硕士论文格式文类, 基本实现了[[http://gs.nwpu.edu.cn/info/2021/5046.htm][博士、硕士学位论文撰写规定]]的要求.
+
+** \TeX 环境
+=sample.tex= 源文件使用 =UTF8= 编码在 =TeXLive 2019= 下使用引擎 =xelatex= 及 =pdflatex= 
+编译通过. 其他环境未测试.
+
+(* 推荐使用新版 =TeXLive= 下的 =xelatex= 进行编译 *)
+
+** 如何使用
+1. 如何使用该文类
+   在 \TeX 文档开头使用 =nputhesis= 文类即可, 如 
+       =\documentclass[twoside,UTF8,phd,AutoFakeBold]{nputhesis}=.
+
+   这里使用 =AutoFakeBold= 为外封面的字体加黑. 在 TeXLive 2019 之前的版本中,
+   启用该选项将导致 =xelatex= 编译生成的 =pdf= 文件内容复制时显示为乱码, 进而导致查重报告显示为乱码.
+   解决方法有以下三种:
+    1) 升级 TeXLive 到 2019 版.
+    2) 使用 Adobe 字体. 首先自行下载安装 Adobe 字体, 然后在 =tex= 源文件导言区重新定义相关字体, 如
+      #+BEGIN_SRC tex
+        \documentclass[twoside, UTF8, phd, dbr, AutoFakeBold]{nputhesis}
+        % 导言区
+        \renewcommand{\songti}{\CJKfontspec{Adobe Song Std L}}        % adobe 宋体
+        \renewcommand{\kaishu}{\CJKfontspec{Adobe Kaiti Std R}}       % adobe 楷体
+        \renewcommand{\heiti}{\CJKfontspec{Adobe Heiti Std R}}        % adobe 黑体
+        \renewcommand{\fangsong}{\CJKfontspec{Adobe Fangsong Std R}}  % adobe 仿宋
+        % other command
+        \begin{document}
+        正文
+        \end{document}
+      #+END_SRC
+    3) 去掉 =AutoFakeBold= 选项. 这样会导致外封面字体不能加黑.
+
+2. 如何编译
+   推荐使用 `latexmk' 命令进行编译, 编译命令如下
+   #+BEGIN_SRC shell
+    latexmk -xelatex -synctex=1 nputhesis-sample.tex
+   #+END_SRC
+3. 符号表的生成
+   由于符号表需要使用外部程序 `makeindex' 辅助生成, 所以我们添加了 `latexmkrc' 文件, 
+   只要使用上述 `latexmk' 命令符号表可以自动生成, 否则, 需要手动调用 'makeindex' 程序
+   #+BEGIN_SRC shell
+     makeindex nputhesis-sample.nlo -s nomencl.ist -o nputhesis-sample.nls -t nputhesis-sample.nlg
+   #+END_SRC
+   
+*** 文档选项说明
+1. 由于 =nputhesis= 基于 =book= 实现, =book= 文类的选项这里均能是使用, 如 =twoside=.
+2. =nputhesis= 新定义的选项
+  - =UTF8= : 传递给宏包 =ctexcap=, 用于中文标题处理.
+  - =phd= : 使用博士论文模板, 默认选项.
+  - =ma= : 使用硕士论文模板.
+  - =dbr= : 用于隐藏作者和导师名, 需要使用命令 =\dbr=.
+  - =blankinfo= : 空白页信息开关, 用于在偶数空白页显示 `This Page Intentionally Left Blank!`, 默认不显示.
+
+*** 使用的宏包及定义的环境
+该文类内部已包含宏包 =geometry=, =xcolor=, =fancyhdr=, =titletoc=, =caption=, =ulem=,
+=amsthm=, =amsmath=, =amsfonts=, =setspace=, =longtable=, =booktabs=, =tabularx=, 
+=multirow=, =graphicx=, =ctex=, =nomencl=, =multicol=.
+
+1. 使用了 =amsthm= 宏包定义了定理格式 =nputheorem= 和 =npuplain=, 并默认启用 =npuplain=. 
+在文档中 =\newtheorem{theorem}{定理}[section]= 定义新环境将默认使用格式. 若需更改将
+要定义的定理格式为其他格式, 如 =nputheorem=, 请使用如下命令:
+#+BEGIN_SRC tex
+  \theoremstyle{nputheorem}
+  \newtheorem{npu-thm}{斜体定理}[section]
+#+END_SRC
+那么 =npu-thm= 环境将使用 =nputheorem= 格式.
+2. 符号表生成使用了宏包 =nomencl= . 在需要显示符号表的地方使用命令 =\printnomenclature= 即可, 
+模板中符号表在目录后. 添加符号请使用命令 =\nomenclature{<sym>}{<text explanation>}=.
+
+*** 关于参考文献得说明
+推荐使用 =biblatex= 宏包生成参考文献. 若确实需要使用 =bst= 文件生成参考文件, 可以考虑
+使用 [[https://github.com/Haixing-Hu][@Haixing-Hu]] 编写的 `bst' 文件
+[[https://github.com/Haixing-Hu/GBT7714-2005-BibTeX-Style][`gbt7741-2005.bst']].
+
+** 其他链接
+1. [[https://github.com/polossk][@polossk]]: [[https://github.com/polossk/LaTeX-Template-For-NPU-Thesis][LaTeX-Template-For-NPU-Thesis]] 
+2. [[https://github.com/NPUSCG][@NPUSCG]]: [[https://github.com/NPUSCG/npu-dissertation-proposal][西北工业大学研究生选题报告表 \LaTeX 模板]]
+3. [[https://github.com/Haixing-Hu][@Haixing-Hu]]: [[https://github.com/Haixing-Hu/GBT7714-2005-BibTeX-Style][`gbt7741-2005.bst']].
+
+** License
+
+MIT License
+
+Copyright (c) 2020 Yang Zongze (yangzongze@gmail.com)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+%</readme>
+%<*internal>
+\fi
+\def\nameofplainTeX{plain}
+\ifx\fmtname\nameofplainTeX\else
+  \expandafter\begingroup
+\fi
+%</internal>
+%<*install>
+\input docstrip.tex
+\keepsilent
+\askforoverwritefalse
+\preamble
+Copyright (C) 2020 by Zongze Yang <yangzongze@gmail.com>
+
+It may be distributed and/or modified under the conditions of the LaTeX 
+Project Public License, either version 1.3b of this license or (at your 
+option) any later version. The latest version of this license is in
+    https://www.latex-project.org/lppl.txt
+and version 1.3b or later is part of all distributions of LaTeX version 
+2005/12/01 or later.
+\endpreamble
+\postamble
+
+This work consists of the file  nputhesis.dtx
+and the derived files           nputhesis.ins,
+                                nputhesis.pdf,
+                                nputhesis.cls,
+                                nputhesis-sample.tex,
+                                nputhesis-sample.pdf and
+                                README.org
+
+\endpostamble
+
+\generate
+{
+  \usedir{tex/latex/nputhesis}
+  \file{nputhesis.cls}             {\from{\jobname.dtx}{class}}
+%</install>
+%<*internal>
+  \usedir{source/latex/nputhesis}
+  \file{\jobname.ins}              {\from{\jobname.dtx}{install}}
+%</internal>
+%<*install>
+  \usedir{doc/latex/nputhesis}
+  \file{nputhesis-sample.tex}      {\from{\jobname.dtx}{sample}}
+  \nopreamble\nopostamble
+  \file{README.org}               {\from{\jobname.dtx}{readme}}
+}
+
+\Msg{*************************************************************}
+\Msg{*                                                           *}
+\Msg{* To finish the installation you have to move the following *}
+\Msg{* files into a directory searched by TeX:                   *}
+\Msg{*                                                           *}
+\Msg{* \space\space nputhesis.cls                                *} 
+\Msg{*                                                           *}
+\Msg{* To produce the documentation run the files ending with    *}
+\Msg{* `.dtx' through XeLaTeX.                                   *}
+\Msg{*                                                           *}
+\Msg{* Happy TeXing                                              *}
+\Msg{*************************************************************}
+
+%</install>
+%<install>\endbatchfile
+%<*internal>
+\ifx\fmtname\nameofplainTeX
+  \expandafter\endbatchfile
+\else
+  \expandafter\endgroup
+\fi
+%</internal>
 %<*driver>
 \ProvidesFile{nputhesis.dtx}
 %</driver>
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\ProvidesClass{nputhesis}
 %<*class>
-    [2020/02/18 v0.6.2 NPU Thesis]
+    [2020/04/21 v1.0.0 NPU Thesis Template]
 %</class>
 %<*driver>
-\documentclass{ltxdoc}
-\usepackage{xeCJK}
+\documentclass{ctxdoc}
+\usepackage{booktabs}
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
 \begin{document}
   \DocInput{nputhesis.dtx}
+  \IndexLayout
   \PrintChanges
   \PrintIndex
 \end{document}
 %</driver>
 % \fi
-%
-%
-% \changes{v0.6.3}{2020/02/18}{Initial version use dtx}
+% \changes{v1.0.0}{2020/04/21}{Revise the README file}
+% \changes{v1.0.0}{2020/02/18}{Initial version use dtx}
 % \changes{v0.6.2}{2020/01/10}{Adjust the skip of the chapter title}
 % \changes{v0.6.2}{2020/01/10}{Make the line under the title longer}
 % \changes{v0.6.2}{2020/01/10}{Remark: ``AutoFakeBold'' option can be used
@@ -64,19 +242,371 @@
 %
 % \StopEventually{}
 %
-% \section{Introduction}
+% \section{简介}
+% 
+% \section{使用方法}
+% \subsection{加载文类}
+% 加载 nputhesis 文档类
+% \begin{frameverb}
+%   \documentclass[twoside, UTF8, phd, AutoFakeBold]{nputhesis}
+% \end{frameverb}
 %
-% \section{Usage}
+% \changes{v1.0.0}{2020/03/28}{Add comments on the option ``AutoFakeBold'' in the documents}
+% {
+%   \color{red} 这里使用 |AutoFakeBold| 为外封面的字体加黑. 在 TeXLive 2019 之前的版本中,
+%   启用该选项将导致 =xelatex= 编译生成的 =pdf= 文件内容复制时显示为乱码, 进而导致查重报告显示为乱码. 
+%   解决方法有以下三种:
+%   \begin{itemize}
+%     \item[1.] 升级 TeXLive 到 2019 版.
+%     \item[2.] 使用 Adobe 字体. 首先自行下载安装 Adobe 字体, 然后在 |tex| 源文件导言区重新定义相关字体.
+% \begin{frameverb}
+%   \documentclass[twoside, UTF8, phd, dbr, AutoFakeBold]{nputhesis}
+%   % 导言区
+%   \renewcommand{\songti}{\CJKfontspec{Adobe Song Std L}}        % adobe 宋体
+%   \renewcommand{\kaishu}{\CJKfontspec{Adobe Kaiti Std R}}       % adobe 楷体
+%   \renewcommand{\heiti}{\CJKfontspec{Adobe Heiti Std R}}        % adobe 黑体
+%   \renewcommand{\fangsong}{\CJKfontspec{Adobe Fangsong Std R}}  % adobe 仿宋
+%   % other command
+%   \begin{document}
+%   正文
+%   \end{document}
+% \end{frameverb}
+%     \item[3.] 去掉 |AutoFakeBold| 选项. 这样会导致外封面字体不能加黑.
+%   \end{itemize}
+% }
 %
-% \section{Implementation}
+% 若需生成盲评版本, 添加选项 |dbr| 即可, 如
+% \begin{frameverb}
+%   \documentclass[twoside, UTF8, phd, dbr, AutoFakeBold]{nputhesis}
+% \end{frameverb}
+% 关于 |\dbr| 命令的使用请参考 \ref{ss:varset} 节, \ref{ss:refs} 节以及
+% \ref{ss:dbr} 节.
+%
+% \subsection{加载常用宏包}
+% \begin{frameverb}
+%   \usepackage{lipsum}
+% \end{frameverb} 
+% \subsection{参考文献}
+% 推荐使用 |biblatex| 处理参考文献. 参考文献格式使用 |gb7714-2015|, 
+% 其详细信息请参考 https://github.com/hushidong/biblatex-gb7714-2015.
+% 宏包 |biblatex-gb7714-2015| 已包含在 TeXLive 和 MikTeX 中. 使用如下
+% 命令载入 |biblatex| 宏包即可.
+% \begin{frameverb}
+%   \usepackage[backend=biber,
+%               style=gb7714-2015, maxbibnames=3,minbibnames=3,
+%               gbnamefmt=givenahead,
+%               doi=false,
+%               url=false,
+%   %            gbpub=false
+%              ]{biblatex}
+% \end{frameverb}
+% 上面的选项 |gbnamefmt| 需要使用 v1.0k 以上版本的 |biblatex-gb7714-2015|.
+% 如果宏包版本不能满足, 可以注释掉选项 |gbnamefmt=givenahead|.
+%
+% 然后使用 |addbibresource| 添加参考文献文件 |myrefs.bib|.
+% \begin{frameverb}
+%   \addbibresource{myrefs.bib}
+% \end{frameverb}
+% \subsection{变量设置}\label{ss:varset}
+% 设置学校编号, 分类号, 题目, 姓名等信息
+% \begin{frameverb}
+%   \schoolno{10699}
+%   \classno{O242}
+%   \secretlevel{公开}
+%   \authorno{0000999999}
+%   \title[\LaTeX\ Template of NPU Thesis]{西工大硕博学位论文 \LaTeX 模板}
+%   \author[\dbr{San Zhang}]{\dbr{张三}}
+%   \major[Philosophy in Mathematics]{数学}
+%   \supervisor[\dbr{Si Li}]{\dbr{李四}}
+%   \applydate[April 2046]{2046~年~4~月}
+%   \support{本文研究得到某某基金(编号:XXXXXXX)资助。}
+% \end{frameverb}
+% \subsection{开始文档}
+% 使用 |makecover| 生成封面: 包括外封面和内封面, 然后用 | frontmatter | 
+% 分割封面和正文部分.
+% \begin{frameverb}
+%   \begin{document}
+%   \makecover
+%   \frontmatter
+% \end{frameverb}
+% \subsection{摘要部分}
+% 中文摘要
+% \begin{frameverb}
+%   \begin{abstract}
+%     本模板基本实现了西北工业大学硕博论文格式要求: 封皮, 页眉页脚, 
+%     章节标题格式, 参考文献格式等.
+%     \begin{keywords}
+%       学位论文, \LaTeX\ 模板, 西工大
+%     \end{keywords}
+%   \end{abstract}
+% \end{frameverb}
+% 英文摘要
+% \begin{frameverb}
+%   \begin{Abstract}
+%     We implement the class |nputhesis| for the thesis of NWPU. 
+%     \begin{Keywords}
+%       Thesis Template, \LaTeX, NPU
+%     \end{Keywords}
+%   \end{Abstract}
+% \end{frameverb}
+% \subsection{目录和符号表}
+% \begin{frameverb}
+%   \tableofcontents
+%   \printnomenclature  
+% \end{frameverb}
+% 正文中使用 |\nomenclature{<sym>}{<text explanation>}| 向符号表中添加内容.
+% \subsection{正文部分}
+% 使用 |mainmatter| 开始正文.
+% \begin{frameverb}
+%   \mainmatter
+% \end{frameverb}
+% 正文结构
+% \begin{frameverb}
+%   \chapter{绪论}
+%   \section{\TeX 和 \LaTeX 介绍}
+%   \section{nputhesis 简介}
+%   \chapter{基础知识}
+%   \section{基本命令}
+%   \section{宏包}
+% \end{frameverb}
+% \subsubsection{图与表}
+% \newenvironment{nputabu}[1][\zihao{5}]%
+%   {\begingroup #1\tabularx{\textwidth}}{\endtabularx\endgroup}
+% \newcolumntype{L}{>{\raggedright\arraybackslash}X}
+% \newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+% \newcolumntype{C}{>{\centering\arraybackslash}X}
+% 表格可以使用 nputabu 环境. 列模式除了常规的 |c|, |r| 和 |l| 外, 还可以使用
+% `nputhesis.cls` 中定义的列模式 |C|, |R| 和 |L|, 它们表示等列宽模式下的居中, 
+% 居右和居左.
+% 
+% 如下代码生成的表格见表 \ref{table:result}.
+% \begin{frameverb}
+%   \begin{table}
+%     \caption{数值误差和收敛阶}
+%     \begin{nputabu}{CCC}
+%       \toprule
+%       $N$   &  $L^2$ 误差     &  收敛阶  \\
+%       \midrule
+%        4    &   8.1060e-03    &  0.00   \\
+%        8    &   2.0489e-03    &  1.98   \\
+%       16    &   5.3476e-04    &  1.94   \\
+%       32    &   1.5625e-04    &  1.77   \\
+%       \bottomrule
+%     \end{nputabu}
+%   \end{table}
+% \end{frameverb}
+% \begin{table}
+%   \caption{数值误差和收敛阶}\label{table:result}
+%   \begin{nputabu}{CCC}
+%     \toprule
+%     $N$   &  $L^2$ 误差     &  收敛阶  \\
+%     \midrule
+%      4    &   8.1060e-03    &  0.00   \\
+%      8    &   2.0489e-03    &  1.98   \\
+%     16    &   5.3476e-04    &  1.94   \\
+%     32    &   1.5625e-04    &  1.77   \\
+%     \bottomrule
+%   \end{nputabu}
+% \end{table}
+% \subsection{参考文献, 附录等}\label{ss:refs}
+% \begin{frameverb}
+%   \backmatter
+%   % 以下两种参考文献格式, 根据实际宏包使用情况添加
+%   \printbibliography             % biblatex 输出参考文件方式
+%   % \bibliographystyle{gbt7714-2005}   % 传统输出参考文献方式
+%   % \bibliography{ref}                 % 传统输出参考文献方式
+%
+%   % \Appendix  % 如果有多个附录, 可重复使用该命令, 自动按字母编号.
+%
+%   \Thanks     % 致谢
+%
+%   \Work
+%   \papersection  % 以下填写发表论文情况
+%
+%   \begin{npulist}
+%     \item {\bf \dbr{S. Zhang}}, \dbr{S. Li}. NPU 硕博学位论文
+%       \LaTeX\ 模板[D]. 2019.
+%   \end{npulist}
+%
+%   \researchsection % 以下填写参加科研情况
+%   \begin{npulist}
+%     \item NPU \LaTeX 模板.   编号: 000000000, 参与.
+%     \item NPU \LaTeX 模板.   编号: 000000001, 参与.
+%     \item NPU \LaTeX 模板.   编号: 000000002, 参与.
+%   \end{npulist}
+% \end{frameverb}
+% \subsection{结束文档}
+% \begin{frameverb}
+%   \statement
+%   \end{document}
+% \end{frameverb}
+% \subsection{完整的例子}\label{ss:example}
+%    \begin{macrocode}
+%<*sample>
+\documentclass[oneside, UTF8, phd, AutoFakeBold]{nputhesis}
+\usepackage{lipsum}
+\usepackage{filecontents}
+\usepackage[backend=biber,
+            style=gb7714-2015, maxbibnames=3,minbibnames=3,
+            gbnamefmt=givenahead,
+            doi=false,
+            url=false,
+           ]{biblatex}
+\begin{filecontents}{myrefs.bib}
+@Book{Knuth1986,
+  Title                    = {The \TeX book},
+  Author                   = {Donald~Ervin Knuth},
+  Publisher                = {Addison-Wesley},
+  Year                     = {1986}
+}
+
+@Book{Lamport1994,
+  Title                    = {A Document Preparation System},
+  Author                   = {Leslie Lamport},
+  Publisher                = {Addison-Wesley},
+  Year                     = {1994}
+}
+
+@Book{Liu2013,
+  Title                    = {\LaTeX 入门},
+  Author                   = {刘海洋},
+  Publisher                = {电子工业出版社},
+  Year                     = {2013}
+}
+\end{filecontents}
+\addbibresource{myrefs.bib}
+\schoolno{10699}
+\classno{O242}
+\secretlevel{公开}
+\authorno{0000999999}
+\title[\LaTeX\ Template of NPU Thesis]{西工大硕博学位论文 \LaTeX 模板}
+\author[\dbr{San Zhang}]{\dbr{张三}}
+\major[Philosophy in Mathematics]{数学}
+\supervisor[\dbr{Si Li}]{\dbr{李四}}
+\applydate[April 2046]{2046~年~4~月}
+\support{本文研究得到某某基金(编号:XXXXXXX)资助。}
+\begin{document}
+\makecover
+\frontmatter
+
+\begin{abstract}
+  本模板基本实现了西北工业大学硕博论文格式要求: 封皮, 页眉页脚,
+  章节标题格式, 参考文献格式等.
+  \begin{keywords}
+    学位论文, \LaTeX\ 模板, 西工大
+  \end{keywords}
+\end{abstract}
+\begin{Abstract}
+  We implement the class |nputhesis| for the thesis of NWPU.
+  \begin{Keywords}
+    Thesis Template, \LaTeX, NPU
+  \end{Keywords}
+\end{Abstract}
+
+\tableofcontents
+\printnomenclature
+
+\mainmatter
+
+\chapter{绪论}
+\section{\TeX 和 \LaTeX 介绍}
+\TeX \parencite{Knuth1986} 和 \LaTeX \cite{Lamport1994, Liu2013}的介绍.
+\section{nputhesis 简介}
+\chapter{基础知识}
+\section{基本命令}
+\section{宏包}
+
+\section{图表}
+\begin{table}
+  \caption{数值误差和收敛阶}
+  \begin{nputabu}{CCC}
+    \toprule
+    $N$  &  $L^2$ 误差      &   收敛阶   \\
+    \midrule
+     4   &    8.1060e-03    &    0.00   \\
+     8   &    2.0489e-03    &    1.98   \\
+    16   &    5.3476e-04    &    1.94   \\
+    32   &    1.5625e-04    &    1.77   \\
+    \bottomrule
+  \end{nputabu}
+\end{table}
+\backmatter
+
+\printbibliography             % biblatex 输出参考文件方式
+
+\Appendix   % 编号附录
+
+\Appendix*  % 不编号附录
+
+\Thanks     % 致谢
+
+\Work
+\papersection  % 以下填写发表论文情况
+
+\begin{npulist}
+  \item {\bf \dbr{S. Zhang}}, \dbr{S. Li}. NPU 硕博学位论文
+    \LaTeX\ 模板[D]. 2019.
+\end{npulist}
+
+\researchsection % 以下填写参加科研情况
+\begin{npulist}
+  \item NPU \LaTeX 模板.   编号: 000000000, 参与.
+\end{npulist}
+\statement
+\end{document}
+%</sample>
+%    \end{macrocode}
+% \section{安装}
+% 从 |github| 下载的压缩包已所有文件, 直接解压即可使用. 下面介绍从 |dtx| 
+% 文件生成相关文件的过程.   
+% \subsection{编译 nputhesis.dtx}
+% 运行如下命令即可得到所有文件
+% \begin{frameverb}
+%   xelatex nputhesis.dtx
+% \end{frameverb}
+% 但是这样生成文档 | nputhesis.pdf | 中没有索引等信息, 因此需要进行多次编译.
+% 下面给出生成 |pdf| 文件的两种方式.
+% \subsubsection{方法一}
+% 进入 |nputhesis.dtx| 所在文件夹, 依次运行下面命令.
+% \begin{frameverb}
+%   xelatex nputhesis.dtx
+%   makeindex -s gglo.ist -o nputhesis.gls nputhesis.glo
+%   makeindex -s gind.ist -o nputhesis.ind nputhesis.idx
+%   xelatex nputhesis.dtx
+%   xelatex nputhesis.dtx
+%   del nputhesis.gls nputhesis.glo nputhesis.ind nputhesis.idx 
+%   del nputhesis.ilg nputhesis.aux nputhesis.log nputhesis.toc
+%   del nputhesis.hd nputhesis.out
+% \end{frameverb}
+% \subsubsection{方法二}
+% 使用 latexmk 进行编译. 首先, 进入 |nputhesis.dtx| 所在文件夹,
+% 创建文件 |dtxrc| 内容如下:
+% \begin{frameverb}
+%   @cus_dep_list = (@cus_dep_list, "glo gls 0 makegls");
+%   sub makegls {
+%      system("makeindex -s gglo.ist -o $_[0].gls $_[0].glo"); }
+%   $makeindex="makeindex -s gind.ist -o %D %S";
+%   push @generated_exts, 'idx', 'ind', 'glo', 'gls', 'hd';
+% \end{frameverb}
+% 然后在该文件夹运行如下命令即可生成所需文件.
+% \begin{frameverb}
+%   latexmk -xelatex nputhesis.dtx -r dtxrc
+%   latexmk -c nputhesis.dtx -r dtxrc
+% \end{frameverb}
+% \subsubsection{方法三}
+% 在 Windows 环境下直接运行 |build.bat| 即可.
+% \section{代码实现}
+% \subsection{文档选项}
 % 使用布尔变量实现文档的选项设置
 %    \begin{macrocode}
+%<*class>
 \newif\if@npu@phd
 \newif\if@npu@blankinfo
+\newif\if@npu@dbr        % for double-blind review
 \def\set@npu@phd{\@npu@phdtrue}
 \def\set@npu@ma{\@npu@phdfalse}
 %    \end{macrocode}
-% 使用 xkeyval 声明文档选项 
+% 使用 |xkeyval| 声明文档选项 
 %    \begin{macrocode}
 \RequirePackage{xkeyval}
 %    \end{macrocode}
@@ -94,13 +624,19 @@
 \DeclareOptionX{phd}{\@npu@phdtrue}
 \DeclareOptionX{ma}{\@npu@phdfalse}
 %    \end{macrocode}
+% 声明选项 dbr, 用于生成盲评版本, 参考 |\dbr|.
+%    \begin{macrocode}
+\DeclareOptionX{dbr}[true]{\csname @npu@dbr#1\endcsname}
+%    \end{macrocode}
 % 该文类基于 book 类实现, 加载book 文类.
 %    \begin{macrocode}
-\DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{book}}
+\DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ExecuteOptionsX{thesistype=phd}
+\ExecuteOptionsX{dbr=false}
 \ProcessOptionsX \relax
-\LoadClass{book}
+\LoadClass[heading=true,zihao=-4]{ctexbook}
 %    \end{macrocode}
+% \subsection{使用的宏包}
 % 加载需要的宏包
 %    \begin{macrocode}
 \RequirePackage{geometry}
@@ -118,13 +654,23 @@
 \RequirePackage{tabularx}
 \RequirePackage{multirow}
 \RequirePackage{graphicx}
-\RequirePackage[heading=true,zihao=-4]{ctex}
+% \RequirePackage[heading=true,zihao=-4]{ctex}
 \RequirePackage{ifxetex}
 \ifxetex
   \setmainfont{Times New Roman}
 \fi
 %    \end{macrocode}
-% 设置页面版式格式
+% \subsection{盲评命令}\label{ss:dbr}
+% \changes{v1.0.0}{2020/02/18}{Add option `dbr' for double-blind review}
+% 当 |dbr| 选项开启, 即 |dbr=true| 时在文件中 |\dbr| 命令以隐藏作者相关信息, 
+% 使用命令 |\dbr{张三}| 将会使用黑框代替 `张三' 的显示.
+%    \begin{macrocode}
+\newcommand\@npu@replace[1]{{% 
+    \setlength{\fboxsep}{0pt}%
+    \colorbox{black}{\phantom{#1}}}}
+\newcommand{\dbr}[1]{\if@npu@dbr \@npu@replace{#1}\relax\else #1\fi}
+%    \end{macrocode}
+% \subsection{设置页面版式格式}
 %    \begin{macrocode}
 \geometry{paperwidth=210mm,paperheight=297mm,%
   left=2.5cm,right=2.5cm,top=2.54cm,bottom=2.54cm}
@@ -133,7 +679,26 @@
 \footskip=8mm
 \headsep=5mm
 %    \end{macrocode}
-% 设置默认章节标题格式
+% 页眉设置
+%    \begin{macrocode}
+\pagestyle{fancy}
+% \renewcommand\chaptermark[1]{\markboth{%
+%   \if@mainmatter%
+%     %\ifnum\arabic{chapter}>0%
+%       \arabic{chapter}\quad%
+%     %\fi%
+%   \fi#1}{}}
+\fancyhf{}
+\fancyhead[EC]{\songti\zihao{-5}\npu@rightmark}
+\fancyhead[OC]{\songti\zihao{-5}\leftmark}
+\fancyfoot[C]{\songti\zihao{5}\thepage}
+\renewcommand{\headrule}{%
+  \hrule width\headwidth height2.8pt \vspace{1pt}%
+  \hrule width\headwidth height0.8pt}
+\fancypagestyle{plain}{\thispagestyle{fancy}}
+\newcommand{\clearpagestyle}{\clearpage{\pagestyle{empty}\cleardoublepage}}
+%    \end{macrocode}
+% \subsection{设置默认章节标题格式}
 %    \begin{macrocode}
 \ifx\ctexset\undefined
   \CTEXsetup[ % name={,}, number={\arabic{chapter}},% use default value
@@ -188,7 +753,7 @@
   }
 \fi
 %    \end{macrocode}
-% 目录字体设置
+% \subsection{目录字体设置}
 %    \begin{macrocode}
 \def\@contentfont{\songti\zihao{-4}}
 \titlecontents{chapter}[0pt]{\@contentfont}
@@ -201,33 +766,14 @@
   {\thecontentslabel\quad}{}
   {\hspace{.5em}\titlerule*{.}\contentspage}
 %    \end{macrocode}
-% 版面标题
-%    \begin{macrocode}
-\pagestyle{fancy}
-% \renewcommand\chaptermark[1]{\markboth{%
-%   \if@mainmatter%
-%     %\ifnum\arabic{chapter}>0%
-%       \arabic{chapter}\quad%
-%     %\fi%
-%   \fi#1}{}}
-\fancyhf{}
-\fancyhead[EC]{\songti\zihao{-5}\npu@rightmark}
-\fancyhead[OC]{\songti\zihao{-5}\leftmark}
-\fancyfoot[C]{\songti\zihao{5}\thepage}
-\renewcommand{\headrule}{%
-  \hrule width\headwidth height2.8pt \vspace{1pt}%
-  \hrule width\headwidth height0.8pt}
-\fancypagestyle{plain}{\thispagestyle{fancy}}
-\newcommand{\clearpagestyle}{\clearpage{\pagestyle{empty}\cleardoublepage}}
-%    \end{macrocode}
-% 定义变量, 用于存储包括论文题目, 作者,导师等信息.
+% \subsection{变量设置}
+% 定义变量, 用于存储包括论文题目, 作者, 导师等信息.
 %    \begin{macrocode}
 \def\title{\@ifnextchar[\@@title{\@@title[]}}
 \def\author{\@ifnextchar[\@@author{\@@author[]}}
 \def\major{\@ifnextchar[\@@major{\@@major[]}}
 \def\supervisor{\@ifnextchar[\@@supervisor{\@@supervisor[]}}
 \def\applydate{\@ifnextchar[\@@applydate{\@@applydate[]}}
-
 \def\@@title[#1]#2{\def\@title@en{#1}\def\@title{#2}}
 \def\@@author[#1]#2{\def\@author@en{#1}\def\@author{#2}}
 \def\@@major[#1]#2{\def\@major@en{#1}\def\@major{#2}}
@@ -239,24 +785,23 @@
 \def\@supervisor{}\def\@supervisor@en{}
 \def\@applydate{}\def\@applydate@en{}
 \def\npu@empty{}
-
 \def\schoolno#1{\def\@schoolno{#1}}\def\@schoolno{}
 \def\classno#1{\def\@classno{#1}}\def\@classno{}
 \def\secretlevel#1{\def\@secretlevel{#1}}\def\@secretlevel{}
 \def\authorno#1{\def\@authorno{#1}}\def\@authorno{}
 \def\support#1{\def\@support{#1}}\def\@support{}
-
 \if@npu@phd
   \def\npu@degreename@en{Doctor}
 \else
   \def\npu@degreename@en{Master}
 \fi
 %    \end{macrocode}
-% 设置字体和行距
+% \subsection{设置字体和行距}
 %    \begin{macrocode}
 % \renewcommand{\normalsize}{\zihao{-4}}
 \linespread{1.25}
 %    \end{macrocode}
+% \subsection{封面}
 % 定义外封面
 %    \begin{macrocode}
 \def\makeoutercover{
@@ -322,7 +867,7 @@
       \vspace{2\baselineskip}
     \end{center}
   \end{titlepage}
-  \clearpagestyle%
+  \clearpagestyle
 }
 %    \end{macrocode}
 % 定义内封面
@@ -428,6 +973,7 @@
 \let\npu@frontmatter\frontmatter
 \def\frontmatter{\npu@frontmatter\pagenumbering{Roman}}
 %    \end{macrocode}
+% \subsection{选项 blankinfo 的实现}
 % 重定义 cleardoublepage, 用于实现 blankinfo 选项的功能.
 %    \begin{macrocode}
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
@@ -443,6 +989,7 @@
   \newpage
   \if@twocolumn\hbox{}\newpage\fi\fi\fi}
 %    \end{macrocode}
+% \subsection{摘要环境}
 % 定义中英文摘要环境
 %    \begin{macrocode}
 \newenvironment{abstract}{%
@@ -456,9 +1003,9 @@
   \newenvironment{Keywords}{%
     \vspace{2\baselineskip}\par\textbf{\npu@Keywords\npu@comma}}{}}{}
 %    \end{macrocode}
-% 图表标题设置
+% \subsection{图表标题设置}
 %    \begin{macrocode}
-\DeclareCaptionFont{song}{\songti\zihao{5}}  % command defined in package caption
+\DeclareCaptionFont{song}{\songti\zihao{5}}
 \captionsetup{labelsep=quad, font=song}
 \captionsetup[figure]{aboveskip=10pt, belowskip=10pt}
 \captionsetup[table]{aboveskip=10pt, belowskip=10pt}
@@ -466,7 +1013,7 @@
 \renewcommand\thefigure{\arabic{chapter}-\arabic{figure}}
 \renewcommand\theequation{\arabic{chapter}-\arabic{equation}}
 %    \end{macrocode}
-% 定义表格和列表环境
+% \subsection{表格和列表环境}
 %    \begin{macrocode}
 \let\@ldtabular\tabular
 \let\end@ldtabular\endtabular
@@ -476,20 +1023,27 @@
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
 \newcolumntype{R}{>{\raggedleft\arraybackslash}X}
 \newcolumntype{C}{>{\centering\arraybackslash}X}
-\newenvironment{nputabu}[1][\zihao{5}]{#1\tabularx{\textwidth}}{\endtabularx}
+% \changes{v1.0.0}{2020/04/21}{Add begingroup and endgroup in env ``nputabu''}
+\newenvironment{nputabu}[1][\zihao{5}]%
+  {\begingroup #1\tabularx{\textwidth}}{\endtabularx\endgroup}
 
 \newenvironment{npulist}{%
 \begingroup\renewcommand{\labelenumi}{[\theenumi].}\enumerate}%
   {\endenumerate\endgroup}
 %    \end{macrocode}
+% \subsection{特殊章节设置}
 % 附录自动以英文字母编号
+% \changes{v1.0.0}{2020/03/28}{Fix bug of command ``Appendix''}
 %    \begin{macrocode}
 \let\npu@chapter\chapter
 \def\npu@star@chapter#1{\npu@chapter{#1}}
 \def\chapter{\secdef\npu@chapter\npu@star@chapter}
 \newcounter{npu@c@appendix}
 \setcounter{npu@c@appendix}{0}
-\def\Appendix{\addtocounter{npu@c@appendix}{1}\chapter{\npu@appendix\Alph{npu@c@appendix}}}
+\def\npu@star@Appendix{\chapter{\npu@appendix}}
+\def\npu@Appendix{\addtocounter{npu@c@appendix}{1}%
+  \chapter{\npu@appendix\Alph{npu@c@appendix}}}
+\def\Appendix{\@ifstar{\npu@star@Appendix}{\npu@Appendix}}
 %    \end{macrocode}
 % 致谢章节
 %    \begin{macrocode}
@@ -530,6 +1084,7 @@
     \hfill\hskip8.5cm \npu@ymd
   \end{titlepage}}
 %    \end{macrocode}
+% \subsection{默认定理环境}
 % 定义定理环境
 %    \begin{macrocode}
 % ref amsthdoc.pdf
@@ -555,7 +1110,7 @@
 
 \theoremstyle{npuplain} % set default style to npuplain
 %    \end{macrocode}
-% 定义双栏符号表 
+% \subsection{定义符号表}
 %    \begin{macrocode}
 \RequirePackage{nomencl}   % add symbol notation
 \RequirePackage{multicol}  % for two column notation
@@ -592,7 +1147,7 @@
   % \setlength{\columnsep}{\npu@columnsep@save}
   \nompostamble}
 %    \end{macrocode}
-% 配置信息载入
+% \subsection{配置变量}
 %    \begin{macrocode}
 \def\npu@degreename@zh{\if@npu@phd 博士\else 硕士\fi}
 \def\npu@comma{~:~}
@@ -626,19 +1181,21 @@
 \def\npu@a@signature{学位论文作者签名}
 \def\npu@s@signature{指导教师签名}
 \long\def\npu@longp@statement{%
-本人完全了解学校有关保护知识产权的规定，即：研究生在校攻读学位期间论文工作的知
-识产权单位属于西北工业大学。学校有权保留并向国家有关部门或机构送交论文的复印件
-和电子版。本人允许论文被查阅和借阅。学校可以将本学位论文的全部或部分内容编入有
-关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存和汇编本学位论文。同时
-本人保证，毕业后结合学位论文研究课题再撰写的文章一律注明作者单位为西北工业大学。
+本人完全了解学校有关保护知识产权的规定，即：研究生在校攻读学位期间论文工作的
+知识产权单位属于西北工业大学。学校有权保留并向国家有关部门或机构送交论文的复
+印件和电子版。本人允许论文被查阅和借阅。学校可以将本学位论文的全部或部分内容
+编入有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存和汇编本学位论
+文。同时本人保证，毕业后结合学位论文研究课题再撰写的文章一律注明作者单位为西
+北工业大学。
 \par 保密论文待解密后适用本声明。}
 \long\def\npu@longc@statement{%
-秉承学校严谨的学风和优良的科学道德，本人郑重声明：所呈交的学位论文，是本人在导
-师的指导下进行研究工作所取得的成果。尽我所知，除文中已经注明引用的内容和致谢的
-地方外，本论文不包含任何其他个人或集体已经公开发表或撰写过的研究成果，不包含本
-人或其他已申请学位或其他用途使用过的成果。对本文的研究做出重要贡献的个人和集体，
-均已在文中以明确方式表明。
+秉承学校严谨的学风和优良的科学道德，本人郑重声明：所呈交的学位论文，是本人在
+导师的指导下进行研究工作所取得的成果。尽我所知，除文中已经注明引用的内容和致
+谢的地方外，本论文不包含任何其他个人或集体已经公开发表或撰写过的研究成果，不
+包含本人或其他已申请学位或其他用途使用过的成果。对本文的研究做出重要贡献的个
+人和集体，均已在文中以明确方式表明。
 \par 本人学位论文与资料若有不实，愿意承担一切相关的法律责任。}
+%</class>
 %    \end{macrocode}
 % \Finale
 %

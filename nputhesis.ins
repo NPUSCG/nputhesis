@@ -1,53 +1,75 @@
 %%
+%% This is file `nputhesis.ins',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% nputhesis.dtx  (with options: `install')
 %% Copyright (C) 2020 by Zongze Yang <yangzongze@gmail.com>
 %% 
-%% It may be distributed and/or modified under the
-%% conditions of the LaTeX Project Public License, either version 1.3b
-%% of this license or (at your option) any later version.
-%% The latest version of this license is in
-%%    https://www.latex-project.org/lppl.txt
-%% and version 1.3b or later is part of all distributions of LaTeX 
-%% version 2005/12/01 or later.
-
-\input docstrip
-
+%% It may be distributed and/or modified under the conditions of the LaTeX
+%% Project Public License, either version 1.3b of this license or (at your
+%% option) any later version. The latest version of this license is in
+%%     https://www.latex-project.org/lppl.txt
+%% and version 1.3b or later is part of all distributions of LaTeX version
+%% 2005/12/01 or later.
+\input docstrip.tex
+\keepsilent
+\askforoverwritefalse
 \preamble
-
-This is a generated file.
-
 Copyright (C) 2020 by Zongze Yang <yangzongze@gmail.com>
 
-It may be distributed and/or modified under the
-conditions of the LaTeX Project Public License, either version 1.3b
-of this license or (at your option) any later version.
-The latest version of this license is in
-   https://www.latex-project.org/lppl.txt
-and version 1.3b or later is part of all distributions of LaTeX 
-version 2005/12/01 or later.
-
+It may be distributed and/or modified under the conditions of the LaTeX
+Project Public License, either version 1.3b of this license or (at your
+option) any later version. The latest version of this license is in
+    https://www.latex-project.org/lppl.txt
+and version 1.3b or later is part of all distributions of LaTeX version
+2005/12/01 or later.
 \endpreamble
+\postamble
 
-\keepsilent
-\usedir{tex/latex/nputhesis}
+This work consists of the file  nputhesis.dtx
+and the derived files           nputhesis.ins,
+                                nputhesis.pdf,
+                                nputhesis.cls,
+                                nputhesis-sample.tex,
+                                nputhesis-sample.pdf and
+                                README.org
 
-\generate{
-  \file{nputhesis.cls}{\from{nputhesis.dtx}{class}}
+\endpostamble
+
+\generate
+{
+  \usedir{tex/latex/nputhesis}
+  \file{nputhesis.cls}             {\from{\jobname.dtx}{class}}
+  \usedir{doc/latex/nputhesis}
+  \file{nputhesis-sample.tex}      {\from{\jobname.dtx}{sample}}
+  \nopreamble\nopostamble
+  \file{README.org}               {\from{\jobname.dtx}{readme}}
 }
 
-\ifToplevel{
-\Msg{***********************************************************}
-\Msg{*}
-\Msg{* To finish the installation you have to move the following}
-\Msg{* files into a directory searched by TeX:}
-\Msg{*}
-\Msg{* \space\space nputhesis.cls}
-\Msg{*}
-\Msg{* To produce the documentation run the files ending with}
-\Msg{* `.dtx' through LaTeX.}
-\Msg{*}
-\Msg{* Happy TeXing}
-\Msg{***********************************************************}
-}
+\Msg{*************************************************************}
+\Msg{*                                                           *}
+\Msg{* To finish the installation you have to move the following *}
+\Msg{* files into a directory searched by TeX:                   *}
+\Msg{*                                                           *}
+\Msg{* \space\space nputhesis.cls                                *}
+\Msg{*                                                           *}
+\Msg{* To produce the documentation run the files ending with    *}
+\Msg{* `.dtx' through XeLaTeX.                                   *}
+\Msg{*                                                           *}
+\Msg{* Happy TeXing                                              *}
+\Msg{*************************************************************}
 
 \endbatchfile
-
+%% 
+%% This work consists of the file  nputhesis.dtx
+%% and the derived files           nputhesis.ins,
+%%                                 nputhesis.pdf,
+%%                                 nputhesis.cls,
+%%                                 nputhesis-sample.tex,
+%%                                 nputhesis-sample.pdf and
+%%                                 README.org
+%% 
+%%
+%% End of file `nputhesis.ins'.

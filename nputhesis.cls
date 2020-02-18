@@ -5,24 +5,20 @@
 %% The original source files were:
 %%
 %% nputhesis.dtx  (with options: `class')
-%% 
-%% This is a generated file.
-%% 
 %% Copyright (C) 2020 by Zongze Yang <yangzongze@gmail.com>
 %% 
-%% It may be distributed and/or modified under the
-%% conditions of the LaTeX Project Public License, either version 1.3b
-%% of this license or (at your option) any later version.
-%% The latest version of this license is in
-%%    https://www.latex-project.org/lppl.txt
-%% and version 1.3b or later is part of all distributions of LaTeX
-%% version 2005/12/01 or later.
-%% 
+%% It may be distributed and/or modified under the conditions of the LaTeX
+%% Project Public License, either version 1.3b of this license or (at your
+%% option) any later version. The latest version of this license is in
+%%     https://www.latex-project.org/lppl.txt
+%% and version 1.3b or later is part of all distributions of LaTeX version
+%% 2005/12/01 or later.
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{nputhesis}
-    [2020/02/18 v0.6.2 NPU Thesis]
+    [2020/04/21 v1.0.0 NPU Thesis Template]
 \newif\if@npu@phd
 \newif\if@npu@blankinfo
+\newif\if@npu@dbr        % for double-blind review
 \def\set@npu@phd{\@npu@phdtrue}
 \def\set@npu@ma{\@npu@phdfalse}
 \RequirePackage{xkeyval}
@@ -30,10 +26,12 @@
 \DeclareOptionX{thesistype}[phd]{\csname set@npu@#1\endcsname}
 \DeclareOptionX{phd}{\@npu@phdtrue}
 \DeclareOptionX{ma}{\@npu@phdfalse}
-\DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{book}}
+\DeclareOptionX{dbr}[true]{\csname @npu@dbr#1\endcsname}
+\DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ExecuteOptionsX{thesistype=phd}
+\ExecuteOptionsX{dbr=false}
 \ProcessOptionsX \relax
-\LoadClass{book}
+\LoadClass[heading=true,zihao=-4]{ctexbook}
 \RequirePackage{geometry}
 \RequirePackage{xcolor}
 \RequirePackage{fancyhdr}
@@ -49,17 +47,30 @@
 \RequirePackage{tabularx}
 \RequirePackage{multirow}
 \RequirePackage{graphicx}
-\RequirePackage[heading=true,zihao=-4]{ctex}
 \RequirePackage{ifxetex}
 \ifxetex
   \setmainfont{Times New Roman}
 \fi
+\newcommand\@npu@replace[1]{{%
+    \setlength{\fboxsep}{0pt}%
+    \colorbox{black}{\phantom{#1}}}}
+\newcommand{\dbr}[1]{\if@npu@dbr \@npu@replace{#1}\relax\else #1\fi}
 \geometry{paperwidth=210mm,paperheight=297mm,%
   left=2.5cm,right=2.5cm,top=2.54cm,bottom=2.54cm}
 \topmargin=-10.4mm
 \headheight=17pt
 \footskip=8mm
 \headsep=5mm
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[EC]{\songti\zihao{-5}\npu@rightmark}
+\fancyhead[OC]{\songti\zihao{-5}\leftmark}
+\fancyfoot[C]{\songti\zihao{5}\thepage}
+\renewcommand{\headrule}{%
+  \hrule width\headwidth height2.8pt \vspace{1pt}%
+  \hrule width\headwidth height0.8pt}
+\fancypagestyle{plain}{\thispagestyle{fancy}}
+\newcommand{\clearpagestyle}{\clearpage{\pagestyle{empty}\cleardoublepage}}
 \ifx\ctexset\undefined
   \CTEXsetup[ % name={,}, number={\arabic{chapter}},% use default value
     beforeskip={0pt}, afterskip={20pt}]{chapter}
@@ -122,22 +133,11 @@
 \titlecontents{subsection}[30pt]{\@contentfont}
   {\thecontentslabel\quad}{}
   {\hspace{.5em}\titlerule*{.}\contentspage}
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[EC]{\songti\zihao{-5}\npu@rightmark}
-\fancyhead[OC]{\songti\zihao{-5}\leftmark}
-\fancyfoot[C]{\songti\zihao{5}\thepage}
-\renewcommand{\headrule}{%
-  \hrule width\headwidth height2.8pt \vspace{1pt}%
-  \hrule width\headwidth height0.8pt}
-\fancypagestyle{plain}{\thispagestyle{fancy}}
-\newcommand{\clearpagestyle}{\clearpage{\pagestyle{empty}\cleardoublepage}}
 \def\title{\@ifnextchar[\@@title{\@@title[]}}
 \def\author{\@ifnextchar[\@@author{\@@author[]}}
 \def\major{\@ifnextchar[\@@major{\@@major[]}}
 \def\supervisor{\@ifnextchar[\@@supervisor{\@@supervisor[]}}
 \def\applydate{\@ifnextchar[\@@applydate{\@@applydate[]}}
-
 \def\@@title[#1]#2{\def\@title@en{#1}\def\@title{#2}}
 \def\@@author[#1]#2{\def\@author@en{#1}\def\@author{#2}}
 \def\@@major[#1]#2{\def\@major@en{#1}\def\@major{#2}}
@@ -149,13 +149,11 @@
 \def\@supervisor{}\def\@supervisor@en{}
 \def\@applydate{}\def\@applydate@en{}
 \def\npu@empty{}
-
 \def\schoolno#1{\def\@schoolno{#1}}\def\@schoolno{}
 \def\classno#1{\def\@classno{#1}}\def\@classno{}
 \def\secretlevel#1{\def\@secretlevel{#1}}\def\@secretlevel{}
 \def\authorno#1{\def\@authorno{#1}}\def\@authorno{}
 \def\support#1{\def\@support{#1}}\def\@support{}
-
 \if@npu@phd
   \def\npu@degreename@en{Doctor}
 \else
@@ -225,7 +223,7 @@
       \vspace{2\baselineskip}
     \end{center}
   \end{titlepage}
-  \clearpagestyle%
+  \clearpagestyle
 }
 \def\makeinnercover@zh{
   \begin{titlepage}
@@ -340,7 +338,7 @@
   \chapter{\npu@Abstract}%\addcontentsline{toc}{chapter}{\npu@Abstract}%
   \newenvironment{Keywords}{%
     \vspace{2\baselineskip}\par\textbf{\npu@Keywords\npu@comma}}{}}{}
-\DeclareCaptionFont{song}{\songti\zihao{5}}  % command defined in package caption
+\DeclareCaptionFont{song}{\songti\zihao{5}}
 \captionsetup{labelsep=quad, font=song}
 \captionsetup[figure]{aboveskip=10pt, belowskip=10pt}
 \captionsetup[table]{aboveskip=10pt, belowskip=10pt}
@@ -354,7 +352,8 @@
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
 \newcolumntype{R}{>{\raggedleft\arraybackslash}X}
 \newcolumntype{C}{>{\centering\arraybackslash}X}
-\newenvironment{nputabu}[1][\zihao{5}]{#1\tabularx{\textwidth}}{\endtabularx}
+\newenvironment{nputabu}[1][\zihao{5}]%
+  {\begingroup #1\tabularx{\textwidth}}{\endtabularx\endgroup}
 
 \newenvironment{npulist}{%
 \begingroup\renewcommand{\labelenumi}{[\theenumi].}\enumerate}%
@@ -364,7 +363,10 @@
 \def\chapter{\secdef\npu@chapter\npu@star@chapter}
 \newcounter{npu@c@appendix}
 \setcounter{npu@c@appendix}{0}
-\def\Appendix{\addtocounter{npu@c@appendix}{1}\chapter{\npu@appendix\Alph{npu@c@appendix}}}
+\def\npu@star@Appendix{\chapter{\npu@appendix}}
+\def\npu@Appendix{\addtocounter{npu@c@appendix}{1}%
+  \chapter{\npu@appendix\Alph{npu@c@appendix}}}
+\def\Appendix{\@ifstar{\npu@star@Appendix}{\npu@Appendix}}
 \def\Thanks{\chapter{\npu@thanks}}
 \newcommand\Work{\chapter{\npu@work}}
 \newcommand\papersection{\section*{\npu@work@paper}}
@@ -479,19 +481,28 @@
 \def\npu@a@signature{学位论文作者签名}
 \def\npu@s@signature{指导教师签名}
 \long\def\npu@longp@statement{%
-本人完全了解学校有关保护知识产权的规定，即：研究生在校攻读学位期间论文工作的知
-识产权单位属于西北工业大学。学校有权保留并向国家有关部门或机构送交论文的复印件
-和电子版。本人允许论文被查阅和借阅。学校可以将本学位论文的全部或部分内容编入有
-关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存和汇编本学位论文。同时
-本人保证，毕业后结合学位论文研究课题再撰写的文章一律注明作者单位为西北工业大学。
+本人完全了解学校有关保护知识产权的规定，即：研究生在校攻读学位期间论文工作的
+知识产权单位属于西北工业大学。学校有权保留并向国家有关部门或机构送交论文的复
+印件和电子版。本人允许论文被查阅和借阅。学校可以将本学位论文的全部或部分内容
+编入有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存和汇编本学位论
+文。同时本人保证，毕业后结合学位论文研究课题再撰写的文章一律注明作者单位为西
+北工业大学。
 \par 保密论文待解密后适用本声明。}
 \long\def\npu@longc@statement{%
-秉承学校严谨的学风和优良的科学道德，本人郑重声明：所呈交的学位论文，是本人在导
-师的指导下进行研究工作所取得的成果。尽我所知，除文中已经注明引用的内容和致谢的
-地方外，本论文不包含任何其他个人或集体已经公开发表或撰写过的研究成果，不包含本
-人或其他已申请学位或其他用途使用过的成果。对本文的研究做出重要贡献的个人和集体，
-均已在文中以明确方式表明。
+秉承学校严谨的学风和优良的科学道德，本人郑重声明：所呈交的学位论文，是本人在
+导师的指导下进行研究工作所取得的成果。尽我所知，除文中已经注明引用的内容和致
+谢的地方外，本论文不包含任何其他个人或集体已经公开发表或撰写过的研究成果，不
+包含本人或其他已申请学位或其他用途使用过的成果。对本文的研究做出重要贡献的个
+人和集体，均已在文中以明确方式表明。
 \par 本人学位论文与资料若有不实，愿意承担一切相关的法律责任。}
-\endinput
+%% 
+%% This work consists of the file  nputhesis.dtx
+%% and the derived files           nputhesis.ins,
+%%                                 nputhesis.pdf,
+%%                                 nputhesis.cls,
+%%                                 nputhesis-sample.tex,
+%%                                 nputhesis-sample.pdf and
+%%                                 README.org
+%% 
 %%
 %% End of file `nputhesis.cls'.

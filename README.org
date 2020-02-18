@@ -2,62 +2,87 @@
 =nputhesis= 是基于\LaTeX 的 =ctexbook= 文类编写的[[https://www.nwpu.edu.cn][西北工业大学]]博士、硕士论文格式文类, 基本实现了[[http://gs.nwpu.edu.cn/info/2021/5046.htm][博士、硕士学位论文撰写规定]]的要求.
 
 ** \TeX 环境
-=sample.tex= 源文件使用 =UTF8= 编码在 =TeXLive 2019= 下使用引擎 =xelatex= 及 =pdflatex= 编译通过. 其他环境未测试.
+=sample.tex= 源文件使用 =UTF8= 编码在 =TeXLive 2019= 下使用引擎 =xelatex= 及 =pdflatex=
+编译通过. 其他环境未测试.
 
 (* 推荐使用新版 =TeXLive= 下的 =xelatex= 进行编译 *)
 
 ** 如何使用
 1. 如何使用该文类
-   在 \TeX 文档开头使用 =nputhesis= 文类即可, 如 =\documentclass[twoside,UTF8,phd,AutoFakeBold]{nputhesis}=.
-   这里选项 ``AutoFakeBold'' 用于宋体加黑.
+   在 \TeX 文档开头使用 =nputhesis= 文类即可, 如
+       =\documentclass[twoside,UTF8,phd,AutoFakeBold]{nputhesis}=.
+
+   这里使用 =AutoFakeBold= 为外封面的字体加黑. 在 TeXLive 2019 之前的版本中,
+   启用该选项将导致 =xelatex= 编译生成的 =pdf= 文件内容复制时显示为乱码, 进而导致查重报告显示为乱码.
+   解决方法有以下三种:
+    1) 升级 TeXLive 到 2019 版.
+    2) 使用 Adobe 字体. 首先自行下载安装 Adobe 字体, 然后在 =tex= 源文件导言区重新定义相关字体, 如
+      #+BEGIN_SRC tex
+        \documentclass[twoside, UTF8, phd, dbr, AutoFakeBold]{nputhesis}
+        % 导言区
+        \renewcommand{\songti}{\CJKfontspec{Adobe Song Std L}}        % adobe 宋体
+        \renewcommand{\kaishu}{\CJKfontspec{Adobe Kaiti Std R}}       % adobe 楷体
+        \renewcommand{\heiti}{\CJKfontspec{Adobe Heiti Std R}}        % adobe 黑体
+        \renewcommand{\fangsong}{\CJKfontspec{Adobe Fangsong Std R}}  % adobe 仿宋
+        % other command
+        \begin{document}
+        正文
+        \end{document}
+      #+END_SRC
+    3) 去掉 =AutoFakeBold= 选项. 这样会导致外封面字体不能加黑.
+
 2. 如何编译
    推荐使用 `latexmk' 命令进行编译, 编译命令如下
    #+BEGIN_SRC shell
-    latexmk -xelatex -synctex=1 sample.tex
+    latexmk -xelatex -synctex=1 nputhesis-sample.tex
    #+END_SRC
 3. 符号表的生成
-   由于符号表需要使用外部程序 `makeindex' 辅助生成, 所以我们添加了 `latexmkrc' 文件, 
+   由于符号表需要使用外部程序 `makeindex' 辅助生成, 所以我们添加了 `latexmkrc' 文件,
    只要使用上述 `latexmk' 命令符号表可以自动生成, 否则, 需要手动调用 'makeindex' 程序
    #+BEGIN_SRC shell
-     makeindex sample.nlo -s nomencl.ist -o sample.nls -t sample.nlg
+     makeindex nputhesis-sample.nlo -s nomencl.ist -o nputhesis-sample.nls -t nputhesis-sample.nlg
    #+END_SRC
-   
+
 *** 文档选项说明
 1. 由于 =nputhesis= 基于 =book= 实现, =book= 文类的选项这里均能是使用, 如 =twoside=.
 2. =nputhesis= 新定义的选项
-	- =UTF8= : 传递给宏包 =ctexcap=, 用于中文标题处理.
-	- =phd= : 使用博士论文模板, 默认选项.
-	- =ma= : 使用硕士论文模板.
-	- =blankinfo= : 空白页信息开关, 用于在偶数空白页显示 `This Page Intentionally Left Blank!`, 默认不显示.
+  - =UTF8= : 传递给宏包 =ctexcap=, 用于中文标题处理.
+  - =phd= : 使用博士论文模板, 默认选项.
+  - =ma= : 使用硕士论文模板.
+  - =dbr= : 用于隐藏作者和导师名, 需要使用命令 =\dbr=.
+  - =blankinfo= : 空白页信息开关, 用于在偶数空白页显示 `This Page Intentionally Left Blank!`, 默认不显示.
 
 *** 使用的宏包及定义的环境
-该文类内部已包含宏包 =geometry=, =xcolor=, =fancyhdr=, =titletoc=, =caption=, =ulem=, =amsthm=, =amsmath=, 
-=amsfonts=, =setspace=, =longtable=, =booktabs=, =tabularx=, =multirow=, =graphicx=, =ctex=, =nomencl=, 
-=multicol=.
+该文类内部已包含宏包 =geometry=, =xcolor=, =fancyhdr=, =titletoc=, =caption=, =ulem=,
+=amsthm=, =amsmath=, =amsfonts=, =setspace=, =longtable=, =booktabs=, =tabularx=,
+=multirow=, =graphicx=, =ctex=, =nomencl=, =multicol=.
 
-1. 使用了 =amsthm= 宏包定义了定理格式 =nputheorem= 和 =npuplain=, 并默认启用 =npuplain=. 在文档中 =\newtheorem{theorem}{定理}[section]= 定义新环境将默认使用格式. 若需更改将要定义的定理格式为其他格式, 如 =nputheorem=, 请使用如下命令:
+1. 使用了 =amsthm= 宏包定义了定理格式 =nputheorem= 和 =npuplain=, 并默认启用 =npuplain=.
+在文档中 =\newtheorem{theorem}{定理}[section]= 定义新环境将默认使用格式. 若需更改将
+要定义的定理格式为其他格式, 如 =nputheorem=, 请使用如下命令:
 #+BEGIN_SRC tex
   \theoremstyle{nputheorem}
   \newtheorem{npu-thm}{斜体定理}[section]
 #+END_SRC
 那么 =npu-thm= 环境将使用 =nputheorem= 格式.
-2. 符号表生成使用了宏包 =nomencl= . 在需要显示符号表的地方使用命令 =\printnomenclature= 即可, 模板中
-符号表在目录后. 添加符号请使用命令 =\nomenclature{<sym>}{<text explanation>}=.
+2. 符号表生成使用了宏包 =nomencl= . 在需要显示符号表的地方使用命令 =\printnomenclature= 即可,
+模板中符号表在目录后. 添加符号请使用命令 =\nomenclature{<sym>}{<text explanation>}=.
 
-** 其他模板
+*** 关于参考文献得说明
+推荐使用 =biblatex= 宏包生成参考文献. 若确实需要使用 =bst= 文件生成参考文件, 可以考虑
+使用 [[https://github.com/Haixing-Hu][@Haixing-Hu]] 编写的 `bst' 文件
+[[https://github.com/Haixing-Hu/GBT7714-2005-BibTeX-Style][`gbt7741-2005.bst']].
 
-1. [[https://github.com/polossk][@polossk]]: [[https://github.com/polossk/LaTeX-Template-For-NPU-Thesis][LaTeX-Template-For-NPU-Thesis]] 
-2. [[https://github.com/lrtfm][@lrtfm]]: [[https://github.com/lrtfm/npu-dissertation-proposal][西北工业大学研究生选题报告表 \LaTeX 模板]]
-
-** 感谢
-
-这里复制了 [[https://github.com/Haixing-Hu][@Haixing-Hu]] 编写的 `bst' 文件 [[https://github.com/Haixing-Hu/GBT7714-2005-BibTeX-Style][`gbt7741-2005.bst']].
+** 其他链接
+1. [[https://github.com/polossk][@polossk]]: [[https://github.com/polossk/LaTeX-Template-For-NPU-Thesis][LaTeX-Template-For-NPU-Thesis]]
+2. [[https://github.com/NPUSCG][@NPUSCG]]: [[https://github.com/NPUSCG/npu-dissertation-proposal][西北工业大学研究生选题报告表 \LaTeX 模板]]
+3. [[https://github.com/Haixing-Hu][@Haixing-Hu]]: [[https://github.com/Haixing-Hu/GBT7714-2005-BibTeX-Style][`gbt7741-2005.bst']].
 
 ** License
 
 MIT License
 
-Copyright (c) 2019 Yang Zongze (yangzongze@gmail.com)
+Copyright (c) 2020 Yang Zongze (yangzongze@gmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
