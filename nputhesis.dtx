@@ -1,39 +1,108 @@
-%%
-%% This is file `nputhesis.cls',
-%% generated with the docstrip utility.
-%%
-%% The original source files were:
-%%
-%% nputhesis.dtx  (with options: `class')
-%% 
-%% This is a generated file.
-%% 
-%% Copyright (C) 2020 by Zongze Yang <yangzongze@gmail.com>
-%% 
-%% It may be distributed and/or modified under the
-%% conditions of the LaTeX Project Public License, either version 1.3b
-%% of this license or (at your option) any later version.
-%% The latest version of this license is in
-%%    https://www.latex-project.org/lppl.txt
-%% and version 1.3b or later is part of all distributions of LaTeX
-%% version 2005/12/01 or later.
-%% 
-\NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{nputhesis}
+% \iffalse meta-comment
+% 
+% Copyright (C) 2020 by Zongze Yang <yangzongze@gmail.com>
+% 
+% It may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3b
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%    https://www.latex-project.org/lppl.txt
+% and version 1.3b or later is part of all distributions of LaTeX 
+% version 2005/12/01 or later.
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{nputhesis.dtx}
+%</driver>
+%<class>\NeedsTeXFormat{LaTeX2e}
+%<class>\ProvidesClass{nputhesis}
+%<*class>
     [2020/02/18 v0.6.2 NPU Thesis]
+%</class>
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{xeCJK}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{nputhesis.dtx}
+  \PrintChanges
+  \PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+%
+% \changes{v0.6.3}{2020/02/18}{Initial version use dtx}
+% \changes{v0.6.2}{2020/01/10}{Adjust the skip of the chapter title}
+% \changes{v0.6.2}{2020/01/10}{Make the line under the title longer}
+% \changes{v0.6.2}{2020/01/10}{Remark: ``AutoFakeBold'' option can be used
+%    when load this document class to make the font in the cover page as bold
+%    font}
+% \changes{v0.6.1}{2019/12/28}{Delete option workbib}
+% \changes{v0.6.1}{2019/12/28}{Replace nputhesis.bst by gbt7714-2005.bst}
+% \changes{v0.6.1}{2019/12/28}
+%         {Modify font size in tabular environment to `zihao{5}'}
+% \changes{v0.6.1}{2019/12/28}{Add `nputabu' environment}
+% \changes{v0.6.1}{2019/12/28}
+%         {Add theorem style `npuplain', and set it to default}
+%
+% \GetFileInfo{nputhesis.dtx}
+% 
+% \DoNotIndex{\newcommmand, \newenvironment}
+%
+% \title{The \textsf{nputhesis} class\thanks{This document
+% corresponds to \textsf{nputhesis}~\fileversion, dated \filedate.}}
+% \author{Zongze Yang\\ \texttt{yangzongze@gmail.com}}
+%
+% \date{\filedate}
+% \maketitle
+% \tableofcontents
+%
+% \StopEventually{}
+%
+% \section{Introduction}
+%
+% \section{Usage}
+%
+% \section{Implementation}
+% 使用布尔变量实现文档的选项设置
+%    \begin{macrocode}
 \newif\if@npu@phd
 \newif\if@npu@blankinfo
 \def\set@npu@phd{\@npu@phdtrue}
 \def\set@npu@ma{\@npu@phdfalse}
+%    \end{macrocode}
+% 使用 xkeyval 声明文档选项 
+%    \begin{macrocode}
 \RequirePackage{xkeyval}
+%    \end{macrocode}
+% 声明选项 blankinfo, 用于控制是否现实空白页标识信息.
+%    \begin{macrocode}
 \DeclareOptionX{blankinfo}[false]{\csname @npu@blankinfo#1\endcsname}
+%    \end{macrocode}
+% 声明选项 thesistype, 可选参数为 phd 和 ma, 用于选择文档类型
+% : 博士论文还是硕士论文.
+%    \begin{macrocode}
 \DeclareOptionX{thesistype}[phd]{\csname set@npu@#1\endcsname}
+%    \end{macrocode}
+% 声明选项 phd 和 ma, 要废齐的选项, 被 thesistype 代替, 请使用 thesistype.
+%    \begin{macrocode}
 \DeclareOptionX{phd}{\@npu@phdtrue}
 \DeclareOptionX{ma}{\@npu@phdfalse}
+%    \end{macrocode}
+% 该文类基于 book 类实现, 加载book 文类.
+%    \begin{macrocode}
 \DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{book}}
 \ExecuteOptionsX{thesistype=phd}
 \ProcessOptionsX \relax
 \LoadClass{book}
+%    \end{macrocode}
+% 加载需要的宏包
+%    \begin{macrocode}
 \RequirePackage{geometry}
 \RequirePackage{xcolor}
 \RequirePackage{fancyhdr}
@@ -54,12 +123,18 @@
 \ifxetex
   \setmainfont{Times New Roman}
 \fi
+%    \end{macrocode}
+% 设置页面版式格式
+%    \begin{macrocode}
 \geometry{paperwidth=210mm,paperheight=297mm,%
   left=2.5cm,right=2.5cm,top=2.54cm,bottom=2.54cm}
 \topmargin=-10.4mm
 \headheight=17pt
 \footskip=8mm
 \headsep=5mm
+%    \end{macrocode}
+% 设置默认章节标题格式
+%    \begin{macrocode}
 \ifx\ctexset\undefined
   \CTEXsetup[ % name={,}, number={\arabic{chapter}},% use default value
     beforeskip={0pt}, afterskip={20pt}]{chapter}
@@ -112,6 +187,9 @@
     subparagraph/format={\heiti\zihao{-4}}
   }
 \fi
+%    \end{macrocode}
+% 目录字体设置
+%    \begin{macrocode}
 \def\@contentfont{\songti\zihao{-4}}
 \titlecontents{chapter}[0pt]{\@contentfont}
   {\thecontentslabel\hspace{.5em}}{}
@@ -122,7 +200,16 @@
 \titlecontents{subsection}[30pt]{\@contentfont}
   {\thecontentslabel\quad}{}
   {\hspace{.5em}\titlerule*{.}\contentspage}
+%    \end{macrocode}
+% 版面标题
+%    \begin{macrocode}
 \pagestyle{fancy}
+% \renewcommand\chaptermark[1]{\markboth{%
+%   \if@mainmatter%
+%     %\ifnum\arabic{chapter}>0%
+%       \arabic{chapter}\quad%
+%     %\fi%
+%   \fi#1}{}}
 \fancyhf{}
 \fancyhead[EC]{\songti\zihao{-5}\npu@rightmark}
 \fancyhead[OC]{\songti\zihao{-5}\leftmark}
@@ -132,6 +219,9 @@
   \hrule width\headwidth height0.8pt}
 \fancypagestyle{plain}{\thispagestyle{fancy}}
 \newcommand{\clearpagestyle}{\clearpage{\pagestyle{empty}\cleardoublepage}}
+%    \end{macrocode}
+% 定义变量, 用于存储包括论文题目, 作者,导师等信息.
+%    \begin{macrocode}
 \def\title{\@ifnextchar[\@@title{\@@title[]}}
 \def\author{\@ifnextchar[\@@author{\@@author[]}}
 \def\major{\@ifnextchar[\@@major{\@@major[]}}
@@ -161,7 +251,14 @@
 \else
   \def\npu@degreename@en{Master}
 \fi
+%    \end{macrocode}
+% 设置字体和行距
+%    \begin{macrocode}
+% \renewcommand{\normalsize}{\zihao{-4}}
 \linespread{1.25}
+%    \end{macrocode}
+% 定义外封面
+%    \begin{macrocode}
 \def\makeoutercover{
   \begin{titlepage}
     \bfseries
@@ -227,6 +324,9 @@
   \end{titlepage}
   \clearpagestyle%
 }
+%    \end{macrocode}
+% 定义内封面
+%    \begin{macrocode}
 \def\makeinnercover@zh{
   \begin{titlepage}
     \linespread{1.25}
@@ -284,6 +384,9 @@
   \end{titlepage}
   \clearpagestyle
 }
+%    \end{macrocode}
+% 定义英文封面
+%    \begin{macrocode}
 \def\makeinnercover@en{
   \begin{titlepage}
     \linespread{1.25}
@@ -315,9 +418,18 @@
   \end{titlepage}
   \clearpagestyle
 }
+%    \end{macrocode}
+% 整合以上封面为一个命令 makecover
+%    \begin{macrocode}
 \def\makecover{\makeoutercover\makeinnercover@zh\makeinnercover@en}
+%    \end{macrocode}
+% 正文之前使用罗马数字编号
+%    \begin{macrocode}
 \let\npu@frontmatter\frontmatter
 \def\frontmatter{\npu@frontmatter\pagenumbering{Roman}}
+%    \end{macrocode}
+% 重定义 cleardoublepage, 用于实现 blankinfo 选项的功能.
+%    \begin{macrocode}
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
   \hbox{}
   \vspace*{\fill}
@@ -330,6 +442,9 @@
   \thispagestyle{empty}
   \newpage
   \if@twocolumn\hbox{}\newpage\fi\fi\fi}
+%    \end{macrocode}
+% 定义中英文摘要环境
+%    \begin{macrocode}
 \newenvironment{abstract}{%
   \chapter{\npu@abstract}%\addcontentsline{toc}{chapter}{\npu@abstract}%
   \newenvironment{keywords}{%
@@ -340,6 +455,9 @@
   \chapter{\npu@Abstract}%\addcontentsline{toc}{chapter}{\npu@Abstract}%
   \newenvironment{Keywords}{%
     \vspace{2\baselineskip}\par\textbf{\npu@Keywords\npu@comma}}{}}{}
+%    \end{macrocode}
+% 图表标题设置
+%    \begin{macrocode}
 \DeclareCaptionFont{song}{\songti\zihao{5}}  % command defined in package caption
 \captionsetup{labelsep=quad, font=song}
 \captionsetup[figure]{aboveskip=10pt, belowskip=10pt}
@@ -347,10 +465,14 @@
 \renewcommand\thetable{\arabic{chapter}-\arabic{table}}
 \renewcommand\thefigure{\arabic{chapter}-\arabic{figure}}
 \renewcommand\theequation{\arabic{chapter}-\arabic{equation}}
+%    \end{macrocode}
+% 定义表格和列表环境
+%    \begin{macrocode}
 \let\@ldtabular\tabular
 \let\end@ldtabular\endtabular
 \renewenvironment{tabular}{\zihao{5}\@ldtabular}{\end@ldtabular}
 
+% define nputabu environment which will stretch to textwidth
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
 \newcolumntype{R}{>{\raggedleft\arraybackslash}X}
 \newcolumntype{C}{>{\centering\arraybackslash}X}
@@ -359,16 +481,28 @@
 \newenvironment{npulist}{%
 \begingroup\renewcommand{\labelenumi}{[\theenumi].}\enumerate}%
   {\endenumerate\endgroup}
+%    \end{macrocode}
+% 附录自动以英文字母编号
+%    \begin{macrocode}
 \let\npu@chapter\chapter
 \def\npu@star@chapter#1{\npu@chapter{#1}}
 \def\chapter{\secdef\npu@chapter\npu@star@chapter}
 \newcounter{npu@c@appendix}
 \setcounter{npu@c@appendix}{0}
 \def\Appendix{\addtocounter{npu@c@appendix}{1}\chapter{\npu@appendix\Alph{npu@c@appendix}}}
+%    \end{macrocode}
+% 致谢章节
+%    \begin{macrocode}
 \def\Thanks{\chapter{\npu@thanks}}
+%    \end{macrocode}
+% 参加科研工作章节, 设置标题内容
+%    \begin{macrocode}
 \newcommand\Work{\chapter{\npu@work}}
 \newcommand\papersection{\section*{\npu@work@paper}}
 \newcommand\researchsection{\section*{\npu@work@research}}
+%    \end{macrocode}
+% 声明页
+%    \begin{macrocode}
 \def\statement{
   \begin{titlepage}
     \linespread{1.5}
@@ -395,6 +529,10 @@
     \hfill\npu@a@signature\npu@comma\underline{\qquad\qquad\qquad}\par
     \hfill\hskip8.5cm \npu@ymd
   \end{titlepage}}
+%    \end{macrocode}
+% 定义定理环境
+%    \begin{macrocode}
+% ref amsthdoc.pdf
 \newtheoremstyle{nputheorem}% name
   {0pt}% Space above
   {0pt}% Space below
@@ -416,11 +554,17 @@
   {}% Theorem head spec (can be left empty, meaning ‘normal’ )
 
 \theoremstyle{npuplain} % set default style to npuplain
+%    \end{macrocode}
+% 定义双栏符号表 
+%    \begin{macrocode}
 \RequirePackage{nomencl}   % add symbol notation
 \RequirePackage{multicol}  % for two column notation
+% \AtEndPreamble{\makenomenclature}
 \makenomenclature
 \renewcommand{\nomname}{\npu@nomname}
 
+% code come from  @egreg
+% https://tex.stackexchange.com/questions/78764/two-column-nomenclature
 \@ifundefined{chapter}
   {\def\wilh@nomsection{section}}
   {\def\wilh@nomsection{chapter}}
@@ -447,6 +591,9 @@
   % \end{multicols}
   % \setlength{\columnsep}{\npu@columnsep@save}
   \nompostamble}
+%    \end{macrocode}
+% 配置信息载入
+%    \begin{macrocode}
 \def\npu@degreename@zh{\if@npu@phd 博士\else 硕士\fi}
 \def\npu@comma{~:~}
 \def\npu@schoolno{学校代码}
@@ -492,6 +639,8 @@
 人或其他已申请学位或其他用途使用过的成果。对本文的研究做出重要贡献的个人和集体，
 均已在文中以明确方式表明。
 \par 本人学位论文与资料若有不实，愿意承担一切相关的法律责任。}
+%    \end{macrocode}
+% \Finale
+%
 \endinput
-%%
-%% End of file `nputhesis.cls'.
+

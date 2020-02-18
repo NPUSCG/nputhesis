@@ -15,7 +15,6 @@ tags
 *.fdb_latexmk
 *.xdv
 *.fls
-*.pdf
 *.synctex.gz
 *.nlg
 *.nlo
@@ -23,5 +22,10 @@ tags
 *.bcf
 *.run.xml
 *.swp
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
 
 auto
