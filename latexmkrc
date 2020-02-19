@@ -1,6 +1,0 @@
-# for nomenclature
-add_cus_dep("nlo", "nls", 0, "nlo2nls");
-sub nlo2nls {
-    system("makeindex $_[0].nlo -s nomencl.ist -o $_[0].nls -t $_[0].nlg");
-}
-$clean_ext = "bbl nlg nlo nls xdv run.xml"
