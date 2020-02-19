@@ -1,0 +1,5 @@
+@cus_dep_list = (@cus_dep_list, "glo gls 0 makegls");
+sub makegls {
+   system("makeindex -s gglo.ist -o $_[0].gls $_[0].glo"); }
+$makeindex="makeindex -s gind.ist -o %D %S";
+push @generated_exts, 'idx', 'ind', 'glo', 'gls', 'hd';

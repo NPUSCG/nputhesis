@@ -5,19 +5,14 @@
 %% The original source files were:
 %%
 %% nputhesis.dtx  (with options: `class')
-%% 
-%% This is a generated file.
-%% 
 %% Copyright (C) 2020 by Zongze Yang <yangzongze@gmail.com>
 %% 
-%% It may be distributed and/or modified under the
-%% conditions of the LaTeX Project Public License, either version 1.3b
-%% of this license or (at your option) any later version.
-%% The latest version of this license is in
-%%    https://www.latex-project.org/lppl.txt
-%% and version 1.3b or later is part of all distributions of LaTeX
-%% version 2005/12/01 or later.
-%% 
+%% It may be distributed and/or modified under the conditions of the LaTeX
+%% Project Public License, either version 1.3b of this license or (at your
+%% option) any later version. The latest version of this license is in
+%%     https://www.latex-project.org/lppl.txt
+%% and version 1.3b or later is part of all distributions of LaTeX version
+%% 2005/12/01 or later.
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{nputhesis}
     [2020/02/18 v0.6.3 NPU Thesis]
@@ -32,11 +27,11 @@
 \DeclareOptionX{phd}{\@npu@phdtrue}
 \DeclareOptionX{ma}{\@npu@phdfalse}
 \DeclareOptionX{dbr}[true]{\csname @npu@dbr#1\endcsname}
-\DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{book}}
+\DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ExecuteOptionsX{thesistype=phd}
 \ExecuteOptionsX{dbr=false}
 \ProcessOptionsX \relax
-\LoadClass{book}
+\LoadClass[heading=true,zihao=-4]{ctexbook}
 \RequirePackage{geometry}
 \RequirePackage{xcolor}
 \RequirePackage{fancyhdr}
@@ -52,7 +47,6 @@
 \RequirePackage{tabularx}
 \RequirePackage{multirow}
 \RequirePackage{graphicx}
-\RequirePackage[heading=true,zihao=-4]{ctex}
 \RequirePackage{ifxetex}
 \ifxetex
   \setmainfont{Times New Roman}
@@ -499,6 +493,13 @@
 包含本人或其他已申请学位或其他用途使用过的成果。对本文的研究做出重要贡献的个
 人和集体，均已在文中以明确方式表明。
 \par 本人学位论文与资料若有不实，愿意承担一切相关的法律责任。}
-\endinput
+%% 
+%% This work consists of the file  nputhesis.dtx
+%% and the derived files           nputhesis.ins,
+%%                                 nputhesis.pdf,
+%%                                 nputhesis.cls,
+%%                                 nputhesis-sample.tex and
+%%                                 readme2.org
+%% 
 %%
 %% End of file `nputhesis.cls'.

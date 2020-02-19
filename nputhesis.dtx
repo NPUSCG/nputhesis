@@ -1,5 +1,7 @@
 % \iffalse meta-comment
-% 
+% !TeX program  = XeLaTeX
+% !TeX encoding = UTF-8
+%
 % Copyright (C) 2020 by Zongze Yang <yangzongze@gmail.com>
 % 
 % It may be distributed and/or modified under the
@@ -10,9 +12,166 @@
 % and version 1.3b or later is part of all distributions of LaTeX 
 % version 2005/12/01 or later.
 %
-% \fi
-%
-% \iffalse
+%<*internal>
+\iffalse
+%</internal>
+%<*readme>
+* NPU 博士、硕士学位论文 \LaTeX 模板
+=nputhesis= 是基于\LaTeX 的 =ctexbook= 文类编写的[[https://www.nwpu.edu.cn][西北工业大学]]博士、硕士论文格式文类, 基本实现了[[http://gs.nwpu.edu.cn/info/2021/5046.htm][博士、硕士学位论文撰写规定]]的要求.
+
+** \TeX 环境
+=sample.tex= 源文件使用 =UTF8= 编码在 =TeXLive 2019= 下使用引擎 =xelatex= 及 =pdflatex= 
+编译通过. 其他环境未测试.
+
+(* 推荐使用新版 =TeXLive= 下的 =xelatex= 进行编译 *)
+
+** 如何使用
+1. 如何使用该文类
+   在 \TeX 文档开头使用 =nputhesis= 文类即可, 如 
+       =\documentclass[twoside,UTF8,phd,AutoFakeBold]{nputhesis}=.
+   这里选项 ``AutoFakeBold'' 用于宋体加黑.
+2. 如何编译
+   推荐使用 `latexmk' 命令进行编译, 编译命令如下
+   #+BEGIN_SRC shell
+    latexmk -xelatex -synctex=1 nputhesis-sample.tex
+   #+END_SRC
+3. 符号表的生成
+   由于符号表需要使用外部程序 `makeindex' 辅助生成, 所以我们添加了 `latexmkrc' 文件, 
+   只要使用上述 `latexmk' 命令符号表可以自动生成, 否则, 需要手动调用 'makeindex' 程序
+   #+BEGIN_SRC shell
+     makeindex sample.nlo -s nomencl.ist -o sample.nls -t sample.nlg
+   #+END_SRC
+   
+*** 文档选项说明
+1. 由于 =nputhesis= 基于 =book= 实现, =book= 文类的选项这里均能是使用, 如 =twoside=.
+2. =nputhesis= 新定义的选项
+  - =UTF8= : 传递给宏包 =ctexcap=, 用于中文标题处理.
+  - =phd= : 使用博士论文模板, 默认选项.
+  - =ma= : 使用硕士论文模板.
+  - =dbr= : 用于隐藏作者和导师名, 需要使用命令 =\dbr=.
+  - =blankinfo= : 空白页信息开关, 用于在偶数空白页显示 `This Page Intentionally Left Blank!`, 默认不显示.
+
+*** 使用的宏包及定义的环境
+该文类内部已包含宏包 =geometry=, =xcolor=, =fancyhdr=, =titletoc=, =caption=, =ulem=,
+=amsthm=, =amsmath=, =amsfonts=, =setspace=, =longtable=, =booktabs=, =tabularx=, 
+=multirow=, =graphicx=, =ctex=, =nomencl=, =multicol=.
+
+1. 使用了 =amsthm= 宏包定义了定理格式 =nputheorem= 和 =npuplain=, 并默认启用 =npuplain=. 
+在文档中 =\newtheorem{theorem}{定理}[section]= 定义新环境将默认使用格式. 若需更改将
+要定义的定理格式为其他格式, 如 =nputheorem=, 请使用如下命令:
+#+BEGIN_SRC tex
+  \theoremstyle{nputheorem}
+  \newtheorem{npu-thm}{斜体定理}[section]
+#+END_SRC
+那么 =npu-thm= 环境将使用 =nputheorem= 格式.
+2. 符号表生成使用了宏包 =nomencl= . 在需要显示符号表的地方使用命令 =\printnomenclature= 即可, 
+模板中符号表在目录后. 添加符号请使用命令 =\nomenclature{<sym>}{<text explanation>}=.
+
+*** 关于参考文献得说明
+推荐使用 =biblatex= 宏包生成参考文献. 若确实需要使用 =bst= 文件生成参考文件, 可以考虑
+使用 [[https://github.com/Haixing-Hu][@Haixing-Hu]] 编写的 `bst' 文件
+[[https://github.com/Haixing-Hu/GBT7714-2005-BibTeX-Style][`gbt7741-2005.bst']].
+
+** 其他链接
+1. [[https://github.com/polossk][@polossk]]: [[https://github.com/polossk/LaTeX-Template-For-NPU-Thesis][LaTeX-Template-For-NPU-Thesis]] 
+2. [[https://github.com/lrtfm][@lrtfm]]: [[https://github.com/lrtfm/npu-dissertation-proposal][西北工业大学研究生选题报告表 \LaTeX 模板]]
+3. [[https://github.com/Haixing-Hu][@Haixing-Hu]] 编写的 `bst' 文件
+[[https://github.com/Haixing-Hu/GBT7714-2005-BibTeX-Style][`gbt7741-2005.bst']].
+
+** License
+
+MIT License
+
+Copyright (c) 2020 Yang Zongze (yangzongze@gmail.com)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+%</readme>
+%<*internal>
+\fi
+\def\nameofplainTeX{plain}
+\ifx\fmtname\nameofplainTeX\else
+  \expandafter\begingroup
+\fi
+%</internal>
+%<*install>
+\input docstrip.tex
+\keepsilent
+\askforoverwritefalse
+\preamble
+Copyright (C) 2020 by Zongze Yang <yangzongze@gmail.com>
+
+It may be distributed and/or modified under the conditions of the LaTeX 
+Project Public License, either version 1.3b of this license or (at your 
+option) any later version. The latest version of this license is in
+    https://www.latex-project.org/lppl.txt
+and version 1.3b or later is part of all distributions of LaTeX version 
+2005/12/01 or later.
+\endpreamble
+\postamble
+
+This work consists of the file  nputhesis.dtx
+and the derived files           nputhesis.ins,
+                                nputhesis.pdf,
+                                nputhesis.cls,
+                                nputhesis-sample.tex and
+                                readme2.org
+
+\endpostamble
+
+\generate
+{
+  \usedir{tex/latex/nputhesis}
+  \file{nputhesis.cls}             {\from{\jobname.dtx}{class}}
+%</install>
+%<*internal>
+  \usedir{source/latex/nputhesis}
+  \file{\jobname.ins}              {\from{\jobname.dtx}{install}}
+%</internal>
+%<*install>
+  \usedir{doc/latex/nputhesis}
+  \file{nputhesis-sample.tex}      {\from{\jobname.dtx}{sample}}
+  \nopreamble\nopostamble
+  \file{README.org}               {\from{\jobname.dtx}{readme}}
+}
+
+\Msg{*************************************************************}
+\Msg{*                                                           *}
+\Msg{* To finish the installation you have to move the following *}
+\Msg{* files into a directory searched by TeX:                   *}
+\Msg{*                                                           *}
+\Msg{* \space\space nputhesis.cls                                *} 
+\Msg{*                                                           *}
+\Msg{* To produce the documentation run the files ending with    *}
+\Msg{* `.dtx' through XeLaTeX.                                   *}
+\Msg{*                                                           *}
+\Msg{* Happy TeXing                                              *}
+\Msg{*************************************************************}
+
+%</install>
+%<install>\endbatchfile
+%<*internal>
+\ifx\fmtname\nameofplainTeX
+  \expandafter\endbatchfile
+\else
+  \expandafter\endgroup
+\fi
+%</internal>
 %<*driver>
 \ProvidesFile{nputhesis.dtx}
 %</driver>
@@ -65,7 +224,7 @@
 % \StopEventually{}
 %
 % \section{简介}
-%
+% 
 % \section{使用方法}
 % \subsection{加载文类}
 % 加载 nputhesis 文档类
@@ -97,9 +256,9 @@
 % 上面的选项 |gbnamefmt| 需要使用 v1.0k 以上版本的 |biblatex-gb7714-2015|.
 % 如果宏包版本不能满足, 可以注释掉选项 |gbnamefmt=givenahead|.
 %
-% 然后使用 |addbibresource| 添加参考文献文件 |ref.bib|.
+% 然后使用 |addbibresource| 添加参考文献文件 |myrefs.bib|.
 % \begin{frameverb}
-%   \addbibresource{ref.bib}
+%   \addbibresource{myrefs.bib}
 % \end{frameverb}
 % \subsection{变量设置}
 % 设置学校编号, 分类号, 题目, 姓名等信息
@@ -201,13 +360,35 @@
 %<*sample>
 \documentclass[twoside, UTF8, phd, AutoFakeBold]{nputhesis}
 \usepackage{lipsum}
+\usepackage{filecontents}
 \usepackage[backend=biber,
             style=gb7714-2015, maxbibnames=3,minbibnames=3,
             gbnamefmt=givenahead,
             doi=false,
             url=false,
            ]{biblatex}
-\addbibresource{ref.bib}
+\begin{filecontents}{myrefs.bib}
+@Book{Knuth1986,
+  Title                    = {The \TeX book},
+  Author                   = {Donald~Ervin Knuth},
+  Publisher                = {Addison-Wesley},
+  Year                     = {1986}
+}
+@Book{Lamport1994,
+  Title                    = {A Document Preparation System},
+  Author                   = {Leslie Lamport},
+  Publisher                = {Addison-Wesley},
+  Year                     = {1994}
+}
+
+@Book{Liu2013,
+  Title                    = {\LaTeX 入门},
+  Author                   = {刘海洋},
+  Publisher                = {电子工业出版社},
+  Year                     = {2013}
+}
+\end{filecontents}
+\addbibresource{myrefs.bib}
 \schoolno{10699}
 \classno{O.242}
 \secretlevel{公开}
@@ -272,6 +453,43 @@
 \end{document}
 %</sample>
 %    \end{macrocode}
+% \section{安装}
+% 从 |github| 下载的压缩包已所有文件, 直接解压即可使用. 下面介绍从 |dtx| 
+% 文件生成相关文件的过程.   
+% \subsection{编译 nputhesis.dtx}
+% 运行如下命令即可得到所有文件
+% \begin{frameverb}
+%   xelatex nputhesis.dtx
+% \end{frameverb}
+% 但是这样生成文档 | nputhesis.pdf | 中没有索引等信息, 因此需要进行多次编译.
+% 下面给出生成 |pdf| 文件的两种方式.
+% \subsubsection{方法一}
+% 进入 |nputhesis.dtx| 所在文件夹, 依次运行下面命令.
+% \begin{frameverb}
+%   xelatex nputhesis.dtx
+%   makeindex -s gglo.ist -o nputhesis.gls nputhesis.glo
+%   makeindex -s gind.ist -o nputhesis.ind nputhesis.idx
+%   xelatex nputhesis.dtx
+%   xelatex nputhesis.dtx
+%   del nputhesis.gls nputhesis.glo nputhesis.ind nputhesis.idx 
+%   del nputhesis.ilg nputhesis.aux nputhesis.log nputhesis.toc
+%   del nputhesis.hd nputhesis.out
+% \end{frameverb}
+% \subsubsection{方法二}
+% 使用 latexmk 进行编译. 首先, 进入 |nputhesis.dtx| 所在文件夹,
+% 创建文件 |dtxrc| 内容如下:
+% \begin{frameverb}
+%   @cus_dep_list = (@cus_dep_list, "glo gls 0 makegls");
+%   sub makegls {
+%      system("makeindex -s gglo.ist -o $_[0].gls $_[0].glo"); }
+%   $makeindex="makeindex -s gind.ist -o %D %S";
+%   push @generated_exts, 'idx', 'ind', 'glo', 'gls', 'hd';
+% \end{frameverb}
+% 然后在该文件夹运行如下命令即可生成所需文件.
+% \begin{frameverb}
+%   latexmk -xelatex nputhesis.dtx -r dtxrc
+%   latexmk -c nputhesis.dtx -r dtxrc
+% \end{frameverb}
 % \section{代码实现}
 % \subsection{文档选项}
 % 使用布尔变量实现文档的选项设置
@@ -307,11 +525,11 @@
 %    \end{macrocode}
 % 该文类基于 book 类实现, 加载book 文类.
 %    \begin{macrocode}
-\DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{book}}
+\DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ExecuteOptionsX{thesistype=phd}
 \ExecuteOptionsX{dbr=false}
 \ProcessOptionsX \relax
-\LoadClass{book}
+\LoadClass[heading=true,zihao=-4]{ctexbook}
 %    \end{macrocode}
 % \subsection{使用的宏包}
 % 加载需要的宏包
@@ -331,7 +549,7 @@
 \RequirePackage{tabularx}
 \RequirePackage{multirow}
 \RequirePackage{graphicx}
-\RequirePackage[heading=true,zihao=-4]{ctex}
+% \RequirePackage[heading=true,zihao=-4]{ctex}
 \RequirePackage{ifxetex}
 \ifxetex
   \setmainfont{Times New Roman}

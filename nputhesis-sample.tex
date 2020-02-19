@@ -5,28 +5,45 @@
 %% The original source files were:
 %%
 %% nputhesis.dtx  (with options: `sample')
-%% 
-%% This is a generated file.
-%% 
 %% Copyright (C) 2020 by Zongze Yang <yangzongze@gmail.com>
 %% 
-%% It may be distributed and/or modified under the
-%% conditions of the LaTeX Project Public License, either version 1.3b
-%% of this license or (at your option) any later version.
-%% The latest version of this license is in
-%%    https://www.latex-project.org/lppl.txt
-%% and version 1.3b or later is part of all distributions of LaTeX
-%% version 2005/12/01 or later.
-%% 
+%% It may be distributed and/or modified under the conditions of the LaTeX
+%% Project Public License, either version 1.3b of this license or (at your
+%% option) any later version. The latest version of this license is in
+%%     https://www.latex-project.org/lppl.txt
+%% and version 1.3b or later is part of all distributions of LaTeX version
+%% 2005/12/01 or later.
 \documentclass[twoside, UTF8, phd, AutoFakeBold]{nputhesis}
 \usepackage{lipsum}
+\usepackage{filecontents}
 \usepackage[backend=biber,
             style=gb7714-2015, maxbibnames=3,minbibnames=3,
             gbnamefmt=givenahead,
             doi=false,
             url=false,
            ]{biblatex}
-\addbibresource{ref.bib}
+\begin{filecontents}{myrefs.bib}
+@Book{Knuth1986,
+  Title                    = {The \TeX book},
+  Author                   = {Donald~Ervin Knuth},
+  Publisher                = {Addison-Wesley},
+  Year                     = {1986}
+}
+@Book{Lamport1994,
+  Title                    = {A Document Preparation System},
+  Author                   = {Leslie Lamport},
+  Publisher                = {Addison-Wesley},
+  Year                     = {1994}
+}
+
+@Book{Liu2013,
+  Title                    = {\LaTeX 入门},
+  Author                   = {刘海洋},
+  Publisher                = {电子工业出版社},
+  Year                     = {2013}
+}
+\end{filecontents}
+\addbibresource{myrefs.bib}
 \schoolno{10699}
 \classno{O.242}
 \secretlevel{公开}
@@ -89,6 +106,13 @@
 \end{npulist}
 \statement
 \end{document}
-\endinput
+%% 
+%% This work consists of the file  nputhesis.dtx
+%% and the derived files           nputhesis.ins,
+%%                                 nputhesis.pdf,
+%%                                 nputhesis.cls,
+%%                                 nputhesis-sample.tex and
+%%                                 readme2.org
+%% 
 %%
 %% End of file `nputhesis-sample.tex'.
