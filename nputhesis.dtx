@@ -22,14 +22,13 @@
     [2020/02/18 v0.6.3 NPU Thesis]
 %</class>
 %<*driver>
-\documentclass{ltxdoc}
-\usepackage{xeCJK}
-\usepackage{tcolorbox}
+\documentclass{ctxdoc}
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
 \begin{document}
   \DocInput{nputhesis.dtx}
+  \IndexLayout
   \PrintChanges
   \PrintIndex
 \end{document}
@@ -66,40 +65,149 @@
 % \StopEventually{}
 %
 % \section{简介}
+%
+% \section{使用方法}
 % \subsection{加载文类}
 % 加载 nputhesis 文档类
-%    \begin{macrocode}
-%<*sample>
-\documentclass[twoside, UTF8, phd, dbr, AutoFakeBold]{nputhesis}
-%    \end{macrocode}
+% \begin{frameverb}
+%   \documentclass[twoside, UTF8, phd, AutoFakeBold]{nputhesis}
+% \end{frameverb}
+% 若需生成盲评版本, 添加选项 |dbr| 即可, 如
+% \begin{frameverb}
+%   \documentclass[twoside, UTF8, phd, dbr, AutoFakeBold]{nputhesis}
+% \end{frameverb}
 % \subsection{加载常用宏包}
-%    \begin{macrocode}
-\usepackage{lipsum}
-%    \end{macrocode} 
+% \begin{frameverb}
+%   \usepackage{lipsum}
+% \end{frameverb} 
 % \subsection{参考文献}
 % 推荐使用 |biblatex| 处理参考文献. 参考文献格式使用 |gb7714-2015|, 
 % 其详细信息请参考 https://github.com/hushidong/biblatex-gb7714-2015.
 % 宏包 |biblatex-gb7714-2015| 已包含在 TeXLive 和 MikTeX 中. 使用如下
 % 命令载入 |biblatex| 宏包即可.
+% \begin{frameverb}
+%   \usepackage[backend=biber,
+%               style=gb7714-2015, maxbibnames=3,minbibnames=3,
+%               gbnamefmt=givenahead,
+%               doi=false,
+%               url=false,
+%   %            gbpub=false
+%              ]{biblatex}
+% \end{frameverb}
+% 上面的选项 |gbnamefmt| 需要使用 v1.0k 以上版本的 |biblatex-gb7714-2015|.
+% 如果宏包版本不能满足, 可以注释掉选项 |gbnamefmt=givenahead|.
+%
+% 然后使用 |addbibresource| 添加参考文献文件 |ref.bib|.
+% \begin{frameverb}
+%   \addbibresource{ref.bib}
+% \end{frameverb}
+% \subsection{变量设置}
+% 设置学校编号, 分类号, 题目, 姓名等信息
+% \begin{frameverb}
+%   \schoolno{10699}
+%   \classno{O.242}
+%   \secretlevel{公开}
+%   \authorno{0000999999}
+%   \title[\LaTeX\ Template of NPU Thesis]{西工大硕博学位论文 \LaTeX 模板}
+%   \author[\dbr{San Zhang}]{\dbr{张三}}
+%   \major[Philosophy in Mathematics]{数学}
+%   \supervisor[\dbr{Si Li}]{\dbr{李四}}
+%   \applydate[April 2046]{2046~年~4~月}
+%   \support{本文研究得到某某基金(编号:XXXXXXX)资助。}
+% \end{frameverb}
+% \subsection{开始文档}
+% 使用 |makecover| 生成封面: 包括外封面和内封面, 然后用 | frontmatter | 
+% 分割封面和正文部分.
+% \begin{frameverb}
+%   \begin{document}
+%   \makecover
+%   \frontmatter
+% \end{frameverb}
+% \subsection{摘要部分}
+% 中文摘要
+% \begin{frameverb}
+%   \begin{abstract}
+%     本模板基本实现了西北工业大学硕博论文格式要求: 封皮, 页眉页脚, 
+%     章节标题格式, 参考文献格式等.
+%     \begin{keywords}
+%       学位论文, \LaTeX\ 模板, 西工大
+%     \end{keywords}
+%   \end{abstract}
+% \end{frameverb}
+% 英文摘要
+% \begin{frameverb}
+%   \begin{Abstract}
+%     We implement the class |nputhesis| for the thesis of NWPU. 
+%     \begin{Keywords}
+%       Thesis Template, \LaTeX, NPU
+%     \end{Keywords}
+%   \end{Abstract}
+% \end{frameverb}
+% \subsection{目录和符号表}
+% \begin{frameverb}
+%   \tableofcontents
+%   \printnomenclature  
+% \end{frameverb}
+% 正文中使用 |\nomenclature{<sym>}{<text explanation>}| 向符号表中添加内容.
+% \subsection{正文部分}
+% 使用 |mainmatter| 开始正文.
+% \begin{frameverb}
+%   \mainmatter
+% \end{frameverb}
+% 正文结构
+% \begin{frameverb}
+%   \chapter{绪论}
+%   \section{\TeX 和 \LaTeX 介绍}
+%   \section{nputhesis 简介}
+%   \chapter{基础知识}
+%   \section{基本命令}
+%   \section{宏包}
+% \end{frameverb}
+% \subsubsection{图与表}
+% \subsection{参考文献, 附录等}
+% \begin{frameverb}
+%   \backmatter
+%   % 以下两种参考文献格式, 根据实际宏包使用情况添加
+%   \printbibliography             % biblatex 输出参考文件方式
+%   % \bibliographystyle{gbt7714-2005}   % 传统输出参考文献方式
+%   % \bibliography{ref}                 % 传统输出参考文献方式
+%
+%   % \Appendix  % 如果有多个附录, 可重复使用该命令, 自动按字母编号.
+%
+%   \Thanks     % 致谢
+%
+%   \Work
+%   \papersection  % 以下填写发表论文情况
+%
+%   \begin{npulist}
+%     \item {\bf \dbr{S. Zhang}}, \dbr{S. Li}. NPU 硕博学位论文
+%       \LaTeX\ 模板[D]. 2019.
+%   \end{npulist}
+%
+%   \researchsection % 以下填写参加科研情况
+%   \begin{npulist}
+%     \item NPU \LaTeX 模板.   编号: 000000000, 参与.
+%     \item NPU \LaTeX 模板.   编号: 000000001, 参与.
+%     \item NPU \LaTeX 模板.   编号: 000000002, 参与.
+%   \end{npulist}
+% \end{frameverb}
+% \subsection{结束文档}
+% \begin{frameverb}
+%   \statement
+%   \end{document}
+% \end{frameverb}
+% \subsection{完整的例子}
 %    \begin{macrocode}
+%<*sample>
+\documentclass[twoside, UTF8, phd, AutoFakeBold]{nputhesis}
+\usepackage{lipsum}
 \usepackage[backend=biber,
             style=gb7714-2015, maxbibnames=3,minbibnames=3,
             gbnamefmt=givenahead,
             doi=false,
             url=false,
-%            gbpub=false
            ]{biblatex}
-%    \end{macrocode}
-% 上面的选项 |gbnamefmt| 需要使用 v1.0k 以上版本的 |biblatex-gb7714-2015|.
-% 如果宏包版本不能满足, 可以注释掉选项 |gbnamefmt=givenahead|.
-%
-% 然后使用 |addbibresource| 添加参考文献文件 |ref.bib|.
-%    \begin{macrocode}
 \addbibresource{ref.bib}
-%    \end{macrocode}
-% \subsection{变量设置}
-% 设置学校编号, 分类号, 题目, 姓名等信息
-%    \begin{macrocode}
 \schoolno{10699}
 \classno{O.242}
 \secretlevel{公开}
@@ -110,66 +218,39 @@
 \supervisor[\dbr{Si Li}]{\dbr{李四}}
 \applydate[April 2046]{2046~年~4~月}
 \support{本文研究得到某某基金(编号:XXXXXXX)资助。}
-%    \end{macrocode}
-% \subsection{开始文档}
-% 使用 |makecover| 生成封面: 包括外封面和内封面, 然后用 | frontmatter | 
-% 分割封面和正文部分.
-%    \begin{macrocode}
 \begin{document}
 \makecover
 \frontmatter
-%    \end{macrocode}
-% \subsection{摘要部分}
-% 中文摘要
-%    \begin{macrocode}
+
 \begin{abstract}
-
-  本模板基本实现了西北工业大学硕博论文格式要求: 封皮, 页眉页脚, 章节标题格式, 参考文献格式等.
-
+  本模板基本实现了西北工业大学硕博论文格式要求: 封皮, 页眉页脚,
+  章节标题格式, 参考文献格式等.
   \begin{keywords}
     学位论文, \LaTeX\ 模板, 西工大
   \end{keywords}
 \end{abstract}
-%    \end{macrocode}
-% 英文摘要
-%    \begin{macrocode}
 \begin{Abstract}
-  We implement the class |nputhesis| for the thesis of NWPU. 
+  We implement the class |nputhesis| for the thesis of NWPU.
   \begin{Keywords}
     Thesis Template, \LaTeX, NPU
   \end{Keywords}
 \end{Abstract}
-%    \end{macrocode}
-% \subsection{目录和符号表}
-%    \begin{macrocode}
+
 \tableofcontents
-\printnomenclature  
-%    \end{macrocode}
-% 正文中使用 |\nomenclature{<sym>}{<text explanation>}| 向符号表中添加内容.
-% \subsection{正文部分}
-% 使用 |mainmatter| 开始正文.
-%    \begin{macrocode}
+\printnomenclature
+
 \mainmatter
-%    \end{macrocode}
-% 正文结构
-%    \begin{macrocode}
+
 \chapter{绪论}
 \section{\TeX 和 \LaTeX 介绍}
 \section{nputhesis 简介}
 \chapter{基础知识}
 \section{基本命令}
 \section{宏包}
-%    \end{macrocode}
-% \subsubsection{图与表}
-% \subsection{参考文献, 附录等}
-%    \begin{macrocode}
-\backmatter
-% 以下两种参考文献格式, 根据实际宏包使用情况添加
-\printbibliography             % biblatex 输出参考文件方式
-% \bibliographystyle{gbt7714-2005}   % 传统输出参考文献方式
-% \bibliography{ref}                 % 传统输出参考文献方式
 
-% \Appendix  % 如果有多个附录, 可重复使用该命令, 自动按字母编号.
+\backmatter
+
+\printbibliography             % biblatex 输出参考文件方式
 
 \Thanks     % 致谢
 
@@ -177,7 +258,8 @@
 \papersection  % 以下填写发表论文情况
 
 \begin{npulist}
-  \item {\bf \dbr{S. Zhang}}, \dbr{S. Li}. NPU 硕博学位论文 \LaTeX\ 模板[D]. 2019.
+  \item {\bf \dbr{S. Zhang}}, \dbr{S. Li}. NPU 硕博学位论文
+    \LaTeX\ 模板[D]. 2019.
 \end{npulist}
 
 \researchsection % 以下填写参加科研情况
@@ -186,15 +268,10 @@
   \item NPU \LaTeX 模板.   编号: 000000001, 参与.
   \item NPU \LaTeX 模板.   编号: 000000002, 参与.
 \end{npulist}
-%    \end{macrocode}
-% \subsection{结束文档}
-%    \begin{macrocode}
 \statement
 \end{document}
 %</sample>
 %    \end{macrocode}
-% \section{使用方法}
-%
 % \section{代码实现}
 % \subsection{文档选项}
 % 使用布尔变量实现文档的选项设置

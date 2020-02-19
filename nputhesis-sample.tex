@@ -18,7 +18,7 @@
 %% and version 1.3b or later is part of all distributions of LaTeX
 %% version 2005/12/01 or later.
 %% 
-\documentclass[twoside, UTF8, phd, dbr, AutoFakeBold]{nputhesis}
+\documentclass[twoside, UTF8, phd, AutoFakeBold]{nputhesis}
 \usepackage{lipsum}
 \usepackage[backend=biber,
             style=gb7714-2015, maxbibnames=3,minbibnames=3,
@@ -40,10 +40,10 @@
 \begin{document}
 \makecover
 \frontmatter
+
 \begin{abstract}
-
-  本模板基本实现了西北工业大学硕博论文格式要求: 封皮, 页眉页脚, 章节标题格式, 参考文献格式等.
-
+  本模板基本实现了西北工业大学硕博论文格式要求: 封皮, 页眉页脚,
+  章节标题格式, 参考文献格式等.
   \begin{keywords}
     学位论文, \LaTeX\ 模板, 西工大
   \end{keywords}
@@ -54,18 +54,22 @@
     Thesis Template, \LaTeX, NPU
   \end{Keywords}
 \end{Abstract}
+
 \tableofcontents
 \printnomenclature
+
 \mainmatter
+
 \chapter{绪论}
 \section{\TeX 和 \LaTeX 介绍}
 \section{nputhesis 简介}
 \chapter{基础知识}
 \section{基本命令}
 \section{宏包}
-\backmatter
-\printbibliography             % biblatex 输出参考文件方式
 
+\backmatter
+
+\printbibliography             % biblatex 输出参考文件方式
 
 \Thanks     % 致谢
 
@@ -73,7 +77,8 @@
 \papersection  % 以下填写发表论文情况
 
 \begin{npulist}
-  \item {\bf \dbr{S. Zhang}}, \dbr{S. Li}. NPU 硕博学位论文 \LaTeX\ 模板[D]. 2019.
+  \item {\bf \dbr{S. Zhang}}, \dbr{S. Li}. NPU 硕博学位论文
+    \LaTeX\ 模板[D]. 2019.
 \end{npulist}
 
 \researchsection % 以下填写参加科研情况
