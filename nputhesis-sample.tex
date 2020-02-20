@@ -13,7 +13,7 @@
 %%     https://www.latex-project.org/lppl.txt
 %% and version 1.3b or later is part of all distributions of LaTeX version
 %% 2005/12/01 or later.
-\documentclass[twoside, UTF8, phd, AutoFakeBold]{nputhesis}
+\documentclass[oneside, UTF8, phd, AutoFakeBold]{nputhesis}
 \usepackage{lipsum}
 \usepackage{filecontents}
 \usepackage[backend=biber,
@@ -79,6 +79,7 @@
 
 \chapter{绪论}
 \section{\TeX 和 \LaTeX 介绍}
+\TeX \parencite{Knuth1986} 和 \LaTeX \cite{Lamport1994, Liu2013}的介绍.
 \section{nputhesis 简介}
 \chapter{基础知识}
 \section{基本命令}
@@ -87,6 +88,10 @@
 \backmatter
 
 \printbibliography             % biblatex 输出参考文件方式
+
+\Appendix   % 编号附录
+
+\Appendix*  % 不编号附录
 
 \Thanks     % 致谢
 
@@ -101,8 +106,6 @@
 \researchsection % 以下填写参加科研情况
 \begin{npulist}
   \item NPU \LaTeX 模板.   编号: 000000000, 参与.
-  \item NPU \LaTeX 模板.   编号: 000000001, 参与.
-  \item NPU \LaTeX 模板.   编号: 000000002, 参与.
 \end{npulist}
 \statement
 \end{document}
@@ -111,8 +114,9 @@
 %% and the derived files           nputhesis.ins,
 %%                                 nputhesis.pdf,
 %%                                 nputhesis.cls,
-%%                                 nputhesis-sample.tex and
-%%                                 readme2.org
+%%                                 nputhesis-sample.tex,
+%%                                 nputhesis-sample.pdf and
+%%                                 README.org
 %% 
 %%
 %% End of file `nputhesis-sample.tex'.

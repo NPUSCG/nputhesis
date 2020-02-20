@@ -363,8 +363,11 @@
 \def\chapter{\secdef\npu@chapter\npu@star@chapter}
 \newcounter{npu@c@appendix}
 \setcounter{npu@c@appendix}{0}
-\def\Appendix{\addtocounter{npu@c@appendix}{1}%
+\def\npu@star@Appendix{\chapter{\npu@appendix}}
+\def\npu@Appendix{\addtocounter{npu@c@appendix}{1}%
   \chapter{\npu@appendix\Alph{npu@c@appendix}}}
+\def\Appendix{\secdef\npu@Appendix\npu@star@Appendix}
+
 \def\Thanks{\chapter{\npu@thanks}}
 \newcommand\Work{\chapter{\npu@work}}
 \newcommand\papersection{\section*{\npu@work@paper}}
@@ -498,8 +501,9 @@
 %% and the derived files           nputhesis.ins,
 %%                                 nputhesis.pdf,
 %%                                 nputhesis.cls,
-%%                                 nputhesis-sample.tex and
-%%                                 readme2.org
+%%                                 nputhesis-sample.tex,
+%%                                 nputhesis-sample.pdf and
+%%                                 README.org
 %% 
 %%
 %% End of file `nputhesis.cls'.

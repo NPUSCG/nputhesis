@@ -12,11 +12,12 @@ if %flag%x == x (
     for %%i in (tds, clean) do (
         call:%%i
     )
+    pause
     goto :EOF
 )
 
 
-for %%i in (tds, plain, demo, clean, clean_all, help) do if x%flag% == x%%i (
+for %%i in (tds, plain, fast, demo, clean, clean_all, help) do if x%flag% == x%%i (
         call:%%i
         goto :EOF
     )
@@ -41,8 +42,8 @@ goto :EOF
     md %tds_dir%%src_dir%
     call :create_dscfg
     call :plain
-    cp nputhesis.dtx %tds_dir%%src_dir%\nputhesis.dtx
-    cp nputhesis.pdf %tds_dir%%doc_dir%\nputhesis.pdf
+    copy /Y nputhesis.dtx %tds_dir%%src_dir%\nputhesis.dtx
+    copy /Y nputhesis.pdf %tds_dir%%doc_dir%\nputhesis.pdf
     pushd %tds_dir%%doc_dir%
     call :demo
     popd
@@ -53,6 +54,11 @@ goto :EOF
     echo "Copy the files in nputhesis.tds.zip to proper destination."
     echo "Enjoy it!"
     echo ------------------------------------------------------------
+goto :EOF
+
+:fast
+	xelatex nputhesis.dtx
+    latexmk -xelatex nputhesis-sample.tex
 goto :EOF
 
 :plain

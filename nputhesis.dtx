@@ -129,8 +129,9 @@ This work consists of the file  nputhesis.dtx
 and the derived files           nputhesis.ins,
                                 nputhesis.pdf,
                                 nputhesis.cls,
-                                nputhesis-sample.tex and
-                                readme2.org
+                                nputhesis-sample.tex,
+                                nputhesis-sample.pdf and
+                                README.org
 
 \endpostamble
 
@@ -358,7 +359,7 @@ and the derived files           nputhesis.ins,
 % \subsection{完整的例子}
 %    \begin{macrocode}
 %<*sample>
-\documentclass[twoside, UTF8, phd, AutoFakeBold]{nputhesis}
+\documentclass[oneside, UTF8, phd, AutoFakeBold]{nputhesis}
 \usepackage{lipsum}
 \usepackage{filecontents}
 \usepackage[backend=biber,
@@ -424,6 +425,7 @@ and the derived files           nputhesis.ins,
 
 \chapter{绪论}
 \section{\TeX 和 \LaTeX 介绍}
+\TeX \parencite{Knuth1986} 和 \LaTeX \cite{Lamport1994, Liu2013}的介绍.
 \section{nputhesis 简介}
 \chapter{基础知识}
 \section{基本命令}
@@ -432,6 +434,10 @@ and the derived files           nputhesis.ins,
 \backmatter
 
 \printbibliography             % biblatex 输出参考文件方式
+
+\Appendix   % 编号附录
+
+\Appendix*  % 不编号附录
 
 \Thanks     % 致谢
 
@@ -446,8 +452,6 @@ and the derived files           nputhesis.ins,
 \researchsection % 以下填写参加科研情况
 \begin{npulist}
   \item NPU \LaTeX 模板.   编号: 000000000, 参与.
-  \item NPU \LaTeX 模板.   编号: 000000001, 参与.
-  \item NPU \LaTeX 模板.   编号: 000000002, 参与.
 \end{npulist}
 \statement
 \end{document}
@@ -932,8 +936,11 @@ and the derived files           nputhesis.ins,
 \def\chapter{\secdef\npu@chapter\npu@star@chapter}
 \newcounter{npu@c@appendix}
 \setcounter{npu@c@appendix}{0}
-\def\Appendix{\addtocounter{npu@c@appendix}{1}%
+\def\npu@star@Appendix{\chapter{\npu@appendix}}
+\def\npu@Appendix{\addtocounter{npu@c@appendix}{1}%
   \chapter{\npu@appendix\Alph{npu@c@appendix}}}
+\def\Appendix{\secdef\npu@Appendix\npu@star@Appendix}
+
 %    \end{macrocode}
 % 致谢章节
 %    \begin{macrocode}
