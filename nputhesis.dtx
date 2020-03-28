@@ -29,7 +29,25 @@
 1. 如何使用该文类
    在 \TeX 文档开头使用 =nputhesis= 文类即可, 如 
        =\documentclass[twoside,UTF8,phd,AutoFakeBold]{nputhesis}=.
-   这里选项 ``AutoFakeBold'' 用于宋体加黑.
+
+   这里使用 =AutoFakeBold= 为外封面的字体加黑. 在 TeXLive 2019 之前的版本中,
+   启用选项使得 xelatex 编译生成的 pdf 文件不能复制, 即复制为乱码. 解决方法有以下几种:
+    (1) 升级 TeXLive 到 2019 版.
+    (2) 使用 Adobe 字体. 首先自行下载安装 Adobe 字体, 然后 =tex= 源文件导言区重新定义相关字体.
+      #+BEGIN_SRC tex
+        \documentclass[twoside, UTF8, phd, dbr, AutoFakeBold]{nputhesis}
+        % 导言区
+        \renewcommand{\songti}{\CJKfontspec{Adobe Song Std L}}        % adobe 宋体
+        \renewcommand{\kaishu}{\CJKfontspec{Adobe Kaiti Std R}}       % adobe 楷体
+        \renewcommand{\heiti}{\CJKfontspec{Adobe Heiti Std R}}        % adobe 黑体
+        \renewcommand{\fangsong}{\CJKfontspec{Adobe Fangsong Std R}}  % adobe 仿宋
+        % other command
+        \begin{document}
+        正文
+        \end{document}
+      #+END_SRC
+    (3.) 去掉 =AutoFakeBold= 选项. 这样会导致外封面字体不能加黑.
+
 2. 如何编译
    推荐使用 `latexmk' 命令进行编译, 编译命令如下
    #+BEGIN_SRC shell
@@ -39,7 +57,7 @@
    由于符号表需要使用外部程序 `makeindex' 辅助生成, 所以我们添加了 `latexmkrc' 文件, 
    只要使用上述 `latexmk' 命令符号表可以自动生成, 否则, 需要手动调用 'makeindex' 程序
    #+BEGIN_SRC shell
-     makeindex sample.nlo -s nomencl.ist -o sample.nls -t sample.nlg
+     makeindex nputhesis-sample.nlo -s nomencl.ist -o nputhesis-sample.nls -t nputhesis-sample.nlg
    #+END_SRC
    
 *** 文档选项说明
@@ -74,9 +92,8 @@
 
 ** 其他链接
 1. [[https://github.com/polossk][@polossk]]: [[https://github.com/polossk/LaTeX-Template-For-NPU-Thesis][LaTeX-Template-For-NPU-Thesis]] 
-2. [[https://github.com/lrtfm][@lrtfm]]: [[https://github.com/lrtfm/npu-dissertation-proposal][西北工业大学研究生选题报告表 \LaTeX 模板]]
-3. [[https://github.com/Haixing-Hu][@Haixing-Hu]] 编写的 `bst' 文件
-[[https://github.com/Haixing-Hu/GBT7714-2005-BibTeX-Style][`gbt7741-2005.bst']].
+2. [[https://github.com/NPUSCG][@NPUSCG]]: [[https://github.com/NPUSCG/npu-dissertation-proposal][西北工业大学研究生选题报告表 \LaTeX 模板]]
+3. [[https://github.com/Haixing-Hu][@Haixing-Hu]]: [[https://github.com/Haixing-Hu/GBT7714-2005-BibTeX-Style][`gbt7741-2005.bst']].
 
 ** License
 
@@ -179,7 +196,7 @@ and the derived files           nputhesis.ins,
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\ProvidesClass{nputhesis}
 %<*class>
-    [2020/02/18 v0.6.3 NPU Thesis]
+    [2020/03/28 v1.0.0 NPU Thesis Template]
 %</class>
 %<*driver>
 \documentclass{ctxdoc}
@@ -195,8 +212,7 @@ and the derived files           nputhesis.ins,
 %</driver>
 % \fi
 %
-% \changes{v0.6.3}{2020/02/18}{Add option `dbr' for double-blind review}
-% \changes{v0.6.3}{2020/02/18}{Initial version use dtx}
+% \changes{v1.0.0}{2020/02/18}{Initial version use dtx}
 % \changes{v0.6.2}{2020/01/10}{Adjust the skip of the chapter title}
 % \changes{v0.6.2}{2020/01/10}{Make the line under the title longer}
 % \changes{v0.6.2}{2020/01/10}{Remark: ``AutoFakeBold'' option can be used
@@ -232,10 +248,37 @@ and the derived files           nputhesis.ins,
 % \begin{frameverb}
 %   \documentclass[twoside, UTF8, phd, AutoFakeBold]{nputhesis}
 % \end{frameverb}
+%
+% \changes{v1.0.0}{2020/03/28}{Add comments on the option ``AutoFakeBold'' in the documents}
+% {
+%   \color{red} 这里使用 |AutoFakeBold| 为外封面的字体加黑. 在 TeXLive 2019 之前的版本中,
+%   启用选项使得 xelatex 编译生成的 pdf 文件不能复制, 即复制为乱码. 解决方法有以下几种:
+%   \begin{itemize}
+%     \item[1.] 升级 TeXLive 到 2019 版.
+%     \item[2.] 使用 Adobe 字体. 首先自行下载安装 Adobe 字体, 然后 |tex| 源文件导言区重新定义相关字体.
+% \begin{frameverb}
+%   \documentclass[twoside, UTF8, phd, dbr, AutoFakeBold]{nputhesis}
+%   % 导言区
+%   \renewcommand{\songti}{\CJKfontspec{Adobe Song Std L}}        % adobe 宋体
+%   \renewcommand{\kaishu}{\CJKfontspec{Adobe Kaiti Std R}}       % adobe 楷体
+%   \renewcommand{\heiti}{\CJKfontspec{Adobe Heiti Std R}}        % adobe 黑体
+%   \renewcommand{\fangsong}{\CJKfontspec{Adobe Fangsong Std R}}  % adobe 仿宋
+%   % other command
+%   \begin{document}
+%   正文
+%   \end{document}
+% \end{frameverb}
+%     \item[3.] 去掉 |AutoFakeBold| 选项. 这样会导致外封面字体不能加黑.
+%   \end{itemize}
+% }
+%
 % 若需生成盲评版本, 添加选项 |dbr| 即可, 如
 % \begin{frameverb}
 %   \documentclass[twoside, UTF8, phd, dbr, AutoFakeBold]{nputhesis}
 % \end{frameverb}
+% 关于 |\dbr| 命令的使用请参考 \ref{ss:varset} 节, \ref{ss:refs} 节以及
+% \ref{ss:dbr} 节.
+%
 % \subsection{加载常用宏包}
 % \begin{frameverb}
 %   \usepackage{lipsum}
@@ -261,11 +304,11 @@ and the derived files           nputhesis.ins,
 % \begin{frameverb}
 %   \addbibresource{myrefs.bib}
 % \end{frameverb}
-% \subsection{变量设置}
+% \subsection{变量设置}\label{ss:varset}
 % 设置学校编号, 分类号, 题目, 姓名等信息
 % \begin{frameverb}
 %   \schoolno{10699}
-%   \classno{O.242}
+%   \classno{O242}
 %   \secretlevel{公开}
 %   \authorno{0000999999}
 %   \title[\LaTeX\ Template of NPU Thesis]{西工大硕博学位论文 \LaTeX 模板}
@@ -324,7 +367,7 @@ and the derived files           nputhesis.ins,
 %   \section{宏包}
 % \end{frameverb}
 % \subsubsection{图与表}
-% \subsection{参考文献, 附录等}
+% \subsection{参考文献, 附录等}\label{ss:refs}
 % \begin{frameverb}
 %   \backmatter
 %   % 以下两种参考文献格式, 根据实际宏包使用情况添加
@@ -356,7 +399,7 @@ and the derived files           nputhesis.ins,
 %   \statement
 %   \end{document}
 % \end{frameverb}
-% \subsection{完整的例子}
+% \subsection{完整的例子}\label{ss:example}
 %    \begin{macrocode}
 %<*sample>
 \documentclass[oneside, UTF8, phd, AutoFakeBold]{nputhesis}
@@ -391,7 +434,7 @@ and the derived files           nputhesis.ins,
 \end{filecontents}
 \addbibresource{myrefs.bib}
 \schoolno{10699}
-\classno{O.242}
+\classno{O242}
 \secretlevel{公开}
 \authorno{0000999999}
 \title[\LaTeX\ Template of NPU Thesis]{西工大硕博学位论文 \LaTeX 模板}
@@ -494,6 +537,8 @@ and the derived files           nputhesis.ins,
 %   latexmk -xelatex nputhesis.dtx -r dtxrc
 %   latexmk -c nputhesis.dtx -r dtxrc
 % \end{frameverb}
+% \subsubsection{方法三}
+% 在 Windows 环境下直接运行 |build.bat| 即可.
 % \section{代码实现}
 % \subsection{文档选项}
 % 使用布尔变量实现文档的选项设置
@@ -559,7 +604,8 @@ and the derived files           nputhesis.ins,
   \setmainfont{Times New Roman}
 \fi
 %    \end{macrocode}
-% \subsection{盲评命令}
+% \subsection{盲评命令}\label{ss:dbr}
+% \changes{v1.0.0}{2020/02/18}{Add option `dbr' for double-blind review}
 % 当 |dbr| 选项开启, 即 |dbr=true| 时在文件中 |\dbr| 命令以隐藏作者相关信息, 
 % 使用命令 |\dbr{张三}| 将会使用黑框代替 `张三' 的显示.
 %    \begin{macrocode}
@@ -665,7 +711,7 @@ and the derived files           nputhesis.ins,
   {\hspace{.5em}\titlerule*{.}\contentspage}
 %    \end{macrocode}
 % \subsection{变量设置}
-% 定义变量, 用于存储包括论文题目, 作者,导师等信息.
+% 定义变量, 用于存储包括论文题目, 作者, 导师等信息.
 %    \begin{macrocode}
 \def\title{\@ifnextchar[\@@title{\@@title[]}}
 \def\author{\@ifnextchar[\@@author{\@@author[]}}
@@ -930,6 +976,7 @@ and the derived files           nputhesis.ins,
 %    \end{macrocode}
 % \subsection{特殊章节设置}
 % 附录自动以英文字母编号
+% \changes{v1.0.0}{2020/03/28}{Fix bug of command ``Appendix''}
 %    \begin{macrocode}
 \let\npu@chapter\chapter
 \def\npu@star@chapter#1{\npu@chapter{#1}}
@@ -939,8 +986,7 @@ and the derived files           nputhesis.ins,
 \def\npu@star@Appendix{\chapter{\npu@appendix}}
 \def\npu@Appendix{\addtocounter{npu@c@appendix}{1}%
   \chapter{\npu@appendix\Alph{npu@c@appendix}}}
-\def\Appendix{\secdef\npu@Appendix\npu@star@Appendix}
-
+\def\Appendix{\@ifstar{\npu@star@Appendix}{\npu@Appendix}}
 %    \end{macrocode}
 % 致谢章节
 %    \begin{macrocode}

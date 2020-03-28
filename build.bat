@@ -9,7 +9,7 @@ set doc_dir=\doc\latex\nputhesis
 set src_dir=\source\latex\nputhesis
 
 if %flag%x == x (
-    for %%i in (tds, clean) do (
+    for %%i in (plain, clean) do (
         call:%%i
     )
     pause

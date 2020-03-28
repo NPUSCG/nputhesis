@@ -15,7 +15,7 @@
 %% 2005/12/01 or later.
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{nputhesis}
-    [2020/02/18 v0.6.3 NPU Thesis]
+    [2020/03/28 v1.0.0 NPU Thesis Template]
 \newif\if@npu@phd
 \newif\if@npu@blankinfo
 \newif\if@npu@dbr        % for double-blind review
@@ -366,8 +366,7 @@
 \def\npu@star@Appendix{\chapter{\npu@appendix}}
 \def\npu@Appendix{\addtocounter{npu@c@appendix}{1}%
   \chapter{\npu@appendix\Alph{npu@c@appendix}}}
-\def\Appendix{\secdef\npu@Appendix\npu@star@Appendix}
-
+\def\Appendix{\@ifstar{\npu@star@Appendix}{\npu@Appendix}}
 \def\Thanks{\chapter{\npu@thanks}}
 \newcommand\Work{\chapter{\npu@work}}
 \newcommand\papersection{\section*{\npu@work@paper}}
