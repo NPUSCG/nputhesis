@@ -15,7 +15,7 @@
 %% 2005/12/01 or later.
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{nputhesis}
-    [2020/04/21 v1.0.0 NPU Thesis Template]
+    [2020/06/12 v1.0.0 NPU Thesis Template]
 \newif\if@npu@phd
 \newif\if@npu@blankinfo
 \newif\if@npu@dbr        % for double-blind review
@@ -160,6 +160,19 @@
   \def\npu@degreename@en{Master}
 \fi
 \linespread{1.25}
+\renewenvironment{titlepage}
+    {%
+      \cleardoublepage
+      \if@twocolumn
+        \@restonecoltrue\onecolumn
+      \else
+        \@restonecolfalse\newpage
+      \fi
+      \thispagestyle{empty}%
+      % \setcounter{page}\z@
+    }%
+    {\if@restonecol\twocolumn \else \newpage \fi
+    }
 \def\makeoutercover{
   \begin{titlepage}
     \bfseries
@@ -225,7 +238,7 @@
   \end{titlepage}
   \clearpagestyle
 }
-\def\makeinnercover@zh{
+\def\makeinnercover@zh{%
   \begin{titlepage}
     \linespread{1.25}
     \vspace*{2cm}
@@ -282,7 +295,7 @@
   \end{titlepage}
   \clearpagestyle
 }
-\def\makeinnercover@en{
+\def\makeinnercover@en{%
   \begin{titlepage}
     \linespread{1.25}
     \vspace*{1.5cm}
@@ -313,7 +326,14 @@
   \end{titlepage}
   \clearpagestyle
 }
-\def\makecover{\makeoutercover\makeinnercover@zh\makeinnercover@en}
+\def\makecover{%
+  \pagenumbering{Alph}%
+  \makeoutercover%
+  \setcounter{page}\@ne
+  \pagenumbering{roman}%
+  \makeinnercover@zh%
+  \makeinnercover@en%
+}
 \let\npu@frontmatter\frontmatter
 \def\frontmatter{\npu@frontmatter\pagenumbering{Roman}}
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else

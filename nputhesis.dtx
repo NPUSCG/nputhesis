@@ -197,7 +197,7 @@ and the derived files           nputhesis.ins,
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\ProvidesClass{nputhesis}
 %<*class>
-    [2020/04/21 v1.0.0 NPU Thesis Template]
+    [2020/06/12 v1.0.0 NPU Thesis Template]
 %</class>
 %<*driver>
 \documentclass{ctxdoc}
@@ -443,8 +443,9 @@ and the derived files           nputhesis.ins,
 % \subsection{完整的例子}\label{ss:example}
 %    \begin{macrocode}
 %<*sample>
-\documentclass[oneside, UTF8, phd, AutoFakeBold]{nputhesis}
+\documentclass[twoside, UTF8, phd, AutoFakeBold]{nputhesis}
 \usepackage{lipsum}
+\usepackage{hyperref} % 可以保证生成的 pdf 显示逻辑页码
 \usepackage{filecontents}
 \usepackage[backend=biber,
             style=gb7714-2015, maxbibnames=3,minbibnames=3,
@@ -802,6 +803,22 @@ and the derived files           nputhesis.ins,
 \linespread{1.25}
 %    \end{macrocode}
 % \subsection{封面}
+% 重新定义 |titlepage| 环境, 取消页码计数器的更改.
+%    \begin{macrocode}
+\renewenvironment{titlepage}
+    {%
+      \cleardoublepage
+      \if@twocolumn
+        \@restonecoltrue\onecolumn
+      \else
+        \@restonecolfalse\newpage
+      \fi
+      \thispagestyle{empty}%
+      % \setcounter{page}\z@
+    }%
+    {\if@restonecol\twocolumn \else \newpage \fi
+    }
+%    \end{macrocode}
 % 定义外封面
 %    \begin{macrocode}
 \def\makeoutercover{
@@ -872,7 +889,7 @@ and the derived files           nputhesis.ins,
 %    \end{macrocode}
 % 定义内封面
 %    \begin{macrocode}
-\def\makeinnercover@zh{
+\def\makeinnercover@zh{%
   \begin{titlepage}
     \linespread{1.25}
     \vspace*{2cm}
@@ -932,7 +949,7 @@ and the derived files           nputhesis.ins,
 %    \end{macrocode}
 % 定义英文封面
 %    \begin{macrocode}
-\def\makeinnercover@en{
+\def\makeinnercover@en{%
   \begin{titlepage}
     \linespread{1.25}
     \vspace*{1.5cm}
@@ -966,7 +983,15 @@ and the derived files           nputhesis.ins,
 %    \end{macrocode}
 % 整合以上封面为一个命令 makecover
 %    \begin{macrocode}
-\def\makecover{\makeoutercover\makeinnercover@zh\makeinnercover@en}
+% \changes{v1.0.0}{2020/06/12}{Change the logical page number in pdf to avoid the repeation of the numbers}
+\def\makecover{%
+  \pagenumbering{Alph}%
+  \makeoutercover%
+  \setcounter{page}\@ne
+  \pagenumbering{roman}%
+  \makeinnercover@zh%
+  \makeinnercover@en%
+}
 %    \end{macrocode}
 % 正文之前使用罗马数字编号
 %    \begin{macrocode}
