@@ -15,7 +15,7 @@
 %% 2005/12/01 or later.
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{nputhesis}
-    [2020/06/12 v1.0.0 NPU Thesis Template]
+    [2020/06/16 v1.0.0 NPU Thesis Template]
 \newif\if@npu@phd
 \newif\if@npu@blankinfo
 \newif\if@npu@dbr        % for double-blind review
@@ -320,7 +320,7 @@
       for the Degree of\\
       \npu@degreename@en\ of \@major@en\\
       \vspace{4\baselineskip}
-      Xi'an P. R. China\\
+      Xi'an, P. R. China\\
       \@applydate@en
     \end{center}
   \end{titlepage}

@@ -44,8 +44,11 @@ goto :EOF
     call :plain
     copy /Y nputhesis.dtx %tds_dir%%src_dir%\nputhesis.dtx
     copy /Y nputhesis.pdf %tds_dir%%doc_dir%\nputhesis.pdf
+    copy /Y %tds_dir%%tex_dir%\nputhesis.cls %tds_dir%%doc_dir%\nputhesis.cls
     pushd %tds_dir%%doc_dir%
+    copy /Y %tds_dir%%tex_dir%\nputhesis.cls nputhesis.cls
     call :demo
+    if exist nputhesis.cls del nputhesis.cls
     popd
     if exist nputhesis.tds.zip del nputhesis.tds.zip
     7z a nputhesis.tds.zip .\nputhesis-tds\*
