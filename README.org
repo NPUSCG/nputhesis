@@ -1,3 +1,7 @@
+* 该模板已经不再更新, 推荐使用 [[https://github.com/NWPUMetaphysicsOffice][@NWPUMetaphysicsOffice]] 的 [[https://github.com/NWPUMetaphysicsOffice/Yet-Another-LaTeX-Template-for-NPU-Thesis][Yet-Another-LaTeX-Template-for-NPU-Thesis]]
+
+   网址 https://github.com/NWPUMetaphysicsOffice/Yet-Another-LaTeX-Template-for-NPU-Thesis
+
 * NPU 博士、硕士学位论文 \LaTeX 模板
 =nputhesis= 是基于\LaTeX 的 =ctexbook= 文类编写的[[https://www.nwpu.edu.cn][西北工业大学]]博士、硕士论文格式文类, 基本实现了[[http://gs.nwpu.edu.cn/info/2021/5046.htm][博士、硕士学位论文撰写规定]]的要求.
 
